@@ -81,11 +81,31 @@
     <label for="eq_select">착용 장비</label>
     <select id="eq_select" onchange="calculateDamage()">
         <option value="none" data-atk="0" data-crit="0" data-amp="0">장비 없음</option>
-        <option value="sword" data-atk="500" data-crit="10" data-amp="5">드래곤 슬레이어 (+500공, +10%치확, +5%피증)</option>
-        <option value="staff" data-atk="300" data-crit="0" data-amp="25">대현자의 지팡이 (+300공, +25%피증)</option>
-        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">암살자의 단검 (+200공, +25%치확)</option>
+        <option value="sword" data-atk="500" data-crit="10" data-amp="5">추적 (+30%약피증)</option>
+        <option value="staff" data-atk="300" data-crit="0" data-amp="25">암살 (+15%방무)</option>
+        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">복수자 (+70%피증)</option>
     </select>
 
+    <!-- 2. 장신구 선택 드롭다운 -->
+    <label for="eq_select">장신구1</label>
+    <select id="eq_select" onchange="calculateDamage()">
+        <option value="sword" data-atk="500" data-crit="10" data-amp="5">치확 (+10%치확)</option>
+        <option value="staff" data-atk="300" data-crit="0" data-amp="25">약공 (+12%약공)</option>
+        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">토벌 (+12%피증)</option>
+        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">공성 (+10%피증)</option>
+        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">피증 (+6%피증)</option>
+    </select>
+
+    <!-- 2. 장신구 선택 드롭다운 -->
+    <label for="eq_select">장신구2</label>
+    <select id="eq_select" onchange="calculateDamage()">
+        <option value="none" data-atk="0" data-crit="0" data-amp="0">장비 없음</option>
+        <option value="sword" data-atk="500" data-crit="10" data-amp="5">치확 (+10%치확)</option>
+        <option value="staff" data-atk="300" data-crit="0" data-amp="25">약공 (+12%약공)</option>
+        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">토벌 (+12%피증)</option>
+        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">공성 (+10%피증)</option>
+        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">피증 (+6%피증)</option>
+    </select>
     <!-- 3. 상세 스탯 입력 변수들 -->
     <label for="atk">기본 공격력 (Base ATK)</label>
     <input type="number" id="atk" value="1500" min="0" oninput="calculateDamage()">
