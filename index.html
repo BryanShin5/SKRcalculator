@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Test: Character Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 { color: #2c3e50; font-size: 24px; }
+        .status { color: #27ae60; font-weight: bold; margin-bottom: 20px; }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background-color: #2980b9; }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            background: #eef2f3;
+            padding: 10px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>🚀 Deployment Successful!</h1>
+    <p class="status">✓ Serverless App Running Locally</p>
+    
+    <!-- Dummy Character Database Selection -->
+    <label for="character">Select Test Character:</label>
+    <select id="character">
+        <option value="50" data-mult="1.2">Warrior (Base Atk: 50, Mult: 1.2)</option>
+        <option value="40" data-mult="1.5">Mage (Base Atk: 40, Mult: 1.5)</option>
+        <option value="30" data-mult="2.0">Rogue (Base Atk: 30, Mult: 2.0)</option>
+    </select>
+
+    <label for="level">Character Level:</label>
+    <input type="number" id="level" value="1" min="1" max="100">
+
+    <button onclick="calculateDamage()">Calculate Total Damage</button>
+
+    <div class="result" id="output">Total Damage: --</div>
+</div>
+
+<script>
+    function calculateDamage() {
+        const dropdown = document.getElementById('character');
+        const level = parseFloat(document.getElementById('level').value) || 1;
+        
+        // Get stats from selected dummy character
+        const baseAttack = parseFloat(dropdown.value);
+        const multiplier = parseFloat(dropdown.options[dropdown.selectedIndex].getAttribute('data-mult'));
+        
+        // Dummy calculation formula
+        const totalDamage = Math.round(baseAttack * (1 + (level * multiplier * 0.1)));
+        
+        document.getElementById('output').innerText = `Total Damage: ${totalDamage}`;
+    }
+</script>
+
+</body>
+</html>
