@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deployment Test: Character Calculator</title>
+    <title>Deployment Test: 2 Character Inputs</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,43 +11,56 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .card {
             background: white;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
+            max-width: 500px;
             width: 100%;
         }
-        h1 { color: #2c3e50; font-size: 24px; }
-        .status { color: #27ae60; font-weight: bold; margin-bottom: 20px; }
+        h1 { color: #2c3e50; font-size: 24px; text-align: center; margin-top: 0; }
+        .section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 5px solid #3498db;
+        }
+        .section.enemy { border-left-color: #e74c3c; }
+        h2 { font-size: 16px; margin: 0 0 10px 0; color: #34495e; }
+        label { font-size: 14px; color: #7f8c8d; display: block; margin-top: 8px; }
         select, input, button {
             width: 100%;
             padding: 10px;
-            margin: 10px 0;
+            margin: 5px 0 10px 0;
             border: 1px solid #ccc;
             border-radius: 6px;
             box-sizing: border-box;
         }
         button {
-            background-color: #3498db;
+            background-color: #2ecc71;
             color: white;
             border: none;
             cursor: pointer;
             font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
         }
-        button:hover { background-color: #2980b9; }
+        button:hover { background-color: #27ae60; }
         .result {
             margin-top: 20px;
             font-size: 18px;
             font-weight: bold;
+            text-align: center;
             color: #333;
             background: #eef2f3;
-            padding: 10px;
+            padding: 15px;
             border-radius: 6px;
         }
     </style>
@@ -55,38 +68,58 @@
 <body>
 
 <div class="card">
-    <h1>🚀 Deployment Successful!</h1>
-    <p class="status">✓ Serverless App Running Locally</p>
+    <h1>⚔️ Combat Calculator Test</h1>
     
-    <!-- Dummy Character Database Selection -->
-    <label for="character">Select Test Character:</label>
-    <select id="character">
-        <option value="50" data-mult="1.2">Warrior (Base Atk: 50, Mult: 1.2)</option>
-        <option value="40" data-mult="1.5">Mage (Base Atk: 40, Mult: 1.5)</option>
-        <option value="30" data-mult="2.0">Rogue (Base Atk: 30, Mult: 2.0)</option>
-    </select>
+    <!-- Character 1: Attacker -->
+    <div class="section">
+        <h2>Character 1 (Attacker)</h2>
+        <label for="char1">Select Class:</label>
+        <select id="char1">
+            <option value="80">Warrior (Base Atk: 80)</option>
+            <option value="120">Mage (Base Atk: 120)</option>
+            <option value="60">Rogue (Base Atk: 60)</option>
+        </select>
 
-    <label for="level">Character Level:</label>
-    <input type="number" id="level" value="1" min="1" max="100">
+        <label for="char1-level">Level:</label>
+        <input type="number" id="char1-level" value="1" min="1" max="100">
+    </div>
 
-    <button onclick="calculateDamage()">Calculate Total Damage</button>
+    <!-- Character 2: Defender -->
+    <div class="section enemy">
+        <h2>Character 2 (Defender)</h2>
+        <label for="char2">Select Class:</label>
+        <select id="char2">
+            <option value="50">Golem (Base Def: 50)</option>
+            <option value="20">Goblin (Base Def: 20)</option>
+            <option value="40">Knight (Base Def: 40)</option>
+        </select>
 
-    <div class="result" id="output">Total Damage: --</div>
+        <label for="char2-level">Level:</label>
+        <input type="number" id="char2-level" value="1" min="1" max="100">
+    </div>
+
+    <button onclick="calculateCombat()">Simulate Attack</button>
+
+    <div class="result" id="output">Damage Dealt: --</div>
 </div>
 
 <script>
-    function calculateDamage() {
-        const dropdown = document.getElementById('character');
-        const level = parseFloat(document.getElementById('level').value) || 1;
+    function calculateCombat() {
+        // Attacker Stats
+        const atkBase = parseFloat(document.getElementById('char1').value);
+        const atkLevel = parseFloat(document.getElementById('char1-level').value) || 1;
+        const totalAttack = atkBase + (atkLevel * 5);
+
+        // Defender Stats
+        const defBase = parseFloat(document.getElementById('char2').value);
+        const defLevel = parseFloat(document.getElementById('char2-level').value) || 1;
+        const totalDefense = defBase + (defLevel * 3);
+
+        // Formula: Attack minus half of defense (Minimum 1 damage)
+        let finalDamage = Math.round(totalAttack - (totalDefense / 2));
+        if (finalDamage < 1) finalDamage = 1;
         
-        // Get stats from selected dummy character
-        const baseAttack = parseFloat(dropdown.value);
-        const multiplier = parseFloat(dropdown.options[dropdown.selectedIndex].getAttribute('data-mult'));
-        
-        // Dummy calculation formula
-        const totalDamage = Math.round(baseAttack * (1 + (level * multiplier * 0.1)));
-        
-        document.getElementById('output').innerText = `Total Damage: ${totalDamage}`;
+        document.getElementById('output').innerText = `💥 Damage Dealt: ${finalDamage}`;
     }
 </script>
 
