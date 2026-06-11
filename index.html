@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>정밀 데미지 계산기 (장비 연동)</title>
+    <title>데미지 계산기 (장비 연동)</title>
     <style>
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #1e293b;
-            color: #f8fafc;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,251 +16,150 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .container {
-            background-color: #0f172a;
+        .card {
+            background: white;
             padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             max-width: 500px;
             width: 100%;
-            border: 1px solid #334155;
         }
-        h1 {
-            font-size: 22px;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 25px;
-            color: #38bdf8;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #94a3b8;
-        }
-        .input-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        input, select {
+        h1 { color: #2c3e50; font-size: 24px; text-align: center; margin-top: 0; }
+        .status { color: #27ae60; font-weight: bold; text-align: center; margin-bottom: 20px; font-size: 14px; }
+        
+        label { font-size: 14px; color: #34495e; display: block; margin-top: 12px; font-weight: bold; }
+        select, input, button {
             width: 100%;
-            padding: 12px 14px;
-            background-color: #1e293b;
-            border: 2px solid #475569;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            transition: border-color 0.2s;
+            padding: 10px;
+            margin: 6px 0 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             box-sizing: border-box;
-        }
-        input {
-            padding-right: 45px;
+            font-size: 15px;
         }
         input:focus, select:focus {
             outline: none;
-            border-color: #38bdf8;
-        }
-        select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            background-size: 16px;
-            padding-right: 40px;
-        }
-        select option {
-            background-color: #1e293b;
-            color: #fff;
-        }
-        .suffix {
-            position: absolute;
-            right: 14px;
-            color: #64748b;
-            font-size: 14px;
-            font-weight: bold;
+            border-color: #3498db;
         }
         button {
-            width: 100%;
-            padding: 14px;
-            background-color: #38bdf8;
-            color: #0f172a;
+            background-color: #3498db;
+            color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: #7dd3fc;
-        }
-        .result-panel {
-            margin-top: 25px;
-            background-color: #1e293b;
-            border-radius: 8px;
-            padding: 20px;
-            border: 1px solid #334155;
-        }
-        .result-line {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 15px;
-            color: #cbd5e1;
-        }
-        .result-line:last-child {
-            margin-bottom: 0;
-            padding-top: 10px;
-            border-top: 1px dashed #475569;
-        }
-        .val {
             font-weight: bold;
-            color: #fff;
+            font-size: 16px;
+            margin-top: 10px;
         }
-        .val.highlight {
-            color: #f43f5e;
+        button:hover { background-color: #2980b9; }
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+            background: #eef2f3;
+            padding: 15px;
+            border-radius: 6px;
+            line-height: 1.6;
+        }
+        .damage-val {
+            color: #e74c3c;
             font-size: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>⚔️ 장비 연동 데미지 계산기</h1>
+<div class="card">
+    <h1>⚔️ 데미지 계산기</h1>
+    <p class="status">✓ 실시간 서버리스 시뮬레이터</p>
+    
+    <!-- 1. 캐릭터 이름 입력 -->
+    <label for="stat_name">캐릭터 이름</label>
+    <input type="text" id="stat_name" value="전설의 용사" oninput="calculateDamage()">
 
-    <!-- 이름 입력 추가 -->
-    <div class="form-group">
-        <label for="stat_name">캐릭터 이름</label>
-        <div class="input-box">
-            <input type="text" id="stat_name" value="전설의 용사" style="padding-right: 14px;">
-        </div>
-    </div>
+    <!-- 2. 장비 선택 드롭다운 -->
+    <label for="eq_select">착용 장비</label>
+    <select id="eq_select" onchange="calculateDamage()">
+        <option value="none" data-atk="0" data-crit="0" data-amp="0">장비 없음</option>
+        <option value="sword" data-atk="500" data-crit="10" data-amp="5">드래곤 슬레이어 (+500공, +10%치확, +5%피증)</option>
+        <option value="staff" data-atk="300" data-crit="0" data-amp="25">대현자의 지팡이 (+300공, +25%피증)</option>
+        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">암살자의 단검 (+200공, +25%치확)</option>
+    </select>
 
-    <!-- 장비 선택 드롭다운 추가 (데이터셋으로 보너스 스탯 지정) -->
-    <div class="form-group">
-        <label for="eq_select">착용 장비 (Equipment)</label>
-        <select id="eq_select" onchange="runCalculation()">
-            <option value="none" data-atk="0" data-crit="0" data-amp="0">장비 없음 (보너스 없음)</option>
-            <option value="sword" data-atk="500" data-crit="10" data-amp="5">드래곤 슬레이어 (+500 공, +10% 치확, +5% 피증)</option>
-            <option value="staff" data-atk="300" data-crit="0" data-amp="25">대현자의 지팡이 (+300 공, +25% 피증)</option>
-            <option value="dagger" data-atk="200" data-crit="25" data-amp="0">암살자의 단검 (+200 공, +25% 치확)</option>
-        </select>
-    </div>
+    <!-- 3. 상세 스탯 입력 변수들 -->
+    <label for="atk">기본 공격력 (Base ATK)</label>
+    <input type="number" id="atk" value="1500" min="0" oninput="calculateDamage()">
 
-    <!-- 캐릭터 순수 스탯 입력 -->
-    <div class="form-group">
-        <label for="stat_atk">기본 공격력 (Base ATK)</label>
-        <div class="input-box">
-            <input type="number" id="stat_atk" value="2000" oninput="runCalculation()">
-            <span class="suffix">stat</span>
-        </div>
-    </div>
+    <label for="crit-rate">기본 치명타 확률 (치확 %)</label>
+    <input type="number" id="crit-rate" value="50" min="0" max="100" oninput="calculateDamage()">
 
-    <div class="form-group">
-        <label for="stat_crit_rate">기본 치명타 확률 (치확)</label>
-        <div class="input-box">
-            <input type="number" id="stat_crit_rate" value="50" min="0" max="100" oninput="runCalculation()">
-            <span class="suffix">%</span>
-        </div>
-    </div>
+    <label for="crit-dmg">치명타 피해 (치피 %)</label>
+    <input type="number" id="crit-dmg" value="150" min="0" oninput="calculateDamage()">
 
-    <div class="form-group">
-        <label for="stat_crit_dmg">치명타 피해 (치피)</label>
-        <div class="input-box">
-            <input type="number" id="stat_crit_dmg" value="180" min="0" oninput="runCalculation()">
-            <span class="suffix">%</span>
-        </div>
-    </div>
+    <label for="weak-atk">약점 공격 (약공 %)</label>
+    <input type="number" id="weak-atk" value="120" min="100" oninput="calculateDamage()">
 
-    <div class="form-group">
-        <label for="stat_weak">약점 공격 (약공)</label>
-        <div class="input-box">
-            <input type="number" id="stat_weak" value="130" min="100" oninput="runCalculation()">
-            <span class="suffix">%</span>
-        </div>
-    </div>
+    <label for="dmg-buff">기본 피해 증폭 (%)</label>
+    <input type="number" id="dmg-buff" value="10" min="0" oninput="calculateDamage()">
 
-    <div class="form-group">
-        <label for="stat_amp">기본 피해 증폭</label>
-        <div class="input-box">
-            <input type="number" id="stat_amp" value="10" min="0" oninput="runCalculation()">
-            <span class="suffix">%</span>
-        </div>
-    </div>
+    <label for="def">적 방어력</label>
+    <input type="number" id="def" value="500" min="0" oninput="calculateDamage()">
 
-    <button onclick="runCalculation()">실시간 데미지 시뮬레이션</button>
+    <button onclick="calculateDamage()">데미지 계산하기</button>
 
-    <!-- 결과창 출력 영역 -->
-    <div class="result-panel">
-        <div style="text-align: center; margin-bottom: 15px; color: #38bdf8; font-weight: bold; id='char_display'">
-            <span id="res_title">전설의 용사</span>의 전투 분석
-        </div>
-        <div class="result-line">
-            <span>기본 일반 타격:</span>
-            <span class="val" id="res_normal">-</span>
-        </div>
-        <div class="result-line">
-            <span>치명타 발동 타격:</span>
-            <span class="val" id="res_crit" style="color: #fb923c;">-</span>
-        </div>
-        <div class="result-line">
-            <span>최종 평균 기댓값:</span>
-            <span class="val highlight" id="res_avg">-</span>
-        </div>
+    <!-- 화이트 카드 전용 결과 레이아웃 -->
+    <div class="result" id="output">
+        스탯을 입력하고 버튼을 눌러주세요.
     </div>
 </div>
 
 <script>
-    function runCalculation() {
-        // 1. 이름 가져오기
+    function calculateDamage() {
+        // 이름 데이터 매핑
         const charName = document.getElementById('stat_name').value || "캐릭터";
-        document.getElementById('res_title').innerText = charName;
 
-        // 2. 장비 드롭다운 보너스 값 추출
+        // 드롭다운 속성 추출
         const eqSelect = document.getElementById('eq_select');
         const selectedOption = eqSelect.options[eqSelect.selectedIndex];
-        
         const eqAtk = parseFloat(selectedOption.getAttribute('data-atk')) || 0;
         const eqCrit = parseFloat(selectedOption.getAttribute('data-crit')) || 0;
         const eqAmp = parseFloat(selectedOption.getAttribute('data-amp')) || 0;
 
-        // 3. 캐릭터 기본 입력값 + 장비 보너스 합산 연산
-        const baseAtk = parseFloat(document.getElementById('stat_atk').value) || 0;
-        const finalAtk = baseAtk + eqAtk; // 공격력 합산
+        // 보너스 수치 연산 합산
+        const baseAtk = parseFloat(document.getElementById('atk').value) || 0;
+        const finalAtk = baseAtk + eqAtk;
 
-        const baseCritRate = parseFloat(document.getElementById('stat_crit_rate').value) || 0;
-        const finalCritRate = Math.min(baseCritRate + eqCrit, 100) / 100; // 치확 합산 (최대 100%)
+        const baseCritRate = parseFloat(document.getElementById('crit-rate').value) || 0;
+        const finalCritRate = Math.min(baseCritRate + eqCrit, 100) / 100;
 
-        const cDmg = (parseFloat(document.getElementById('stat_crit_dmg').value) || 0) / 100;
-        const weak = (parseFloat(document.getElementById('stat_weak').value) || 100) / 100;
+        const critDmg = (parseFloat(document.getElementById('crit-dmg').value) || 0) / 100;
+        const weakAtk = (parseFloat(document.getElementById('weak-atk').value) || 100) / 100;
         
-        const baseAmp = parseFloat(document.getElementById('stat_amp').value) || 0;
-        const finalAmp = (baseAmp + eqAmp) / 100; // 피증 합산
+        const baseAmp = parseFloat(document.getElementById('dmg-buff').value) || 0;
+        const finalAmp = (baseAmp + eqAmp) / 100;
+        
+        const def = parseFloat(document.getElementById('def').value) || 0;
 
-        // 4. 전투 수학 공식 적용
-        const dummyDefenseMultiplier = 0.7; 
-        let baseDmg = finalAtk * weak * (1 + finalAmp) * dummyDefenseMultiplier;
-        if (baseDmg < 1) baseDmg = 1;
+        // 전투 시뮬레이션 공식 연산
+        let baseDamage = finalAtk - (def * 0.5);
+        if (baseDamage < 1) baseDamage = 1;
 
-        let critDmg = baseDmg * cDmg;
-        let finalExpectedValue = (baseDmg * (1 - finalCritRate)) + (critDmg * finalCritRate);
+        let normalDamage = baseDamage * weakAtk * (1 + finalAmp);
+        let maxCritDamage = normalDamage * critDmg;
+        let avgDamage = (normalDamage * (1 - finalCritRate)) + (maxCritDamage * finalCritRate);
 
-        // 5. UI 출력 업데이트
-        document.getElementById('res_normal').innerText = Math.round(baseDmg).toLocaleString() + " DMG";
-        document.getElementById('res_crit').innerText = Math.round(critDmg).toLocaleString() + " DMG";
-        document.getElementById('res_avg').innerText = Math.round(finalExpectedValue).toLocaleString() + " DMG";
+        // 출력 타겟 바인딩
+        document.getElementById('output').innerHTML = `
+            <strong>[${charName}]</strong> 전투 분석 결과:<br>
+            • 일반 적중 데미지: <strong>${Math.round(normalDamage).toLocaleString()}</strong><br>
+            • 치명타 발생 데미지: <strong>${Math.round(maxCritDamage).toLocaleString()}</strong><br>
+            <div style="border-top: 1px dashed #bbb; margin: 10px 0;"></div>
+            🎯 종합 평균 기댓값: <span class="damage-val">${Math.round(avgDamage).toLocaleString()}</span>
+        `;
     }
 
-    // 초기 실행
-    window.onload = runCalculation;
+    // 렌더링 시 실시간 노출 초기화
+    window.onload = calculateDamage;
 </script>
 
 </body>
