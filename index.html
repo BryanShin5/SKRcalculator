@@ -169,6 +169,13 @@
             font-weight: bold;
         }
 
+        .pet-container-block {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fcfcfd;
+            border: 1px solid #eef2f3;
+            border-radius: 8px;
+        }
         /* 화면이 좁은 모바일 기기에서는 세로로 자동 전환 */
         @media (max-width: 600px) {
             .flex-container {
@@ -260,6 +267,41 @@
 
             <label for="ela">적 탄성</label>
             <input type="number" id="ela" value="0" min="0" oninput="calculateDamage()">
+
+            <div class="pet-container-block">
+    <div class="section-title">🐾 펫 설정 </div>
+    <div class="flex-container" style="margin-bottom: 0;">
+        <!-- 공격자 전용 펫 정보 블록 -->
+        <div class="column">
+            <label for="atk-pet-name">공격자 펫 이름</label>
+            <input type="text" id="atk-pet-name" value="루" oninput="calculateDamage()">
+
+            <label for="atk-pet-atk">공격자 펫 공격 잠재</label>
+            <input type="number" id="atk-pet-atk" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="atk-pet-def">공격자 펫 방어 잠재</label>
+            <input type="number" id="atk-pet-def" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="atk-pet-hp">공격자 펫 체력 잠재</label>
+            <input type="number" id="atk-pet-hp" value="0" min="0" oninput="calculateDamage()">
+        </div>
+        
+        <!-- 방어자 전용 펫 정보 블록 -->
+        <div class="column">
+            <label for="def-pet-name">방어자 펫 이름</label>
+            <input type="text" id="def-pet-name" value="이린" oninput="calculateDamage()">
+
+            <label for="def-pet-atk">방어자 펫 공격 잠재</label>
+            <input type="number" id="def-pet-atk" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="def-pet-def">방어자 펫 방어 잠재</label>
+            <input type="number" id="def-pet-def" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="def-pet-hp">방어자 펫 체력 잠재</label>
+            <input type="number" id="def-pet-hp" value="0" min="0" oninput="calculateDamage()">
+        </div>
+        </div>
+        </div>
         </div>
     </div>
 
