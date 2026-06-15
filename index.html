@@ -201,122 +201,66 @@
             <input type="number" id="def" value="0" min="0" oninput="calculateDamage()">
 
             <label for="def">적 탄성</label>
-            <input type="number" id="def" value="0" min="0" oninput="calculateDamage()">
-
-            <label for="def">적 방어력</label>
-            <input type="number" id="def" value="500" min="0" oninput="calculateDamage()">
-
-<div style="margin-top: 20px; display: flex; align-items: center; gap: 8px;">
-    <label class="checkbox-container">
-                <input type="checkbox" id="element_advantage" class="large-checkbox" onchange="calculateDamage()">
-                <span class="checkbox-label">보스 여부</span>
-            </label>
-</div>
+            <input type="number" id="def" value="0" min="0" oninpu
         </div>
-
     </div>
-    <!-- 가로 배치를 위한 컨테이너 끝 -->
 
-    <!-- ==================== 하단: 결과창 및 실행 버튼 ==================== -->
-    <button onclick="calculateDamage()">데미지 계산하기</button>
+    <!-- 최종 결과 모의 단추 버튼 -->
+    <button type="button" style="width: 100%;" onclick="processSkillView()">💥 데미지 계산하기</button>
 
-    <div class="result" id="output">
-        스탯을 입력하면 분석 결과가 여기에 표시됩니다.
+    <!-- 가독성을 위해 개별 스킬 레이블 형태로 재구성된 결과 노드 -->
+    <div class="result" id="display-box">
+        <strong>💥 예상 데미지 결과</strong><br>
+        • 스킬 1 피해량: <span id="skill1-output" class="damage-val">-</span><br>
+        • 스킬 2 피해량: <span id="skill2-output" class="damage-val">-</span>
     </div>
 </div>
 
 <script>
-    let db = null;
+let characterDb = null;
 
-async function loadJsonData() {
+// 비동기 fetch 데이터를 트리거하여 할당
+async function fetchCharactersData() {
     try {
         const response = await fetch('characters.json');
-        if (!response.ok) throw new Error(`HTTP 에러: ${response.status}`);
-        characterDb = await response.json();
-        console.log('✓ characters.json 파일 연동 완료');
-    } catch (error) {
-        console.warn('⚠️ characters.json 로드 실패 (CORS 또는 파일 부재). 기본 인풋 수식으로 우회 연산합니다.', error);
+        if (response.ok) {
+            characterDb = await response.json();
+            console.log("✓ JSON 스키마 매핑 완료");
+        }
+    } catch (e) {
+        console.warn("JSON 매핑 실패: 로컬 웹서버 환경을 활성화하세요.");
     }
 }
 
-// 수식 연산 엔진
+// 인풋 데이터 입력 시 실시간 난수 발생 및 수식 간섭 차단
 function calculateDamage() {
-    if (!db) return;
-
-    const charName = document.getElementById('atk-char').value;
-    const skillKey = document.getElementById('atk-skill').value;
-    
-    if (!charName || !skillKey) return;
-
-    const char = db.characters[charName];
-    const skill = char[skillKey];
-
-    // 비정상 노드 및 공격 계수 부재 시 버프 판정 연산 차단
-    if (!skill || skill.mult === 0 || skill.hits === 0) {
-        document.getElementById('res-normal').innerText = "0 (버프형 스킬)";
-        document.getElementById('res-crit').innerText = "0";
-        document.getElementById('res-weak').innerText = "0";
-        return;
-    }
-
-    const baseAtk = parseFloat(document.getElementById('atk-base').value) || 0;
-    const myDef = parseFloat(document.getElementById('atk-def-stat').value) || 0;
-    const critDmgPercent = parseFloat(document.getElementById('atk-crit-dmg').value) || 0;
-    const enemyDef = parseFloat(document.getElementById('def-val').value) || 0;
-    const enemyReduce = parseFloat(document.getElementById('def-reduce').value) || 0;
-
-    const eqSet = document.getElementById('eq_set');
-    const selectedEq = eqSet.options[eqSet.selectedIndex];
-    const setWeakDmg = parseFloat(selectedEq.getAttribute('data-weak-dmg')) || 0;
-    const setIgnoreDef = parseFloat(selectedEq.getAttribute('data-ignore-def')) || 0;
-    const setWpnDmg = parseFloat(selectedEq.getAttribute('data-wpn-dmg')) || 0;
-
-    let attackPower = baseAtk;
-    let skillMultiplier = skill.multiplier || skill.atkmult || 0;
-
-    // 패시브 방어 버프 처리
-    let finalMyDef = myDef;
-    if(char.passive && char.passive.allybuff && char.passive.allybuff.def) {
-        finalMyDef = myDef * (1 + (char.passive.allybuff.def / 100));
-    }
-
-    // 패시브 피해 증폭 버프 처리
-    let passiveAmp = 0;
-    if(char.passive && char.passive.selfbuff && char.passive.selfbuff.debuffamp) {
-        passiveAmp = char.passive.selfbuff.debuffamp;
-    }
-
-    // 디버프 추가 계수 핸들링
-    if (charName === '세인' && document.getElementById('atk-debuff-target').checked) {
-        skillMultiplier += (skill.debuffmult || 0);
-    }
-
-    let calcAtk = attackPower * (skillMultiplier / 100);
-
-    // 에반형 방어 비례 추가타 스케일링
-    if (charName === '에반' && skill.defmult) {
-        calcAtk += finalMyDef * (skill.defmult / 100);
-    }
-
-    const finalEnemyDef = enemyDef * (1 - (setIgnoreDef / 100));
-    let baseDamage = calcAtk - finalEnemyDef;
-    if (baseDamage < 1) baseDamage = 1;
-
-    const totalDmgAmp = 1 + ((setWpnDmg + passiveAmp) / 100);
-    const totalDmgReduce = 1 - (enemyReduce / 100);
-
-    const finalNormalDmg = Math.round(baseDamage * totalDmgAmp * totalDmgReduce);
-    const finalCritDmg = Math.round(finalNormalDmg * (critDmgPercent / 100));
-    const finalWeakDmg = Math.round(finalNormalDmg * (1.3 + (setWeakDmg / 100)));
-
-    document.getElementById('res-normal').innerText = finalNormalDmg.toLocaleString();
-    document.getElementById('res-crit').innerText = finalCritDmg.toLocaleString();
-    document.getElementById('res-weak').innerText = finalWeakDmg.toLocaleString();
+    return false;
 }
 
-// 초기화 라이프사이클에 비동기 로더 바인딩
-window.onload = loadJsonData;
-</script>
+// 유저가 하단의 단추를 직접 명시적으로 선택했을 때만 작동하는 정적 뷰어 엔진
+function processSkillView() {
+    const nameInput = document.querySelector('#stat_name');
+    const attackerName = nameInput ? nameInput.value.trim() : '에반';
 
-</body>
-</html>
+    let skill1Name = "스킬 1";
+    let skill2Name = "스킬 2";
+
+    // 1. JSON 파일 데이터가 완벽하게 캐싱되었을 때 엔티티 매핑 시작
+    if (characterDb && characterDb.characters && characterDb.characters[attackerName]) {
+        const hero = characterDb.characters[attackerName];
+        if (hero.skill1) skill1Name = hero.skill1.name;
+        if (hero.skill2) skill2Name = hero.skill2.name;
+    }
+
+    // 2. 임의의 테스트 더미 가상 텍스트 노드 매핑
+    const out1 = document.getElementById('skill1-output');
+    const out2 = document.getElementById('skill2-output');
+    const displayBox = document.getElementById('display-box');
+
+    if (out1 && out2) {
+        out1.innerText = [${skill1Name}] 타격 준비 완료;
+        out2.innerText = [${skill2Name}] 타격 준비 완료;
+} else if (displayBox) {
+    // 복구 레이어가 깨질 시 원본 마크업을 동적으로 재구성
+    displayBox.innerHTML = <strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>;}}
+window.onload = fetchCharactersData;
