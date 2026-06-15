@@ -1,1 +1,14 @@
-
+{
+  "characters": {
+    "에반": {
+      "passive": {"name": "의지", "allybuff": {"def": 18}},
+      "skill1": { "name": "연속공격", "atkmult": 170, "defmult":200, "hits": 1 },
+      "skill2": { "name": "균형의방패", "mult": 0, "hits": 0, "allybuff": {"guard":21}}
+    },
+    
+    "세인": {
+      "passive": { "name": "악마의 힘", "selfbuff":{"critrate": 41, "debuffamp": 20}},
+      "skill2": { "name": "귀신 베기", "multiplier": 690, "hits": 1, "debuffmult": 50}
+    }
+  }
+}
