@@ -20,10 +20,6 @@
         }
     }
 
-    function calculateDamage() {
-        return false;
-    }
-
     // 유저가 하단의 단추를 직접 명시적으로 선택했을 때만 작동하는 정적 뷰어 엔진
     function processSkillView() {
         const nameInput = document.querySelector('#atk_name');
@@ -60,6 +56,30 @@
             // [수정] 백틱(`)을 추가하고 유실되었던 구문 마감 및 중괄호 정렬 완료
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
         }
+    }
+
+    function calculateStat() {
+        const acc1Element = document.getElementById('acc1');
+        const selectedAcc1 = acc1Element ? acc1Element.options[acc1Element.selectedIndex] : null;
+        // 속성이 없을 경우를 대비해 기본값 0 처리
+        const acc1CritRate = selectedAcc1 ? (parseFloat(selectedAcc1.getAttribute('data-crit')) || 0) : 0;
+        const acc1WeakRate = selectedAcc1 ? (parseFloat(selectedAcc1.getAttribute('data-weak-rate')) || 0) : 0;
+        const acc1DmgAmp  = selectedAcc1 ? (parseFloat(selectedAcc1.getAttribute('data-wpn-dmg')) || 0) : 0;
+
+        // --- 장신구 2 데이터 추출 ---
+        const acc2Element = document.getElementById('acc2');
+        const selectedAcc2 = acc2Element ? acc2Element.options[acc2Element.selectedIndex] : null;
+        const acc2CritRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-crit')) || 0) : 0;
+        const acc2WeakRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-weak-rate')) || 0) : 0;
+        const acc2DmgAmp  = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-wpn-dmg')) || 0) : 0;
+        
+        const finalatk = (atk + (characterDb.characters[attackerName].stat.atk*atk-pet-atk));
+        const finalcrit = Math.max((crit-rate + acc1CritRate + acc2CritRate + characterDb.characters[attackerName].passive.critrateconst),100);
+        return false;
+    }
+
+    function calculateDamage(atkmult,defmult,hpmult){
+        return finalatk * atkmult + finaldef * defmult + finalhp * ;
     }
     window.onload = fetchCharactersData;
     </script>
@@ -236,10 +256,10 @@
             <label for="crit-dmg">치명타 피해 (치피 %)</label>
             <input type="number" id="crit-dmg" value="150" min="0" oninput="calculateDamage()">
 
-            <label for="weak-atk">약점 공격 확률 (약공 %)</label>
-            <input type="number" id="weak-atk" value="20" min="0" max="100" oninput="calculateDamage()">
+            <label for="weak-rate">약점 공격 확률 (약공 %)</label>
+            <input type="number" id="weak-rate" value="20" min="0" max="100" oninput="calculateDamage()">
 
-            <label for="dmg-buff">전장 파쇄 (%)</label>
+            <label for="break">전장 파쇄 (%)</label>
             <input type="number" id="break" value="0" min="0" oninput="calculateDamage()">
 
             <label for="dmg-buff">전장 증폭 (%)</label>
