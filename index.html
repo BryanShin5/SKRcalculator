@@ -43,7 +43,15 @@
         const out1 = document.getElementById('skill1-output');
         const out2 = document.getElementById('skill2-output');
         const displayBox = document.getElementById('display-box');
-
+        if (!characterDb || !characterDb.characters || !characterDb.characters[attackerName]) {
+            if (out1 && out2) {
+                out1.innerText = "❌ 등록되지 않은 캐릭터입니다.";
+                out2.innerText = "❌ 등록되지 않은 캐릭터입니다.";
+            } else if (displayBox) {
+                displayBox.innerHTML = <strong>💥 예상 데미지 결과</strong><br><span class="damage-val">❌ 등록되지 않은 캐릭터입니다. 데이터 파일을 확인하세요.</span>;
+            }
+            return;
+        }
         if (out1 && out2) {
             // [수정] 백틱(`)을 추가하여 변수가 문자열에 정상 바인딩되도록 교정
             out1.innerText = `[${skill1Name}] 타격 준비 완료`;
