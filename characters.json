@@ -1,14 +1,269 @@
-{
-  "characters": {
-    "에반": {
-      "passive": {"name": "의지", "allybuff": {"def": 18}},
-      "skill1": { "name": "연속공격", "atkmult": 170, "defmult":200, "hits": 1 },
-      "skill2": { "name": "균형의방패", "mult": 0, "hits": 0, "allybuff": {"guard":21}}
-    },
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데미지 계산기 (가로 분리 레이아웃)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 800px; /* 가로 배치를 위해 전체 카드 카드 최대 너비를 확장 */
+            width: 100%;
+        }
+        h1 { color: #2c3e50; font-size: 24px; text-align: center; margin-top: 0; margin-bottom: 5px; }
+        .status { color: #27ae60; font-weight: bold; text-align: center; margin-bottom: 25px; font-size: 14px; }
+        
+        /* 공격자와 방어자를 가로로 배치하기 위한 그리드 컨테이너 */
+        .flex-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        /* 세션 분리를 위한 서브 타이틀 스타일 */
+        .section-title {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #eef2f3;
+            font-weight: bold;
+        }
+
+        label { font-size: 13px; color: #5a738e; display: block; margin-top: 10px; font-weight: bold; }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+.checkbox-container {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px; /* 상자와 글자 사이 간격 넓힘 */
+            background-color: #f8f9fa; /* 클릭하기 좋게 부드러운 배경 배치 */
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px dashed #cbd5e1;
+            cursor: pointer;
+        }
+        .large-checkbox {
+            width: 22px !important;    /* 가로 크기 확장 */
+            height: 22px !important;   /* 세로 크기 확장 */
+            margin: 0 !important;      /* 기본 마진 제거 */
+            cursor: pointer;
+            transform: scale(1.2);     /* 브라우저 호환성을 위해 스케일 업 */
+        }
+        .checkbox-label {
+            font-size: 15px;           /* 글자 크기도 시원하게 변경 */
+            color: #2c3e50;
+            margin: 0;
+            cursor: pointer;
+            user-select: none;         /* 더블클릭 시 텍스트 블록 지정 방지 */
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        button:hover { background-color: #2980b9; }
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+            background: #eef2f3;
+            padding: 15px;
+            border-radius: 6px;
+            line-height: 1.6;
+        }
+        .damage-val {
+            color: #e74c3c;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* 화면이 좁은 모바일 기기에서는 세로로 자동 전환 */
+        @media (max-width: 600px) {
+            .flex-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>⚔️ 세븐나이츠 계산기</h1>
+    <p class="status">✓ 실시간 서버리스 시뮬레이터</p>
     
-    "세인": {
-      "passive": { "name": "악마의 힘", "selfbuff":{"critrate": 41, "debuffamp": 20}},
-      "skill2": { "name": "귀신 베기", "multiplier": 690, "hits": 1, "debuffmult": 50}
+    <!-- 가로 배치를 위한 컨테이너 시작 -->
+    <div class="flex-container">
+        
+        <!-- ==================== 좌측: 공격자 입력 섹션 ==================== -->
+        <div class="column">
+            <div class="section-title">🔴 공격자 설정 (Attacker)</div>
+
+            <label for="stat_name">캐릭터 이름</label>
+            <input type="text" id="atk_name" value="에반" oninput="calculateDamage()">
+
+            <label for="eq_set">장비 세트효과</label>
+            <select id="eq_set" onchange="calculateDamage()">
+                <option value="none" data-weak-dmg="0" data-ignore-def="0" data-wpn-dmg="0" data-boss-dmg="0">없음</option>
+                <option value="chase" data-weak-dmg="30" data-ignore-def="0" data-wpn-dmg="0" data-boss-dmg="0">추적 (+30% 약점 공격 피해량)</option>
+                <option value="assassin" data-weak-dmg="0" data-ignore-def="15" data-wpn-dmg="0" data-boss-dmg="0">암살 (+15% 방어력 무시)</option>
+                <option value="avenger" data-weak-dmg="0" data-ignore-def="0" data-wpn-dmg="30" data-boss-dmg="40">복수자 (+70% 피해 증폭)</option>
+            </select>
+
+            <label for="acc1">장신구1</label>
+            <select id="acc1" onchange="calculateDamage()">
+                <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0">치확 (+10% 치확)</option>
+                <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0">약공 (+12% 약공 확률)</option>
+                <option value="subjugate" data-crit="0" data-weak-rate="0" data-wpn-dmg="12">토벌 (+12% 피해 증폭)</option>
+                <option value="siege" data-crit="0" data-weak-rate="0" data-wpn-dmg="10">공성 (+10% 피해 증폭)</option>
+                <option value="dmg" data-crit="0" data-weak-rate="0" data-wpn-dmg="6">피증 (+6% 피해 증폭)</option>
+            </select>
+
+            <label for="acc2">장신구2</label>
+            <select id="acc2" onchange="calculateDamage()">
+                <option value="none" data-crit="0" data-weak-rate="0" data-wpn-dmg="0">장비 없음</option>
+                <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0">치확 (+10% 치확)</option>
+                <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0">약공 (+12% 약공 확률)</option>
+                <option value="subjugate" data-crit="0" data-weak-rate="0" data-wpn-dmg="12">토벌 (+12% 피해 증폭)</option>
+                <option value="siege" data-crit="0" data-weak-rate="0" data-wpn-dmg="10">공성 (+10% 피해 증폭)</option>
+                <option value="dmg" data-crit="0" data-weak-rate="0" data-wpn-dmg="6">피증 (+6% 피해 증폭)</option>
+            </select>
+
+            <label for="atk">기본 공격력 (Base ATK)</label>
+            <input type="number" id="atk" value="1500" min="0" oninput="calculateDamage()">
+
+            <label for="crit-rate">기본 치명타 확률 (치확 %)</label>
+            <input type="number" id="crit-rate" value="0" min="0" max="100" oninput="calculateDamage()">
+
+            <label for="crit-dmg">치명타 피해 (치피 %)</label>
+            <input type="number" id="crit-dmg" value="150" min="0" oninput="calculateDamage()">
+
+            <label for="weak-atk">약점 공격 확률 (약공 %)</label>
+            <input type="number" id="weak-atk" value="20" min="0" max="100" oninput="calculateDamage()">
+
+            <label for="dmg-buff">전장 파쇄 (%)</label>
+            <input type="number" id="break" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="dmg-buff">전장 증폭 (%)</label>
+            <input type="number" id="dmg-buff" value="0" min="0" oninput="calculateDamage()">
+        </div>
+
+        <!-- ==================== 우측: 방어자 입력 섹션 ==================== -->
+        <div class="column">
+            <div class="section-title">🔵 방어자 설정 (Defender)</div>
+
+            <label for="stat_name">캐릭터 이름</label>
+            <input type="text" id="def_name" value="에반" oninput="calculateDamage()">
+
+            <label for="def">적 방어력</label>
+            <input type="number" id="def" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="def">적 체력</label>
+            <input type="number" id="hp" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="def">적 막기</label>
+            <input type="number" id="guard" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="def">적 받피감</label>
+            <input type="number" id="dmg-red" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="def">적 탄성</label>
+            <input type="number" id="ela" value="0" min="0" oninput="calculateDamage()">
+        </div>
+    </div>
+
+    <!-- 최종 결과 모의 단추 버튼 -->
+    <button type="button" style="width: 100%;" onclick="processSkillView()">💥 데미지 계산하기</button>
+
+    <!-- 가독성을 위해 개별 스킬 레이블 형태로 재구성된 결과 노드 -->
+    <div class="result" id="display-box">
+        <strong>💥 예상 데미지 결과</strong><br>
+        • 스킬 1 피해량: <span id="skill1-output" class="damage-val">-</span><br>
+        • 스킬 2 피해량: <span id="skill2-output" class="damage-val">-</span>
+    </div>
+</div>
+
+<script>
+let characterDb = null;
+
+// 비동기 fetch 데이터를 트리거하여 할당
+async function fetchCharactersData() {
+    try {
+        const response = await fetch('characters.json');
+        if (response.ok) {
+            characterDb = await response.json();
+            console.error("✓ JSON 스키마 매핑 완료");
+        }
+    } catch (e) {
+        console.warn("JSON 매핑 실패: 로컬 웹서버 환경을 활성화하세요.");
     }
-  }
 }
+
+function calculateDamage() {
+    return false;
+}
+
+// 유저가 하단의 단추를 직접 명시적으로 선택했을 때만 작동하는 정적 뷰어 엔진
+function processSkillView() {
+    const nameInput = document.querySelector('#atk_name');
+    const attackerName = nameInput ? nameInput.value.trim() : '에반';
+    console.error(attackerName);
+    let skill1Name = "스킬 1";
+    let skill2Name = "스킬 2";
+
+    // 1. JSON 파일 데이터가 완벽하게 캐싱되었을 때 엔티티 매핑 시작
+    if (characterDb && characterDb.characters && characterDb.characters[attackerName]) {
+        const hero = characterDb.characters[attackerName];
+        if (hero.skill1) skill1Name = hero.skill1.name;
+        if (hero.skill2) skill2Name = hero.skill2.name;
+    }
+
+    // 2. 임의의 테스트 더미 가상 텍스트 노드 매핑
+    const out1 = document.getElementById('skill1-output');
+    const out2 = document.getElementById('skill2-output');
+    const displayBox = document.getElementById('display-box');
+
+    if (out1 && out2) {
+        // [수정] 백틱(`)을 추가하여 변수가 문자열에 정상 바인딩되도록 교정
+        out1.innerText = `[${skill1Name}] 타격 준비 완료`;
+        out2.innerText = `[${skill2Name}] 타격 준비 완료`;
+    } else if (displayBox) {
+        // [수정] 백틱(`)을 추가하고 유실되었던 구문 마감 및 중괄호 정렬 완료
+        displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
+    }
+}
+
+window.onload = fetchCharactersData;
