@@ -226,60 +226,151 @@
 </div>
 
 <script>
-    function calculateDamage() {
-        const charName = document.getElementById('stat_name').value || "캐릭터";
+    let db = null;
 
-        // 드롭다운 노드 선택
-        const eqSetOpt = document.getElementById('eq_set').options[document.getElementById('eq_set').selectedIndex];
-        const acc1Opt = document.getElementById('acc1').options[document.getElementById('acc1').selectedIndex];
-        const acc2Opt = document.getElementById('acc2').options[document.getElementById('acc2').selectedIndex];
-
-        // 장비 데이터 추출
-        const bonusWeakDmg = parseFloat(eqSetOpt.getAttribute('data-weak-dmg')) || 0;
-        const bonusIgnoreDef = parseFloat(eqSetOpt.getAttribute('data-ignore-def')) || 0;
+// 비동기 fetch 함수 정의
+async function loadJsonData() {
+    try {
+        // 동일 디렉토리 내의 characters.json 파일을 요청
+        const response = await fetch('characters.json');
         
-        const bonusCritRate = (parseFloat(acc1Opt.getAttribute('data-crit')) || 0) + (parseFloat(acc2Opt.getAttribute('data-crit')) || 0);
-        const bonusWeakRate = (parseFloat(acc1Opt.getAttribute('data-weak-rate')) || 0) + (parseFloat(acc2Opt.getAttribute('data-weak-rate')) || 0);
-        const bonusAmp = (parseFloat(eqSetOpt.getAttribute('data-wpn-dmg')) || 0) + 
-                         (parseFloat(acc1Opt.getAttribute('data-wpn-dmg')) || 0) + 
-                         (parseFloat(acc2Opt.getAttribute('data-wpn-dmg')) || 0);
-
-        // 공격자 최종 수치 연산
-        const finalAtk = parseFloat(document.getElementById('atk').value) || 0;
-
-        const baseCritRate = parseFloat(document.getElementById('crit-rate').value) || 0;
-        const finalCritRate = Math.min(baseCritRate + bonusCritRate, 100) / 100;
-        const critDmgMultiplier = (parseFloat(document.getElementById('crit-dmg').value) || 0) / 100;
-
-        const baseWeakRate = parseFloat(document.getElementById('weak-atk').value) || 0;
-        const finalWeakRate = Math.min(baseWeakRate + bonusWeakRate, 100) / 100;
-        const weakDmgMultiplier = 1.5 + (bonusWeakDmg / 100); 
-
-        const baseAmp = parseFloat(document.getElementById('dmg-buff').value) || 0;
-        const finalAmpMultiplier = 1 + ((baseAmp + bonusAmp) / 100);
+        if (!response.ok) {
+            throw new Error(`HTTP 에러 발생: ${response.status}`);
+        }
         
-        // 방어자 최종 수치 연산 (방어도 무시 적용)
-        const enemyDef = parseFloat(document.getElementById('def').value) || 0;
-        const finalEnemyDef = enemyDef * (1 - (bonusIgnoreDef / 100));
+        db = await response.json();
+        
+        // 상태 표시 갱신 및 데이터 렌더링 시작
+        document.getElementById('load-status').innerText = '✓ 외부 데이터 연동 완료';
+        initCharacterSelect();
+        
+    } catch (error) {
+        console.error('JSON 로딩 실패:', error);
+        document.getElementById('load-status').style.display = 'none';
+        document.getElementById('error-status').style.display = 'block';
+    }
+}
 
-        // 데미지 시뮬레이션
-        let baseDamage = finalAtk - (finalEnemyDef * 0.5);
-        if (baseDamage < 1) baseDamage = 1;
-        baseDamage = baseDamage * finalAmpMultiplier;
+// 캐릭터 셀렉트 박스 렌더링
+function initCharacterSelect() {
+    if (!db || !db.characters) return;
+    
+    const charSelect = document.getElementById('atk-char');
+    charSelect.innerHTML = ''; // 초기화
+    
+    for (const name in db.characters) {
+        const option = document.createElement('option');
+        option.value = name;
+        option.innerText = name;
+        charSelect.appendChild(option);
+    }
+    onCharacterChange();
+}
 
-        const normalDmg = baseDamage;
-        const critDmg = baseDamage * critDmgMultiplier;
-        const weakDmg = baseDamage * weakDmgMultiplier;
-        const weakCritDmg = baseDamage * critDmgMultiplier * weakDmgMultiplier;
+// 캐릭터 변경 핸들러
+function onCharacterChange() {
+    if (!db) return;
+    
+    const charName = document.getElementById('atk-char').value;
+    const skillSelect = document.getElementById('atk-skill');
+    const character = db.characters[charName];
+    
+    skillSelect.innerHTML = '';
+    
+    // 특정 캐릭터 조건부 옵션 제어
+    document.getElementById('sein-option').style.display = (charName === '세인') ? 'flex' : 'none';
 
-        // 독립 복합 기댓값 확률 연산
-        const pNormal = (1 - finalCritRate) * (1 - finalWeakRate);
-        const pCrit = finalCritRate * (1 - finalWeakRate);
-        const pWeak = (1 - finalCritRate) * finalWeakRate;
-        const pWeakCrit = finalCritRate * finalWeakRate;
+    // skill 접두사 노드 동적 바인딩
+    for (const key in character) {
+        if (key.startsWith('skill')) {
+            const option = document.createElement('option');
+            option.value = key;
+            option.innerText = character[key].name;
+            skillSelect.appendChild(option);
+        }
+    }
+    calculateDamage();
+}
 
-        const avgDamage = (normalDmg * pNormal) + (critDmg * pCrit) + (weakDmg * pWeak) + (weakCritDmg * pWeakCrit);
+// 수식 연산 엔진
+function calculateDamage() {
+    if (!db) return;
 
-        // UI 결과 바인딩
-        document.getElementById('output').innerHTML = `
+    const charName = document.getElementById('atk-char').value;
+    const skillKey = document.getElementById('atk-skill').value;
+    
+    if (!charName || !skillKey) return;
+
+    const char = db.characters[charName];
+    const skill = char[skillKey];
+
+    // 비정상 노드 및 공격 계수 부재 시 버프 판정 연산 차단
+    if (!skill || skill.mult === 0 || skill.hits === 0) {
+        document.getElementById('res-normal').innerText = "0 (버프형 스킬)";
+        document.getElementById('res-crit').innerText = "0";
+        document.getElementById('res-weak').innerText = "0";
+        return;
+    }
+
+    const baseAtk = parseFloat(document.getElementById('atk-base').value) || 0;
+    const myDef = parseFloat(document.getElementById('atk-def-stat').value) || 0;
+    const critDmgPercent = parseFloat(document.getElementById('atk-crit-dmg').value) || 0;
+    const enemyDef = parseFloat(document.getElementById('def-val').value) || 0;
+    const enemyReduce = parseFloat(document.getElementById('def-reduce').value) || 0;
+
+    const eqSet = document.getElementById('eq_set');
+    const selectedEq = eqSet.options[eqSet.selectedIndex];
+    const setWeakDmg = parseFloat(selectedEq.getAttribute('data-weak-dmg')) || 0;
+    const setIgnoreDef = parseFloat(selectedEq.getAttribute('data-ignore-def')) || 0;
+    const setWpnDmg = parseFloat(selectedEq.getAttribute('data-wpn-dmg')) || 0;
+
+    let attackPower = baseAtk;
+    let skillMultiplier = skill.multiplier || skill.atkmult || 0;
+
+    // 패시브 방어 버프 처리
+    let finalMyDef = myDef;
+    if(char.passive && char.passive.allybuff && char.passive.allybuff.def) {
+        finalMyDef = myDef * (1 + (char.passive.allybuff.def / 100));
+    }
+
+    // 패시브 피해 증폭 버프 처리
+    let passiveAmp = 0;
+    if(char.passive && char.passive.selfbuff && char.passive.selfbuff.debuffamp) {
+        passiveAmp = char.passive.selfbuff.debuffamp;
+    }
+
+    // 디버프 추가 계수 핸들링
+    if (charName === '세인' && document.getElementById('atk-debuff-target').checked) {
+        skillMultiplier += (skill.debuffmult || 0);
+    }
+
+    let calcAtk = attackPower * (skillMultiplier / 100);
+
+    // 에반형 방어 비례 추가타 스케일링
+    if (charName === '에반' && skill.defmult) {
+        calcAtk += finalMyDef * (skill.defmult / 100);
+    }
+
+    const finalEnemyDef = enemyDef * (1 - (setIgnoreDef / 100));
+    let baseDamage = calcAtk - finalEnemyDef;
+    if (baseDamage < 1) baseDamage = 1;
+
+    const totalDmgAmp = 1 + ((setWpnDmg + passiveAmp) / 100);
+    const totalDmgReduce = 1 - (enemyReduce / 100);
+
+    const finalNormalDmg = Math.round(baseDamage * totalDmgAmp * totalDmgReduce);
+    const finalCritDmg = Math.round(finalNormalDmg * (critDmgPercent / 100));
+    const finalWeakDmg = Math.round(finalNormalDmg * (1.3 + (setWeakDmg / 100)));
+
+    document.getElementById('res-normal').innerText = finalNormalDmg.toLocaleString();
+    document.getElementById('res-crit').innerText = finalCritDmg.toLocaleString();
+    document.getElementById('res-weak').innerText = finalWeakDmg.toLocaleString();
+}
+
+// 초기화 라이프사이클에 비동기 로더 바인딩
+window.onload = loadJsonData;
+</script>
+
+</body>
+</html>
             <strong>[${charName}]</strong> 전투 분석 결과:<br>
