@@ -242,54 +242,12 @@ async function loadJsonData() {
         
         // 상태 표시 갱신 및 데이터 렌더링 시작
         document.getElementById('load-status').innerText = '✓ 외부 데이터 연동 완료';
-        initCharacterSelect();
         
     } catch (error) {
         console.error('JSON 로딩 실패:', error);
         document.getElementById('load-status').style.display = 'none';
         document.getElementById('error-status').style.display = 'block';
     }
-}
-
-// 캐릭터 셀렉트 박스 렌더링
-function initCharacterSelect() {
-    if (!db || !db.characters) return;
-    
-    const charSelect = document.getElementById('atk-char');
-    charSelect.innerHTML = ''; // 초기화
-    
-    for (const name in db.characters) {
-        const option = document.createElement('option');
-        option.value = name;
-        option.innerText = name;
-        charSelect.appendChild(option);
-    }
-    onCharacterChange();
-}
-
-// 캐릭터 변경 핸들러
-function onCharacterChange() {
-    if (!db) return;
-    
-    const charName = document.getElementById('atk-char').value;
-    const skillSelect = document.getElementById('atk-skill');
-    const character = db.characters[charName];
-    
-    skillSelect.innerHTML = '';
-    
-    // 특정 캐릭터 조건부 옵션 제어
-    document.getElementById('sein-option').style.display = (charName === '세인') ? 'flex' : 'none';
-
-    // skill 접두사 노드 동적 바인딩
-    for (const key in character) {
-        if (key.startsWith('skill')) {
-            const option = document.createElement('option');
-            option.value = key;
-            option.innerText = character[key].name;
-            skillSelect.appendChild(option);
-        }
-    }
-    calculateDamage();
 }
 
 // 수식 연산 엔진
