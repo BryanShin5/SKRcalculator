@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>데미지 계산기 (장비 연동)</title>
+    <title>데미지 계산기 (가로 분리 레이아웃)</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,17 +21,36 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 500px;
+            max-width: 800px; /* 가로 배치를 위해 전체 카드 카드 최대 너비를 확장 */
             width: 100%;
         }
-        h1 { color: #2c3e50; font-size: 24px; text-align: center; margin-top: 0; }
-        .status { color: #27ae60; font-weight: bold; text-align: center; margin-bottom: 20px; font-size: 14px; }
+        h1 { color: #2c3e50; font-size: 24px; text-align: center; margin-top: 0; margin-bottom: 5px; }
+        .status { color: #27ae60; font-weight: bold; text-align: center; margin-bottom: 25px; font-size: 14px; }
         
-        label { font-size: 14px; color: #34495e; display: block; margin-top: 12px; font-weight: bold; }
+        /* 공격자와 방어자를 가로로 배치하기 위한 그리드 컨테이너 */
+        .flex-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        /* 세션 분리를 위한 서브 타이틀 스타일 */
+        .section-title {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #eef2f3;
+            font-weight: bold;
+        }
+
+        label { font-size: 13px; color: #5a738e; display: block; margin-top: 10px; font-weight: bold; }
         select, input, button {
             width: 100%;
             padding: 10px;
-            margin: 6px 0 12px 0;
+            margin: 5px 0 10px 0;
             border: 1px solid #ccc;
             border-radius: 6px;
             box-sizing: border-box;
@@ -48,7 +67,7 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 16px;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         button:hover { background-color: #2980b9; }
         .result {
@@ -65,122 +84,167 @@
             font-size: 20px;
             font-weight: bold;
         }
+
+        /* 화면이 좁은 모바일 기기에서는 세로로 자동 전환 */
+        @media (max-width: 600px) {
+            .flex-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h1>⚔️ 데미지 계산기</h1>
+    <h1>⚔️ 세븐나이츠 키우기 계산기</h1>
     <p class="status">✓ 실시간 서버리스 시뮬레이터</p>
     
-    <!-- 1. 캐릭터 이름 입력 -->
-    <label for="stat_name">캐릭터 이름</label>
-    <input type="text" id="stat_name" value="전설의 용사" oninput="calculateDamage()">
+    <!-- 가로 배치를 위한 컨테이너 시작 -->
+    <div class="flex-container">
+        
+        <!-- ==================== 좌측: 공격자 입력 섹션 ==================== -->
+        <div class="column">
+            <div class="section-title">🔴 공격자 설정 (Attacker)</div>
 
-    <!-- 2. 장비 선택 드롭다운 -->
-    <label for="eq_select">착용 장비</label>
-    <select id="eq_select" onchange="calculateDamage()">
-        <option value="none" data-atk="0" data-crit="0" data-amp="0">장비 없음</option>
-        <option value="sword" data-atk="500" data-crit="10" data-amp="5">추적 (+30%약피증)</option>
-        <option value="staff" data-atk="300" data-crit="0" data-amp="25">암살 (+15%방무)</option>
-        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">복수자 (+70%피증)</option>
-    </select>
+            <label for="stat_name">캐릭터 이름</label>
+            <input type="text" id="stat_name" value="에반" oninput="calculateDamage()">
 
-    <!-- 2. 장신구 선택 드롭다운 -->
-    <label for="eq_select">장신구1</label>
-    <select id="eq_select" onchange="calculateDamage()">
-        <option value="sword" data-atk="500" data-crit="10" data-amp="5">치확 (+10%치확)</option>
-        <option value="staff" data-atk="300" data-crit="0" data-amp="25">약공 (+12%약공)</option>
-        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">토벌 (+12%피증)</option>
-        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">공성 (+10%피증)</option>
-        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">피증 (+6%피증)</option>
-    </select>
+            <label for="eq_set">장비 세트효과</label>
+            <select id="eq_set" onchange="calculateDamage()">
+                <option value="none" data-weak-dmg="0" data-ignore-def="0" data-wpn-dmg="0">없음</option>
+                <option value="chase" data-weak-dmg="30" data-ignore-def="0" data-wpn-dmg="0">추적 (+30% 약점 공격 피해량)</option>
+                <option value="assassin" data-weak-dmg="0" data-ignore-def="15" data-wpn-dmg="0">암살 (+15% 방어력 무시)</option>
+                <option value="avenger" data-weak-dmg="0" data-ignore-def="0" data-wpn-dmg="70">복수자 (+70% 피해 증폭)</option>
+            </select>
 
-    <!-- 2. 장신구 선택 드롭다운 -->
-    <label for="eq_select">장신구2</label>
-    <select id="eq_select" onchange="calculateDamage()">
-        <option value="none" data-atk="0" data-crit="0" data-amp="0">장비 없음</option>
-        <option value="sword" data-atk="500" data-crit="10" data-amp="5">치확 (+10%치확)</option>
-        <option value="staff" data-atk="300" data-crit="0" data-amp="25">약공 (+12%약공)</option>
-        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">토벌 (+12%피증)</option>
-        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">공성 (+10%피증)</option>
-        <option value="dagger" data-atk="200" data-crit="25" data-amp="0">피증 (+6%피증)</option>
-    </select>
-    <!-- 3. 상세 스탯 입력 변수들 -->
-    <label for="atk">기본 공격력 (Base ATK)</label>
-    <input type="number" id="atk" value="1500" min="0" oninput="calculateDamage()">
+            <label for="acc1">장신구1</label>
+            <select id="acc1" onchange="calculateDamage()">
+                <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0">치확 (+10% 치확)</option>
+                <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0">약공 (+12% 약공 확률)</option>
+                <option value="subjugate" data-crit="0" data-weak-rate="0" data-wpn-dmg="12">토벌 (+12% 피해 증폭)</option>
+                <option value="siege" data-crit="0" data-weak-rate="0" data-wpn-dmg="10">공성 (+10% 피해 증폭)</option>
+                <option value="dmg" data-crit="0" data-weak-rate="0" data-wpn-dmg="6">피증 (+6% 피해 증폭)</option>
+            </select>
 
-    <label for="crit-rate">기본 치명타 확률 (치확 %)</label>
-    <input type="number" id="crit-rate" value="50" min="0" max="100" oninput="calculateDamage()">
+            <label for="acc2">장신구2</label>
+            <select id="acc2" onchange="calculateDamage()">
+                <option value="none" data-crit="0" data-weak-rate="0" data-wpn-dmg="0">장비 없음</option>
+                <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0">치확 (+10% 치확)</option>
+                <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0">약공 (+12% 약공 확률)</option>
+                <option value="subjugate" data-crit="0" data-weak-rate="0" data-wpn-dmg="12">토벌 (+12% 피해 증폭)</option>
+                <option value="siege" data-crit="0" data-weak-rate="0" data-wpn-dmg="10">공성 (+10% 피해 증폭)</option>
+                <option value="dmg" data-crit="0" data-weak-rate="0" data-wpn-dmg="6">피증 (+6% 피해 증폭)</option>
+            </select>
 
-    <label for="crit-dmg">치명타 피해 (치피 %)</label>
-    <input type="number" id="crit-dmg" value="150" min="0" oninput="calculateDamage()">
+            <label for="atk">기본 공격력 (Base ATK)</label>
+            <input type="number" id="atk" value="1500" min="0" oninput="calculateDamage()">
 
-    <label for="weak-atk">약점 공격 (약공 %)</label>
-    <input type="number" id="weak-atk" value="120" min="100" oninput="calculateDamage()">
+            <label for="crit-rate">기본 치명타 확률 (치확 %)</label>
+            <input type="number" id="crit-rate" value="50" min="0" max="100" oninput="calculateDamage()">
 
-    <label for="dmg-buff">기본 피해 증폭 (%)</label>
-    <input type="number" id="dmg-buff" value="10" min="0" oninput="calculateDamage()">
+            <label for="crit-dmg">치명타 피해 (치피 %)</label>
+            <input type="number" id="crit-dmg" value="150" min="0" oninput="calculateDamage()">
 
-    <label for="def">적 방어력</label>
-    <input type="number" id="def" value="500" min="0" oninput="calculateDamage()">
+            <label for="weak-atk">약점 공격 확률 (약공 %)</label>
+            <input type="number" id="weak-atk" value="20" min="0" max="100" oninput="calculateDamage()">
 
+            <label for="dmg-buff">전장 증폭 (%)</label>
+            <input type="number" id="dmg-buff" value="10" min="0" oninput="calculateDamage()">
+        </div>
+
+        <!-- ==================== 우측: 방어자 입력 섹션 ==================== -->
+        <div class="column">
+            <div class="section-title">🔵 방어자 설정 (Defender)</div>
+
+            <label for="stat_name">캐릭터 이름</label>
+            <input type="text" id="stat_name" value="에반" oninput="calculateDamage()">
+
+            <label for="def">적 방어력</label>
+            <input type="number" id="def" value="500" min="0" oninput="calculateDamage()">
+
+            <label for="def">적 체력</label>
+            <input type="number" id="def" value="500" min="0" oninput="calculateDamage()">
+
+            <label for="def">적 막기</label>
+            <input type="number" id="def" value="500" min="0" oninput="calculateDamage()">
+
+            <label for="def">적 받피감</label>
+            <input type="number" id="def" value="500" min="0" oninput="calculateDamage()">
+
+            <label for="def">적 탄성</label>
+            <input type="number" id="def" value="500" min="0" oninput="calculateDamage()">
+
+            <label for="def">적 방어력</label>
+            <input type="number" id="def" value="500" min="0" oninput="calculateDamage()">
+        </div>
+
+    </div>
+    <!-- 가로 배치를 위한 컨테이너 끝 -->
+
+    <!-- ==================== 하단: 결과창 및 실행 버튼 ==================== -->
     <button onclick="calculateDamage()">데미지 계산하기</button>
 
-    <!-- 화이트 카드 전용 결과 레이아웃 -->
     <div class="result" id="output">
-        스탯을 입력하고 버튼을 눌러주세요.
+        스탯을 입력하면 분석 결과가 여기에 표시됩니다.
     </div>
 </div>
 
 <script>
     function calculateDamage() {
-        // 이름 데이터 매핑
         const charName = document.getElementById('stat_name').value || "캐릭터";
 
-        // 드롭다운 속성 추출
-        const eqSelect = document.getElementById('eq_select');
-        const selectedOption = eqSelect.options[eqSelect.selectedIndex];
-        const eqAtk = parseFloat(selectedOption.getAttribute('data-atk')) || 0;
-        const eqCrit = parseFloat(selectedOption.getAttribute('data-crit')) || 0;
-        const eqAmp = parseFloat(selectedOption.getAttribute('data-amp')) || 0;
+        // 드롭다운 노드 선택
+        const eqSetOpt = document.getElementById('eq_set').options[document.getElementById('eq_set').selectedIndex];
+        const acc1Opt = document.getElementById('acc1').options[document.getElementById('acc1').selectedIndex];
+        const acc2Opt = document.getElementById('acc2').options[document.getElementById('acc2').selectedIndex];
 
-        // 보너스 수치 연산 합산
-        const baseAtk = parseFloat(document.getElementById('atk').value) || 0;
-        const finalAtk = baseAtk + eqAtk;
+        // 장비 데이터 추출
+        const bonusWeakDmg = parseFloat(eqSetOpt.getAttribute('data-weak-dmg')) || 0;
+        const bonusIgnoreDef = parseFloat(eqSetOpt.getAttribute('data-ignore-def')) || 0;
+        
+        const bonusCritRate = (parseFloat(acc1Opt.getAttribute('data-crit')) || 0) + (parseFloat(acc2Opt.getAttribute('data-crit')) || 0);
+        const bonusWeakRate = (parseFloat(acc1Opt.getAttribute('data-weak-rate')) || 0) + (parseFloat(acc2Opt.getAttribute('data-weak-rate')) || 0);
+        const bonusAmp = (parseFloat(eqSetOpt.getAttribute('data-wpn-dmg')) || 0) + 
+                         (parseFloat(acc1Opt.getAttribute('data-wpn-dmg')) || 0) + 
+                         (parseFloat(acc2Opt.getAttribute('data-wpn-dmg')) || 0);
+
+        // 공격자 최종 수치 연산
+        const finalAtk = parseFloat(document.getElementById('atk').value) || 0;
 
         const baseCritRate = parseFloat(document.getElementById('crit-rate').value) || 0;
-        const finalCritRate = Math.min(baseCritRate + eqCrit, 100) / 100;
+        const finalCritRate = Math.min(baseCritRate + bonusCritRate, 100) / 100;
+        const critDmgMultiplier = (parseFloat(document.getElementById('crit-dmg').value) || 0) / 100;
 
-        const critDmg = (parseFloat(document.getElementById('crit-dmg').value) || 0) / 100;
-        const weakAtk = (parseFloat(document.getElementById('weak-atk').value) || 100) / 100;
-        
+        const baseWeakRate = parseFloat(document.getElementById('weak-atk').value) || 0;
+        const finalWeakRate = Math.min(baseWeakRate + bonusWeakRate, 100) / 100;
+        const weakDmgMultiplier = 1.5 + (bonusWeakDmg / 100); 
+
         const baseAmp = parseFloat(document.getElementById('dmg-buff').value) || 0;
-        const finalAmp = (baseAmp + eqAmp) / 100;
+        const finalAmpMultiplier = 1 + ((baseAmp + bonusAmp) / 100);
         
-        const def = parseFloat(document.getElementById('def').value) || 0;
+        // 방어자 최종 수치 연산 (방어도 무시 적용)
+        const enemyDef = parseFloat(document.getElementById('def').value) || 0;
+        const finalEnemyDef = enemyDef * (1 - (bonusIgnoreDef / 100));
 
-        // 전투 시뮬레이션 공식 연산
-        let baseDamage = finalAtk - (def * 0.5);
+        // 데미지 시뮬레이션
+        let baseDamage = finalAtk - (finalEnemyDef * 0.5);
         if (baseDamage < 1) baseDamage = 1;
+        baseDamage = baseDamage * finalAmpMultiplier;
 
-        let normalDamage = baseDamage * weakAtk * (1 + finalAmp);
-        let maxCritDamage = normalDamage * critDmg;
-        let avgDamage = (normalDamage * (1 - finalCritRate)) + (maxCritDamage * finalCritRate);
+        const normalDmg = baseDamage;
+        const critDmg = baseDamage * critDmgMultiplier;
+        const weakDmg = baseDamage * weakDmgMultiplier;
+        const weakCritDmg = baseDamage * critDmgMultiplier * weakDmgMultiplier;
 
-        // 출력 타겟 바인딩
+        // 독립 복합 기댓값 확률 연산
+        const pNormal = (1 - finalCritRate) * (1 - finalWeakRate);
+        const pCrit = finalCritRate * (1 - finalWeakRate);
+        const pWeak = (1 - finalCritRate) * finalWeakRate;
+        const pWeakCrit = finalCritRate * finalWeakRate;
+
+        const avgDamage = (normalDmg * pNormal) + (critDmg * pCrit) + (weakDmg * pWeak) + (weakCritDmg * pWeakCrit);
+
+        // UI 결과 바인딩
         document.getElementById('output').innerHTML = `
             <strong>[${charName}]</strong> 전투 분석 결과:<br>
-            • 일반 적중 데미지: <strong>${Math.round(normalDamage).toLocaleString()}</strong><br>
-            • 치명타 발생 데미지: <strong>${Math.round(maxCritDamage).toLocaleString()}</strong><br>
-            <div style="border-top: 1px dashed #bbb; margin: 10px 0;"></div>
-            🎯 종합 평균 기댓값: <span class="damage-val">${Math.round(avgDamage).toLocaleString()}</span>
-        `;
-    }
-
-    // 렌더링 시 실시간 노출 초기화
-    window.onload = calculateDamage;
-</script>
-
-</body>
-</html>
