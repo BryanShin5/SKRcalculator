@@ -133,14 +133,14 @@
             <div class="section-title">🔴 공격자 설정 (Attacker)</div>
 
             <label for="stat_name">캐릭터 이름</label>
-            <input type="text" id="stat_name" value="에반" oninput="calculateDamage()">
+            <input type="text" id="atk_name" value="에반" oninput="calculateDamage()">
 
             <label for="eq_set">장비 세트효과</label>
             <select id="eq_set" onchange="calculateDamage()">
-                <option value="none" data-weak-dmg="0" data-ignore-def="0" data-wpn-dmg="0">없음</option>
-                <option value="chase" data-weak-dmg="30" data-ignore-def="0" data-wpn-dmg="0">추적 (+30% 약점 공격 피해량)</option>
-                <option value="assassin" data-weak-dmg="0" data-ignore-def="15" data-wpn-dmg="0">암살 (+15% 방어력 무시)</option>
-                <option value="avenger" data-weak-dmg="0" data-ignore-def="0" data-wpn-dmg="70">복수자 (+70% 피해 증폭)</option>
+                <option value="none" data-weak-dmg="0" data-ignore-def="0" data-wpn-dmg="0" data-boss-dmg="0">없음</option>
+                <option value="chase" data-weak-dmg="30" data-ignore-def="0" data-wpn-dmg="0" data-boss-dmg="0">추적 (+30% 약점 공격 피해량)</option>
+                <option value="assassin" data-weak-dmg="0" data-ignore-def="15" data-wpn-dmg="0" data-boss-dmg="0">암살 (+15% 방어력 무시)</option>
+                <option value="avenger" data-weak-dmg="0" data-ignore-def="0" data-wpn-dmg="30" data-boss-dmg="40">복수자 (+70% 피해 증폭)</option>
             </select>
 
             <label for="acc1">장신구1</label>
@@ -166,7 +166,7 @@
             <input type="number" id="atk" value="1500" min="0" oninput="calculateDamage()">
 
             <label for="crit-rate">기본 치명타 확률 (치확 %)</label>
-            <input type="number" id="crit-rate" value="50" min="0" max="100" oninput="calculateDamage()">
+            <input type="number" id="crit-rate" value="0" min="0" max="100" oninput="calculateDamage()">
 
             <label for="crit-dmg">치명타 피해 (치피 %)</label>
             <input type="number" id="crit-dmg" value="150" min="0" oninput="calculateDamage()">
@@ -175,7 +175,7 @@
             <input type="number" id="weak-atk" value="20" min="0" max="100" oninput="calculateDamage()">
 
             <label for="dmg-buff">전장 파쇄 (%)</label>
-            <input type="number" id="dmg-buff" value="0" min="0" oninput="calculateDamage()">
+            <input type="number" id="break" value="0" min="0" oninput="calculateDamage()">
 
             <label for="dmg-buff">전장 증폭 (%)</label>
             <input type="number" id="dmg-buff" value="0" min="0" oninput="calculateDamage()">
@@ -186,22 +186,22 @@
             <div class="section-title">🔵 방어자 설정 (Defender)</div>
 
             <label for="stat_name">캐릭터 이름</label>
-            <input type="text" id="stat_name" value="에반" oninput="calculateDamage()">
+            <input type="text" id="def_name" value="에반" oninput="calculateDamage()">
 
             <label for="def">적 방어력</label>
             <input type="number" id="def" value="0" min="0" oninput="calculateDamage()">
 
             <label for="def">적 체력</label>
-            <input type="number" id="def" value="0" min="0" oninput="calculateDamage()">
+            <input type="number" id="hp" value="0" min="0" oninput="calculateDamage()">
 
             <label for="def">적 막기</label>
-            <input type="number" id="def" value="0" min="0" oninput="calculateDamage()">
+            <input type="number" id="guard" value="0" min="0" oninput="calculateDamage()">
 
             <label for="def">적 받피감</label>
-            <input type="number" id="def" value="0" min="0" oninput="calculateDamage()">
+            <input type="number" id="dmg-red" value="0" min="0" oninput="calculateDamage()">
 
             <label for="def">적 탄성</label>
-            <input type="number" id="def" value="0" min="0" oninput="calculateDamage()">
+            <input type="number" id="ela" value="0" min="0" oninput="calculateDamage()">
         </div>
     </div>
 
@@ -225,21 +225,20 @@ async function fetchCharactersData() {
         const response = await fetch('characters.json');
         if (response.ok) {
             characterDb = await response.json();
-            console.log("✓ JSON 스키마 매핑 완료");
+            console.error("✓ JSON 스키마 매핑 완료");
         }
     } catch (e) {
         console.warn("JSON 매핑 실패: 로컬 웹서버 환경을 활성화하세요.");
     }
 }
 
-// 인풋 데이터 입력 시 실시간 난수 발생 및 수식 간섭 차단
 function calculateDamage() {
     return false;
 }
 
 // 유저가 하단의 단추를 직접 명시적으로 선택했을 때만 작동하는 정적 뷰어 엔진
 function processSkillView() {
-    const nameInput = document.querySelector('#stat_name');
+    const nameInput = document.querySelector('#atk_name');
     const attackerName = nameInput ? nameInput.value.trim() : '에반';
 
     let skill1Name = "스킬 1";
