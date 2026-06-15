@@ -228,25 +228,14 @@
 <script>
     let db = null;
 
-// 비동기 fetch 함수 정의
 async function loadJsonData() {
     try {
-        // 동일 디렉토리 내의 characters.json 파일을 요청
         const response = await fetch('characters.json');
-        
-        if (!response.ok) {
-            throw new Error(`HTTP 에러 발생: ${response.status}`);
-        }
-        
-        db = await response.json();
-        
-        // 상태 표시 갱신 및 데이터 렌더링 시작
-        document.getElementById('load-status').innerText = '✓ 외부 데이터 연동 완료';
-        
+        if (!response.ok) throw new Error(`HTTP 에러: ${response.status}`);
+        characterDb = await response.json();
+        console.log('✓ characters.json 파일 연동 완료');
     } catch (error) {
-        console.error('JSON 로딩 실패:', error);
-        document.getElementById('load-status').style.display = 'none';
-        document.getElementById('error-status').style.display = 'block';
+        console.warn('⚠️ characters.json 로드 실패 (CORS 또는 파일 부재). 기본 인풋 수식으로 우회 연산합니다.', error);
     }
 }
 
