@@ -81,7 +81,6 @@
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
         }
     }
-
     function calculateStat() {
         const acc1Element = document.getElementById('acc1');
         const selectedAcc1 = acc1Element ? acc1Element.options[acc1Element.selectedIndex] : null;
@@ -203,13 +202,22 @@
       // 전방 입력창 문자열 생성
       let frontInputs = '';
       for (let i = 1; i <= frontCount; i++) {
-        frontInputs += `<input type="text" class="front-hero" placeholder="전열 ${i}">`;
+        frontInputs += `<div class="hero-container"><input type="text" class="front-hero" placeholder="전열 ${i}">
+        <div class="checkbox-group">
+        <label><input type="checkbox" class="front-skill1"> 스킬1</label>
+        <label><input type="checkbox" class="front-skill2"> 스킬2</label>
+      </div>
+    </div>`;
       }
 
       // 후방 입력창 문자열 생성
       let backInputs = '';
       for (let i = 1; i <= backCount; i++) {
-        backInputs += `<input type="text" class="back-hero" placeholder="후열 ${i}">`;
+        backInputs += `<div class="hero-container"><input type="text" class="back-hero" placeholder="후열 ${i}"><div class="checkbox-group">
+        <label><input type="checkbox" class="front-skill1"> 스킬1</label>
+        <label><input type="checkbox" class="front-skill2"> 스킬2</label>
+      </div>
+    </div>`;
       }
 
       // 지정한 영역의 innerHTML을 교체하여 단 하나의 화면만 렌더링
