@@ -243,26 +243,35 @@
       // 전방 입력창 문자열 생성
       let frontInputs = '';
       for (let i = 1; i <= frontCount; i++) {
-        frontInputs += `<input type="text" class="front-def-hero" placeholder="전열 ${i}">`;
+        frontInputs += `<div class="hero-card"><input type="text" class="front-def-hero" placeholder="전열 ${i}">
+        <div class="checkbox-row">
+        <label class="skill-label"><input type="checkbox" class="front-skill1"> 스킬1</label>
+        <label class="skill-label"><input type="checkbox" class="front-skill2"> 스킬2</label>
+      </div>
+    </div>`;
       }
 
       // 후방 입력창 문자열 생성
       let backInputs = '';
       for (let i = 1; i <= backCount; i++) {
-        backInputs += `<input type="text" class="back-def-hero" placeholder="후열 ${i}">`;
+        backInputs += `<div class="hero-card"><input type="text" class="back-def-hero" placeholder="후열 ${i}"><div class="checkbox-row">
+        <label class="skill-label"><input type="checkbox" class="front-skill1"> 스킬1</label>
+        <label class="skill-label"><input type="checkbox" class="front-skill2"> 스킬2</label>
+      </div>
+    </div>`;
       }
 
       // 지정한 영역의 innerHTML을 교체하여 단 하나의 화면만 렌더링
       displayArea.innerHTML = `
         <h4>[전열 ${frontCount} / 후열 ${backCount}] 영웅 입력</h4>
         <div class="form-group">
-          <label>후열 영웅 (${backCount}명)</label>
-          ${backInputs}
-        </div>
-        <div class="form-group">
-          <label>전열 영웅 (${frontCount}명)</label>
-          ${frontInputs}
-        </div>
+    <label class="row-title">후열 영웅 (${backCount}명)</label>
+    <div class="row-flex-container">${backInputs}</div>
+  </div>
+  <div class="form-group">
+    <label class="row-title">전열 영웅 (${frontCount}명)</label>
+    <div class="row-flex-container">${frontInputs}</div>
+  </div>
       `;
     }
     window.onload = fetchCharactersData;
