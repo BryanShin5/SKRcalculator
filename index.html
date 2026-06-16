@@ -6,7 +6,13 @@
     <title>데미지 계산기</title>
     <script>
     let characterDb = null;
-
+    let finalAtk = 0;
+    let finalDef = 0;
+    let finalHp = 0;
+    let finalCritRate = 0;
+    let attackerName = null;
+    let defenderName = null;
+    
     async function fetchCharactersData() {
         try {
             const response = await fetch('characters.json');
@@ -69,10 +75,10 @@
         const acc2WeakRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-weak-rate')) || 0) : 0;
         const acc2DmgAmp  = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-wpn-dmg')) || 0) : 0;
         
-        const finalatk = (atk + (characterDb.characters[attackerName].stat.atk*atk-pet-atk));
-        const finaldef = 0;
-        const finalhp = 0;
-        const finalcrit = Math.max((crit-rate + acc1CritRate + acc2CritRate + characterDb.characters[attackerName].passive.critrateconst),100);
+        finalatk = (atk + (characterDb.characters[attackerName].stat.atk*atk-pet-atk));
+        finaldef = 0;
+        finalhp = 0;
+        finalcrit = Math.max((crit-rate + acc1CritRate + acc2CritRate + characterDb.characters[attackerName].passive.critrateconst),100);
         return false;
     }
 
