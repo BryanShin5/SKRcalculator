@@ -83,6 +83,14 @@
         const acc2WeakRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-weak-rate')) || 0) : 0;
         const acc2DmgAmp  = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-wpn-dmg')) || 0) : 0;
 
+        // 장비 세트옵 추출
+        const gearElement = document.getElementById('eq_set');
+        const selectedgear = gearElement ? gearElement.options[gearElement.selectedIndex] : null;
+        const gearWeakDmg = selectedgear ? (parseFloat(selectedgear.getAttribute('data-weak-dmg')) || 0) : 0;
+        const gearDefIgn = selectedgear ? (parseFloat(selectedgear.getAttribute('data-ignore-def')) || 0) : 0;
+        const gearDmgAmp = selectedgear ? (parseFloat(selectedgear.getAttribute('data-wpn-dmg')) || 0) : 0;
+        const gearBossAmp = selectedgear ? (parseFloat(selectedgear.getAttribute('data-boss-dmg')) || 0) : 0;
+        
         const heroData = characterDb?.characters?.[attackerName];
         const Atk = parseFloat(document.getElementById('atk').value) || 0;
         const baseAtk = parseFloat(heroData?.stat?.atk) || 0;
@@ -94,6 +102,8 @@
         finalHp = 0;
         finalCritRate = Math.max((critRate + acc1CritRate + acc2CritRate + heroData?.passive.critrateconst),100);
         finalCritDmg = parseFloat(document.getElementById('crit-dmg').value) || 150;
+        finalWeakDmg = 130 + gearWeakDmg;
+        finalWeakRate = parseFloat(document.getElementById('weak-rate').value) || 0;
         return false;
     }
 
