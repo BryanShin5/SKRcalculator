@@ -160,24 +160,24 @@
       // 전방 입력창 문자열 생성
       let frontInputs = '';
       for (let i = 1; i <= frontCount; i++) {
-        frontInputs += `<input type="text" placeholder="공격 ${i}">`;
+        frontInputs += `<input type="text" class="front-hero" placeholder="공격 ${i}">`;
       }
 
       // 후방 입력창 문자열 생성
       let backInputs = '';
       for (let i = 1; i <= backCount; i++) {
-        backInputs += `<input type="text" placeholder="수비 ${i}">`;
+        backInputs += `<input type="text" class="back-hero" placeholder="수비 ${i}">`;
       }
 
       // 지정한 영역의 innerHTML을 교체하여 단 하나의 화면만 렌더링
       displayArea.innerHTML = `
-        <h4>[전방 ${frontCount} / 후방 ${backCount}] 선수 입력</h4>
+        <h4>[전방 ${frontCount} / 후방 ${backCount}] 영웅 입력</h4>
         <div class="form-group">
-          <label>전방 선수 (${frontCount}명)</label>
+          <label>전방 영웅 (${frontCount}명)</label>
           ${frontInputs}
         </div>
         <div class="form-group">
-          <label>후방 선수 (${backCount}명)</label>
+          <label>후방 영웅 (${backCount}명)</label>
           ${backInputs}
         </div>
       `;
@@ -373,14 +373,14 @@
             <label for="dmg-buff">전장 증폭 (%)</label>
             <input type="number" id="dmg-buff" value="0" min="0">
 
-            <h2>포메이션을 선택하세요</h2>
+            <h2>진형을 선택하세요</h2>
   
   <select id="formation-select" onchange="renderFormation(this.value)">
   <option value="">-- 진형 선택 --</option>
-  <option value="1-4">보호진형</option>
-  <option value="2-3">전방 2 / 후방 3</option>
-  <option value="3-2">전방 3 / 후방 2</option>
-  <option value="4-1">전방 4 / 후방 1</option>
+  <option value="4-1">보호 진형</option>
+  <option value="3-2">밸런스 진형</option>
+  <option value="2-3">기본 진형</option>
+  <option value="1-4">공격 진형</option>
 </select>
 
   <!-- 2단계: 렌더링 결과가 출력될 영역 -->
