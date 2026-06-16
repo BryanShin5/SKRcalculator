@@ -42,10 +42,10 @@
         defenderName = defNameInput ? defNameInput.value.trim() : '에반';
         let skill1Name = "스킬 1";
         let skill2Name = "스킬 2";
-
+        let hero = null;
         // 1. 캐릭터 데이터 로딩
         if (characterDb && characterDb.characters && characterDb.characters[attackerName]) {
-            const hero = characterDb.characters[attackerName];
+            hero = characterDb.characters[attackerName];
             if (hero.skill1) skill1Name = hero.skill1.name;
             if (hero.skill2) skill2Name = hero.skill2.name;
         }
