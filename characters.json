@@ -10,7 +10,7 @@
     "세인": {
       "stat":{"atk":1500, "def":571, "hp":3326},
       "passive": { "name": "악마의 힘", "selfbuff":{"critrateconst": 41, "debuffamp": 20}},
-      "skill2": { "name": "귀신 베기", "multiplier": 690, "hits": 1, "debuffmult": 50}
+      "skill2": { "name": "귀신 베기", "atkmult": 690, "hits": 1, "debuffmult": 50}
     }
   }
 }
