@@ -84,7 +84,9 @@
         const acc2DmgAmp  = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-wpn-dmg')) || 0) : 0;
 
         const heroData = characterDb?.characters?.[attackerName];
-        finalatk = (atk + (heroData?.stat?.atk*atk-pet-atk));
+        const baseAtk = parseFloat(document.getElementById('atk').value) || 0;
+        const petAtk  = parseFloat(document.getElementById('atk-pet-atk')?.value) || 0; 
+        finalatk = (baseAtk + (heroData?.stat?.atk*petAtk));
         finaldef = 0;
         finalhp = 0;
         finalcrit = Math.max((crit-rate + acc1CritRate + acc2CritRate + characterDb.characters[attackerName].passive.critrateconst),100);
