@@ -6,10 +6,18 @@
     <title>데미지 계산기</title>
     <script>
     let characterDb = null;
+
+    //계산에 사용할 스탯 전역변수 할
     let finalAtk = 0;
     let finalDef = 0;
     let finalHp = 0;
     let finalCritRate = 0;
+    let finalCritDmg = 150;
+    let finalWeakRate = 0;
+    let finalWeakDmg = 130;
+    let finalBreak = 0;
+    let finalDmgAmp = 0;
+    let finalDefIgnore = 0;
     let attackerName = null;
     let defenderName = null;
     
@@ -74,8 +82,9 @@
         const acc2CritRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-crit')) || 0) : 0;
         const acc2WeakRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-weak-rate')) || 0) : 0;
         const acc2DmgAmp  = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-wpn-dmg')) || 0) : 0;
-        
-        finalatk = (atk + (characterDb.characters[attackerName].stat.atk*atk-pet-atk));
+
+        const heroData = characterDb?.characters?.[attackerName];
+        finalatk = (atk + (heroData?.stat?.atk*atk-pet-atk));
         finaldef = 0;
         finalhp = 0;
         finalcrit = Math.max((crit-rate + acc1CritRate + acc2CritRate + characterDb.characters[attackerName].passive.critrateconst),100);
