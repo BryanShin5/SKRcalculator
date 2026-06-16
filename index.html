@@ -149,7 +149,7 @@
             if(formationId === "2"){formationDef = 14;}
             if(formationId === "1"){formationDef = 10.5;}
         }
-        finalAtk = (Atk + (baseAtk*petAtk)) + petBaseAtk + (baseAtk * formationAtk);
+        finalAtk = (Atk + (baseAtk*petAtk)) + petBaseAtk + (baseAtk * formationAtk / 100);
         finalDef = petBaseDef;
         finalHp = petBaseHp;
         finalCritRate = Math.min((critRate + acc1CritRate + acc2CritRate + heroCritRate),100);
