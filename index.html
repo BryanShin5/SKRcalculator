@@ -380,6 +380,55 @@
             border: 1px solid #eef2f3;
             border-radius: 8px;
         }
+        /* 영웅 1명 단위의 가로 정렬 상자 */
+.hero-horizontal-box {
+  display: flex;
+  align-items: center; /* 세로 기준 중앙 정렬 */
+  background: #ffffff;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-right: 12px;
+  margin-bottom: 12px;
+}
+
+/* 입력창 우측에 여백 확보 */
+.hero-horizontal-box input[type="text"] {
+  width: 100px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 12px; 
+}
+
+/* 가로로 나열될 체크박스 레이블 스타일 */
+.checkbox-inline {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #444;
+  cursor: pointer;
+  margin-right: 10px; /* 체크박스 간 간격 */
+  font-weight: normal !important; /* 부모 레이블 스타일 제거 */
+}
+
+/* 체크박스 자체와 글자 사이 간격 추가 */
+.checkbox-inline input[type="checkbox"] {
+  margin-right: 4px;
+  cursor: pointer;
+}
+
+/* 행 전체 컨테이너를 아래로 떨어지지 않고 가로 배치 유지 */
+.row-flex-container {
+  display: flex;
+  flex-wrap: wrap; /* 화면이 좁아지면 영웅 단위로 줄바꿈 */
+}
+
+.row-title {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
         /* 화면이 좁은 모바일 기기에서는 세로로 자동 전환 */
         @media (max-width: 600px) {
             .flex-container {
