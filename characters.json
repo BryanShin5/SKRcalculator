@@ -12,7 +12,7 @@
       "passive": { "name": "악마의 힘", "selfbuff":{"const": {"critrate" : 41, "debuffamp": 20}}},
       "skill2": { "name": "귀신 베기", "atkmult": 690, "hits": 1, "debuffmult": 50, "debuffcap": 4}
     }
-  }
+  },
   "pets": {
     "이린": {
       "buff1":{"atk": 26, "type": "physical"}
