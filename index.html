@@ -97,8 +97,14 @@
         const heroData = characterDb?.characters?.[attackerName];
         const heroCritRate = parseFloat(heroData?.passive?.critrateconst) || 0;
         const Atk = parseFloat(document.getElementById('atk').value) || 0;
+        const Def = parseFloat(document.getElementById('atk-def').value) || 0;
+        const Hp = parseFloat(document.getElementById('atk-hp').value) || 0;
         const baseAtk = parseFloat(heroData?.stat?.atk) || 0;
+        const baseDef = parseFloat(heroData?.stat?.def) || 0;
+        const baseHp = parseFloat(heroData?.stat?.hp) || 0;
         const petAtk  = parseFloat(document.getElementById('atk-pet-atk')?.value) / 100 || 0; 
+        const petDef  = parseFloat(document.getElementById('atk-pet-def')?.value) / 100 || 0; 
+        const petHp  = parseFloat(document.getElementById('atk-pet-hp')?.value) / 100 || 0; 
         const critRate = parseFloat(document.getElementById('crit-rate').value) || 0;
         const weakRate = parseFloat(document.getElementById('weak-rate').value) || 0;
 
@@ -150,8 +156,8 @@
             if(formationId === "1"){formationDef = 10.5;}
         }
         finalAtk = (Atk + (baseAtk*petAtk)) + petBaseAtk + (baseAtk * formationAtk / 100);
-        finalDef = petBaseDef;
-        finalHp = petBaseHp;
+        finalDef = Def + petBaseDef + (baseDef * petDef) + ((baseDef * formationDef / 100));
+        finalHp = Hp + petBaseHp + (baseHp * petHp);
         finalCritRate = Math.min((critRate + acc1CritRate + acc2CritRate + heroCritRate),100);
         finalCritDmg = parseFloat(document.getElementById('crit-dmg').value) || 150;
         finalWeakDmg = 130 + gearWeakDmg;
