@@ -152,6 +152,38 @@
         return (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100);
     }
     function renderFormation(selectedOption) {
+      const displayArea = document.getElementById('defformation-display-area');
+
+      // "2-3" 문자열을 잘라 숫자로 분리 (frontCount = 2, backCount = 3)
+      const [frontCount, backCount] = selectedOption.split('-').map(Number);
+
+      // 전방 입력창 문자열 생성
+      let frontInputs = '';
+      for (let i = 1; i <= frontCount; i++) {
+        frontInputs += `<input type="text" class="front-def-hero" placeholder="전열 ${i}">`;
+      }
+
+      // 후방 입력창 문자열 생성
+      let backInputs = '';
+      for (let i = 1; i <= backCount; i++) {
+        backInputs += `<input type="text" class="back-def-hero" placeholder="후열 ${i}">`;
+      }
+
+      // 지정한 영역의 innerHTML을 교체하여 단 하나의 화면만 렌더링
+      displayArea.innerHTML = `
+        <h4>[전열 ${frontCount} / 후열 ${backCount}] 영웅 입력</h4>
+        <div class="form-group">
+          <label>후열 영웅 (${backCount}명)</label>
+          ${backInputs}
+        </div>
+        <div class="form-group">
+          <label>전열 영웅 (${frontCount}명)</label>
+          ${frontInputs}
+        </div>
+      `;
+    }
+
+    function renderDefFormation(selectedOption) {
       const displayArea = document.getElementById('formation-display-area');
 
       // "2-3" 문자열을 잘라 숫자로 분리 (frontCount = 2, backCount = 3)
@@ -160,13 +192,13 @@
       // 전방 입력창 문자열 생성
       let frontInputs = '';
       for (let i = 1; i <= frontCount; i++) {
-        frontInputs += `<input type="text" class="front-hero" placeholder="공격 ${i}">`;
+        frontInputs += `<input type="text" class="front-hero" placeholder="전열 ${i}">`;
       }
 
       // 후방 입력창 문자열 생성
       let backInputs = '';
       for (let i = 1; i <= backCount; i++) {
-        backInputs += `<input type="text" class="back-hero" placeholder="수비 ${i}">`;
+        backInputs += `<input type="text" class="back-hero" placeholder="후열 ${i}">`;
       }
 
       // 지정한 영역의 innerHTML을 교체하여 단 하나의 화면만 렌더링
@@ -411,6 +443,18 @@
             <label for="ela">적 탄성</label>
             <input type="number" id="ela" value="0" min="0">
 
+             <select id="formation-select" onchange="renderDefFormation(this.value)">
+  <option value="">-- 방어팀 진형 선택 --</option>
+  <option value="4-1">보호 진형</option>
+  <option value="3-2">밸런스 진형</option>
+  <option value="2-3">기본 진형</option>
+  <option value="1-4">공격 진형</option>
+</select>
+
+  <!-- 2단계: 렌더링 결과가 출력될 영역 -->
+  <div id='defformation-display-area'>
+    <p class="empty-message">포메이션 버튼을 클릭하면 입력 창이 여기에 표시됩니다.</p>
+  </div>
             <div class="pet-container-block">
     <div class="section-title">🐾 펫 설정 </div>
     <div class="flex-container" style="margin-bottom: 0;">
