@@ -88,7 +88,7 @@
         const baseAtk = parseFloat(heroData?.stat?.atk) || 0;
         const petAtk  = parseFloat(document.getElementById('atk-pet-atk')?.value) || 0; 
         const critRate = parseFloat(document.getElementById('crit-rate').value) || 0;
-        finalAtk = (Atk + (baseatk*petAtk));
+        finalAtk = (Atk + (baseAtk*petAtk));
         finalDef = 0;
         finalHp = 0;
         finalCritRate = Math.max((critRate + acc1CritRate + acc2CritRate + heroData?.passive.critrateconst),100);
