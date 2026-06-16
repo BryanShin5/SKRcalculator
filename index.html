@@ -7,7 +7,7 @@
     <script>
     let characterDb = null;
 
-    //계산에 사용할 스탯 전역변수 할
+    //계산에 사용할 스탯 전역변수 할당
     let finalAtk = 0;
     let finalDef = 0;
     let finalHp = 0;
@@ -22,6 +22,26 @@
     let finalDefIgnore = 0;
     let attackerName = null;
     let defenderName = null;
+
+    //버프 수치 할당
+    let atkBuff = 0;
+    let defBuff = 0;
+    let critrateBuff = 0;
+    let critdmgBuff = 0;
+    let weakrateBuff = 0;
+    let weakdmgBuff = 0;
+    let dmgampBuff = 0;
+    let bossampBuff = 0;
+    let defignoreBuff = 0;
+    let enemyatkBuff = 0;
+    let enemydefBuff = 0;
+    let enemycritrateBuff = 0;
+    let enemycritdmgBuff = 0;
+    let enemyweakrateBuff = 0;
+    let enemyweakdmgBuff = 0;
+    let enemydmgampBuff = 0;
+    let enemybossampBuff = 0;
+    let enemydefignoreBuff = 0;
     
     async function fetchCharactersData() {
         try {
@@ -79,6 +99,61 @@
             }
         } else if (displayBox) {
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
+        }
+    }
+    function buffIterator(){
+        const atkPetInput = document.querySelector('#atk-pet-name');
+        const defPetInput = document.querySelector('#def-pet-name');
+        attackerPetName = atkPetInput ? atkPetInput.value.trim() : '';
+        defenderPetName = defPetInput ? defNameInput.value.trim() : '';
+        let pet  = null;
+        // 1.펫 데이터 로딩
+        if (characterDb && characterDb.pets && characterDb.pets[attackerPetName]) {
+            pet = characterDb.pets[attackerPetName];
+            if (pet.buff1){
+                if(pet.buff1.target==="enemy"){
+                    if(buff1.atk && (buff1.type === characterDb.characters[defenderName].stat.type)){ enemyatkBuff = enemyatkBuff - parseFloat(buff1.atk);}
+                    if(buff1.def){ enemydefBuff = enemydefBuff - parseFloat(buff1.def);}
+                    if(buff1.critrate){ enemycritrateBuff = enemycritrateBuff - parseFloat(buff1.critrate);}
+                    if(buff1.critdmg){ enemycritdmgBuff = enemycritdmgBuff - parseFloat(buff1.critdmg);}
+                    if(buff1.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff1.weakrate);}
+                    if(buff1.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff1.weakdmg);}
+                    if(buff1.dmgamp){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff1.dmgamp);}
+                    if(buff1.dmgamp && (buff1.type === "boss"){ enemybossampBuff = enemybossampBuff - parseFloat(buff1.dmgamp);}
+                }
+                else{
+                    if(buff1.atk && (buff1.type === characterDb.characters[attackerName].stat.type)){ atkBuff = atkBuff + parseFloat(buff1.atk);}
+                    if(buff1.def){ defBuff = defBuff + parseFloat(buff1.def);}
+                    if(buff1.critrate){ critrateBuff = critrateBuff + parseFloat(buff1.critrate);}
+                    if(buff1.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff1.critdmg);}
+                    if(buff1.weakrate){ weakrateBuff = weakrateBuff + parseFloat(buff1.weakrate);}
+                    if(buff1.weakdmg){ weakdmgBuff = weakdmgBuff + parseFloat(buff1.weakdmg);}
+                    if(buff1.dmgamp){ dmgampBuff = dmgampBuff + parseFloat(buff1.dmgamp);}
+                    if(buff1.dmgamp && (buff1.type === "boss"){ bossampBuff = bossampBuff + parseFloat(buff1.dmgamp);}
+                }
+            } 
+            if (pet.buff2){
+                if(pet.buff2.target==="enemy"){
+                    if(buff2.atk && (buff2.type === characterDb.characters[defenderName].stat.type)){ enemyatkBuff = enemyatkBuff - parseFloat(buff2.atk);}
+                    if(buff2.def){ enemydefBuff = enemydefBuff - parseFloat(buff2.def);}
+                    if(buff2.critrate){ enemycritrateBuff = enemycritrateBuff - parseFloat(buff2.critrate);}
+                    if(buff2.critdmg){ enemycritdmgBuff = enemycritdmgBuff - parseFloat(buff2.critdmg);}
+                    if(buff2.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff2.weakrate);}
+                    if(buff2.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff2.weakdmg);}
+                    if(buff2.dmgamp){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff2.dmgamp);}
+                    if(buff2.dmgamp && (buff2.type === "boss"){ enemybossampBuff = enemybossampBuff - parseFloat(buff2.dmgamp);}
+                }
+                else{
+                    if(buff2.atk && (buff2.type === characterDb.characters[attackerName].stat.type)){ atkBuff = atkBuff + parseFloat(buff2.atk);}
+                    if(buff2.def){ defBuff = defBuff + parseFloat(buff2.def);}
+                    if(buff2.critrate){ critrateBuff = critrateBuff + parseFloat(buff2.critrate);}
+                    if(buff2.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff2.critdmg);}
+                    if(buff2.weakrate){ weakrateBuff = weakrateBuff + parseFloat(buff2.weakrate);}
+                    if(buff2.weakdmg){ weakdmgBuff = weakdmgBuff + parseFloat(buff2.weakdmg);}
+                    if(buff2.dmgamp){ dmgampBuff = dmgampBuff + parseFloat(buff2.dmgamp);}
+                    if(buff2.dmgamp && (buff2.type === "boss"){ bossampBuff = bossampBuff + parseFloat(buff2.dmgamp);}
+                }
+            } 
         }
     }
     function calculateStat() {
@@ -165,16 +240,17 @@
             if(formationId === "2"){formationDef = 14;}
             if(formationId === "1"){formationDef = 10.5;}
         }
-        finalAtk = (Atk + (baseAtk*petAtk)) + petBaseAtk + (baseAtk * formationAtk / 100);
-        finalDef = Def + petBaseDef + (baseDef * petDef) + ((baseDef * formationDef / 100));
+        finalAtk = ((Atk + (baseAtk*petAtk)) + petBaseAtk + (baseAtk * formationAtk / 100)) * ((100 + atkBuff) / 100);
+        finalDef = (Def + petBaseDef + (baseDef * petDef) + ((baseDef * formationDef / 100))) * ((100 + defBuff) / 100);
         finalHp = Hp + petBaseHp + (baseHp * petHp);
-        finalCritRate = Math.min((critRate + acc1CritRate + acc2CritRate + heroCritRate),100);
+        finalCritRate = Math.min((critRate + acc1CritRate + acc2CritRate + critrateBuff),100) ;
         finalCritDmg = parseFloat(document.getElementById('crit-dmg').value) || 150;
-        finalWeakDmg = 130 + gearWeakDmg;
-        finalWeakRate = weakRate + acc1WeakRate + acc2WeakRate;
-        finalDefIgnore = gearDefIgn;
-        finalDmgAmp = acc1DmgAmp + acc2DmgAmp + gearDmgAmp;
-        finalBossAmp = acc1BossAmp + acc2BossAmp + gearBossAmp;
+        finalCritDmg = finalCritDmg + critdmgBuff;
+        finalWeakDmg = 130 + gearWeakDmg + weakdmgBuff;
+        finalWeakRate = Math.min((weakRate + acc1WeakRate + acc2WeakRate + weakrateBuff),100) ;
+        finalDefIgnore = gearDefIgn + defignoreBuff;
+        finalDmgAmp = acc1DmgAmp + acc2DmgAmp + gearDmgAmp + dmgampBuff;
+        finalBossAmp = acc1BossAmp + acc2BossAmp + gearBossAmp + bossampBuff;
         if(defenderName === "보스"){
             finalDmgAmp = finalDmgAmp + finalBossAmp;
         }
