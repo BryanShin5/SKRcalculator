@@ -115,7 +115,9 @@
         // 1.펫 데이터 로딩
         if (characterDb && characterDb.pets && characterDb.pets[attackerPetName]) {
             pet = characterDb.pets[attackerPetName];
+            
             if (pet.buff1){
+                const buff1 = pet.buff1;
                 if(pet.buff1.target==="enemy"){
                     if(buff1.atk && (buff1.type === characterDb.characters[defenderName].stat.type)){ enemyatkBuff = enemyatkBuff - parseFloat(buff1.atk);}
                     if(buff1.def){ enemydefBuff = enemydefBuff - parseFloat(buff1.def);}
@@ -138,6 +140,7 @@
                 }
             } 
             if (pet.buff2){
+                const buff2 = pet.buff2;
                 if(pet.buff2.target==="enemy"){
                     if(buff2.atk && (buff2.type === characterDb.characters[defenderName].stat.type)){ enemyatkBuff = enemyatkBuff - parseFloat(buff2.atk);}
                     if(buff2.def){ enemydefBuff = enemydefBuff - parseFloat(buff2.def);}
