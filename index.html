@@ -290,8 +290,14 @@
                 <option value="dmg" data-crit="0" data-weak-rate="0" data-wpn-dmg="6" data-boss-dmg="0">피증 (+6% 피해 증폭)</option>
             </select>
 
-            <label for="atk">기본 공격력 (Base ATK)</label>
-            <input type="number" id="atk" value="1500" min="0" oninput="calculateDamage()">
+            <label for="atk">공격력</label>
+            <input type="number" id="atk" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="atk-def">방어력</label>
+            <input type="number" id="atk-def" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="atk-hp">체력</label>
+            <input type="number" id="atk-def" value="0" min="0" oninput="calculateDamage()">
 
             <label for="crit-rate">기본 치명타 확률 (치확 %)</label>
             <input type="number" id="crit-rate" value="0" min="0" max="100" oninput="calculateDamage()">
@@ -339,6 +345,12 @@
             <label for="atk-pet-name">공격자 펫 이름</label>
             <input type="text" id="atk-pet-name" value="루" oninput="calculateDamage()">
 
+            <label for="atk-pet-level">공격자 펫 등급</label>
+            <input type="number" id="atk-pet-atk" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="atk-pet-enchant">공격자 펫 강화</label>
+            <input type="number" id="atk-pet-atk" value="0" min="0" oninput="calculateDamage()">
+            
             <label for="atk-pet-atk">공격자 펫 공격 잠재</label>
             <input type="number" id="atk-pet-atk" value="0" min="0" oninput="calculateDamage()">
 
@@ -353,6 +365,12 @@
         <div class="column">
             <label for="def-pet-name">방어자 펫 이름</label>
             <input type="text" id="def-pet-name" value="이린" oninput="calculateDamage()">
+
+            <label for="def-pet-level">방어자 펫 등급</label>
+            <input type="number" id="atk-pet-atk" value="0" min="0" oninput="calculateDamage()">
+
+            <label for="def-pet-enchant">방어자 펫 강화</label>
+            <input type="number" id="atk-pet-atk" value="0" min="0" oninput="calculateDamage()">
 
             <label for="def-pet-atk">방어자 펫 공격 잠재</label>
             <input type="number" id="def-pet-atk" value="0" min="0" oninput="calculateDamage()">
