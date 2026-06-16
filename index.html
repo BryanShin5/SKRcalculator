@@ -98,7 +98,7 @@
     function calculateDamage(atkmult,defmult,hpmult){
         console.error(atkmult, defmult, hpmult)
         calculateStat();
-        return (finalAtk * atkmult + finalDef * defmult + finalHp * hpmult);
+        return (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100));
     }
     window.onload = fetchCharactersData;
     </script>
