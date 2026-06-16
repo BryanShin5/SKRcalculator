@@ -134,7 +134,7 @@
         let formationAtk = 0;
         let formationDef = 0;
         const formationElement = document.getElementById('formation-select');
-        const selectedFormation = formationElement ? formationElement.options[acc1Element.selectedIndex] : null;
+        const selectedFormation = formationElement ? formationElement.options[formationElement.selectedIndex] : null;
         const formationId = selectedFormation.id;
         console.error(inFront, inBack, frontHeroes, backHeroes,formationId);
         if(inBack){
