@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>데미지 계산기 (가로 분리 레이아웃)</title>
+    <title>데미지 계산기</title>
     <script>
     let characterDb = null;
 
-    // 비동기 fetch 데이터를 트리거하여 할당
     async function fetchCharactersData() {
         try {
             const response = await fetch('characters.json');
@@ -20,7 +19,6 @@
         }
     }
 
-    // 유저가 하단의 단추를 직접 명시적으로 선택했을 때만 작동하는 정적 뷰어 엔진
     function processSkillView() {
         const nameInput = document.querySelector('#atk_name');
         const attackerName = nameInput ? nameInput.value.trim() : '에반';
@@ -28,14 +26,14 @@
         let skill1Name = "스킬 1";
         let skill2Name = "스킬 2";
 
-        // 1. JSON 파일 데이터가 완벽하게 캐싱되었을 때 엔티티 매핑 시작
+        // 1. 캐릭터 데이터 로딩
         if (characterDb && characterDb.characters && characterDb.characters[attackerName]) {
             const hero = characterDb.characters[attackerName];
             if (hero.skill1) skill1Name = hero.skill1.name;
             if (hero.skill2) skill2Name = hero.skill2.name;
         }
 
-        // 2. 임의의 테스트 더미 가상 텍스트 노드 매핑
+        // 2. 등록되지 않았을 경우 유저에게 공지
         const out1 = document.getElementById('skill1-output');
         const out2 = document.getElementById('skill2-output');
         const displayBox = document.getElementById('display-box');
@@ -49,11 +47,9 @@
             return;
         }
         if (out1 && out2) {
-            // [수정] 백틱(`)을 추가하여 변수가 문자열에 정상 바인딩되도록 교정
             out1.innerText = `[${skill1Name}] : ${calculateDamage(characterDb.characters[attackerName].skill1.atkmult,0,0)}`;
             out2.innerText = `[${skill2Name}] 타격 준비 완료`;
         } else if (displayBox) {
-            // [수정] 백틱(`)을 추가하고 유실되었던 구문 마감 및 중괄호 정렬 완료
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
         }
     }
