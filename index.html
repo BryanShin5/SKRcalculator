@@ -152,7 +152,7 @@
         return (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100);
     }
     function renderFormation(selectedOption) {
-      const displayArea = document.getElementById('defformation-display-area');
+      const displayArea = document.getElementById('formation-display-area');
 
       // "2-3" 문자열을 잘라 숫자로 분리 (frontCount = 2, backCount = 3)
       const [frontCount, backCount] = selectedOption.split('-').map(Number);
@@ -184,7 +184,7 @@
     }
 
     function renderDefFormation(selectedOption) {
-      const displayArea = document.getElementById('formation-display-area');
+      const displayArea = document.getElementById('defformation-display-area');
 
       // "2-3" 문자열을 잘라 숫자로 분리 (frontCount = 2, backCount = 3)
       const [frontCount, backCount] = selectedOption.split('-').map(Number);
