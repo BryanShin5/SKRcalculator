@@ -95,6 +95,7 @@
     }
 
     function calculateDamage(atkmult,defmult,hpmult){
+        console.error(atkmult, defmult, hpmult)
         calculateStat();
         return (finalatk * atkmult + finaldef * defmult + finalhp * hpmult);
     }
