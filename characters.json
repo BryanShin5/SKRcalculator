@@ -33,11 +33,11 @@
     },
     "유": {
       "buff1":{"def": 12, "target": "enemy"},
-      "buff2":{"heal-reduction": 40, "target": "enemy"}
+      "buff2":{"heal": 40, "target": "enemy"}
     },
     "요랑": {
-      "buff1":{"dmg-amp": 20, "type": "4"},
-      "buff2":{"weakrate-reduction": 40, "target": "enemy"}
+      "buff1":{"dmgamp": 20, "type": "4"},
+      "buff2":{"weakrate": 40, "target": "enemy"}
     },
     "제브": {
       "buff1":{"heal": 30},
@@ -45,7 +45,7 @@
     },
     "윈디": {
       "buff1":{"atk": 15},
-      "buff2":{"dmg-amp": 30, "type": "boss", "target": "enemy"}
+      "buff2":{"dmgamp": 30, "type": "boss", "target": "enemy"}
     },
     "델로": {
       "buff1":{"critdmg": 20},
