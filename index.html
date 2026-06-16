@@ -122,8 +122,33 @@
             petBaseDef = 20 * petLevel + 244;
             petBaseHp = 108 * petLevel + 1355;
         }
+        //진형 체크
+        const frontInputs = document.querySelectorAll('.front-hero');
+        const frontHeroes = Array.from(frontInputs).map(input => input.value);
+        const backInputs = document.querySelectorAll('.back-hero');
+        const backHeroes = Array.from(backInputs).map(input => input.value);
 
-        finalAtk = (Atk + (baseAtk*petAtk)) + petBaseAtk;
+        const inFront = frontHeroes.includes(attackerName);
+        const inBack = backHeroes.includes(attackerName);  
+
+        let formationAtk = 0;
+        let formationDef = 0;
+        const formationElement = document.getElementById('formation-select');
+        const selectedFormation = formationElement ? formationElement.options[acc1Element.selectedIndex] : null;
+        const formationId = selectedFormation.id;
+        if(inBack){
+            if(formationId === "1"){formationAtk = 42;}
+            if(formationId === "2"){formationAtk = 21;}
+            if(formationId === "3"){formationAtk = 14;}
+            if(formationId === "4"){formationAtk = 10.5;}
+        }
+        if(inFront){
+            if(formationId === "4"){formationAtk = 42;}
+            if(formationId === "3"){formationAtk = 21;}
+            if(formationId === "2"){formationAtk = 14;}
+            if(formationId === "1"){formationAtk = 10.5;}
+        }
+        finalAtk = (Atk + (baseAtk*petAtk)) + petBaseAtk + (baseAtk * formationAtk);
         finalDef = petBaseDef;
         finalHp = petBaseHp;
         finalCritRate = Math.min((critRate + acc1CritRate + acc2CritRate + heroCritRate),100);
@@ -348,10 +373,10 @@
         
         <!-- ==================== 좌측: 공격자 입력 섹션 ==================== -->
         <div class="column">
-            <div class="section-title">🔴 공격자 설정 (Attacker)</div>
+            <div class="section-title">🔴 공격자 설정</div>
 
             <label for="atk_name">캐릭터 이름</label>
-            <input type="text" id="atk_name" value="에반">
+            <input type="text" id="atk_name">
 
             <label for="eq_set">장비 세트효과</label>
             <select id="eq_set">
@@ -408,11 +433,11 @@
             <h2>진형을 선택하세요</h2>
   
   <select id="formation-select" onchange="renderFormation(this.value)">
-  <option value="">-- 공격팀 진형 선택 --</option>
-  <option value="4-1">보호 진형</option>
-  <option value="3-2">밸런스 진형</option>
-  <option value="2-3">기본 진형</option>
-  <option value="1-4">공격 진형</option>
+  <option value="" id = "0">-- 공격팀 진형 선택 --</option>
+  <option value="4-1" id = "1">보호 진형</option>
+  <option value="3-2" id = "2">밸런스 진형</option>
+  <option value="2-3" id = "3">기본 진형</option>
+  <option value="1-4" id = "4">공격 진형</option>
 </select>
 
   <!-- 2단계: 렌더링 결과가 출력될 영역 -->
@@ -423,10 +448,10 @@
 
         <!-- ==================== 우측: 방어자 입력 섹션 ==================== -->
         <div class="column">
-            <div class="section-title">🔵 방어자 설정 (Defender)</div>
+            <div class="section-title">🔵 방어자 설정</div>
 
             <label for="def_name">캐릭터 이름(보스는 보스 라고 써주세요)</label>
-            <input type="text" id="def_name" value="에반">
+            <input type="text" id="def_name">
 
             <label for="def">적 방어력</label>
             <input type="number" id="def" value="0" min="0">
@@ -443,12 +468,12 @@
             <label for="ela">적 탄성</label>
             <input type="number" id="ela" value="0" min="0">
 
-             <select id="formation-select" onchange="renderDefFormation(this.value)">
+             <select id="defformation-select" onchange="renderDefFormation(this.value)">
   <option value="">-- 방어팀 진형 선택 --</option>
-  <option value="4-1">보호 진형</option>
-  <option value="3-2">밸런스 진형</option>
-  <option value="2-3">기본 진형</option>
-  <option value="1-4">공격 진형</option>
+  <option value="4-1" id = "1">보호 진형</option>
+  <option value="3-2" id = "2">밸런스 진형</option>
+  <option value="2-3" id = "3">기본 진형</option>
+  <option value="1-4" id = "4">공격 진형</option>
 </select>
 
   <!-- 2단계: 렌더링 결과가 출력될 영역 -->
