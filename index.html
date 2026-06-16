@@ -130,7 +130,7 @@
 
         const inFront = frontHeroes.includes(attackerName);
         const inBack = backHeroes.includes(attackerName);  
-        console.error(inFront, inBack);
+        console.error(inFront, inBack, frontHeroes, backHeroes);
         let formationAtk = 0;
         let formationDef = 0;
         const formationElement = document.getElementById('formation-select');
@@ -143,10 +143,10 @@
             if(formationId === "4"){formationAtk = 10.5;}
         }
         if(inFront){
-            if(formationId === "4"){formationAtk = 42;}
-            if(formationId === "3"){formationAtk = 21;}
-            if(formationId === "2"){formationAtk = 14;}
-            if(formationId === "1"){formationAtk = 10.5;}
+            if(formationId === "4"){formationDef = 42;}
+            if(formationId === "3"){formationDef = 21;}
+            if(formationId === "2"){formationDef = 14;}
+            if(formationId === "1"){formationDef = 10.5;}
         }
         finalAtk = (Atk + (baseAtk*petAtk)) + petBaseAtk + (baseAtk * formationAtk);
         finalDef = petBaseDef;
@@ -185,13 +185,13 @@
       // 전방 입력창 문자열 생성
       let frontInputs = '';
       for (let i = 1; i <= frontCount; i++) {
-        frontInputs += `<input type="text" class="front-def-hero" placeholder="전열 ${i}">`;
+        frontInputs += `<input type="text" class="front-hero" placeholder="전열 ${i}">`;
       }
 
       // 후방 입력창 문자열 생성
       let backInputs = '';
       for (let i = 1; i <= backCount; i++) {
-        backInputs += `<input type="text" class="back-def-hero" placeholder="후열 ${i}">`;
+        backInputs += `<input type="text" class="back-hero" placeholder="후열 ${i}">`;
       }
 
       // 지정한 영역의 innerHTML을 교체하여 단 하나의 화면만 렌더링
@@ -217,13 +217,13 @@
       // 전방 입력창 문자열 생성
       let frontInputs = '';
       for (let i = 1; i <= frontCount; i++) {
-        frontInputs += `<input type="text" class="front-hero" placeholder="전열 ${i}">`;
+        frontInputs += `<input type="text" class="front-def-hero" placeholder="전열 ${i}">`;
       }
 
       // 후방 입력창 문자열 생성
       let backInputs = '';
       for (let i = 1; i <= backCount; i++) {
-        backInputs += `<input type="text" class="back-hero" placeholder="후열 ${i}">`;
+        backInputs += `<input type="text" class="back-def-hero" placeholder="후열 ${i}">`;
       }
 
       // 지정한 영역의 innerHTML을 교체하여 단 하나의 화면만 렌더링
