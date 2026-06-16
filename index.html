@@ -18,6 +18,7 @@
     let finalBreak = 0;
     let finalDmgAmp = 0;
     let finalBossAmp = 0;
+    let finalAmp = 0;
     let finalDefIgnore = 0;
     let attackerName = null;
     let defenderName = null;
@@ -113,6 +114,7 @@
         if(defenderName === "보스"){
             finalDmgAmp = finalDmgAmp + finalBossAmp;
         }
+        finalAmp =  parseFloat(document.getElementById('dmg-buff').value) || 0;
         return false;
     }
 
@@ -120,7 +122,7 @@
         console.error(atkmult, defmult, hpmult)
         calculateStat();
         console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, finalDefIgnore, finalBreak, attackerName, defenderName);
-        console.error(finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * finalDmgAmp;
+        console.error(finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * finalDmgAmp * finalAmp;
         return;
     }
     window.onload = fetchCharactersData;
