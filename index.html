@@ -76,14 +76,14 @@
         const acc1CritRate = selectedAcc1 ? (parseFloat(selectedAcc1.getAttribute('data-crit')) || 0) : 0;
         const acc1WeakRate = selectedAcc1 ? (parseFloat(selectedAcc1.getAttribute('data-weak-rate')) || 0) : 0;
         const acc1DmgAmp  = selectedAcc1 ? (parseFloat(selectedAcc1.getAttribute('data-wpn-dmg')) || 0) : 0;
-
+        const acc1BossAmp  = selectedAcc1 ? (parseFloat(selectedAcc1.getAttribute('data-boss-dmg')) || 0) : 0;
         // --- 장신구 2 데이터 추출 ---
         const acc2Element = document.getElementById('acc2');
         const selectedAcc2 = acc2Element ? acc2Element.options[acc2Element.selectedIndex] : null;
         const acc2CritRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-crit')) || 0) : 0;
         const acc2WeakRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-weak-rate')) || 0) : 0;
         const acc2DmgAmp  = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-wpn-dmg')) || 0) : 0;
-
+        const acc2BossAmp  = selectedAcc1 ? (parseFloat(selectedAcc1.getAttribute('data-boss-dmg')) || 0) : 0;
         // 장비 세트옵 추출
         const gearElement = document.getElementById('eq_set');
         const selectedgear = gearElement ? gearElement.options[gearElement.selectedIndex] : null;
@@ -107,14 +107,14 @@
         finalWeakRate = parseFloat(document.getElementById('weak-rate').value) || 0;
         finalDefIgnore = gearDefIgn;
         finalDmgAmp = acc1DmgAmp + acc2DmgAmp + gearDmgAmp;
-        finalBossAmp = gearBossAmp;
+        finalBossAmp = acc1BossAmp + acc2BossAmp + gearBossAmp;
         return false;
     }
 
     function calculateDamage(atkmult,defmult,hpmult){
         console.error(atkmult, defmult, hpmult)
         calculateStat();
-        console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalDefIgnore, finalBreak, attackerName, defenderName);
+        console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, finalDefIgnore, finalBreak, attackerName, defenderName);
         return (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100));
     }
     window.onload = fetchCharactersData;
@@ -266,21 +266,22 @@
 
             <label for="acc1">장신구1</label>
             <select id="acc1" onchange="calculateDamage()">
-                <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0">치확 (+10% 치확)</option>
-                <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0">약공 (+12% 약공 확률)</option>
-                <option value="subjugate" data-crit="0" data-weak-rate="0" data-wpn-dmg="12">토벌 (+12% 피해 증폭)</option>
-                <option value="siege" data-crit="0" data-weak-rate="0" data-wpn-dmg="10">공성 (+10% 피해 증폭)</option>
-                <option value="dmg" data-crit="0" data-weak-rate="0" data-wpn-dmg="6">피증 (+6% 피해 증폭)</option>
+                <option value="none" data-crit="0" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="0">장비 없음</option>
+                <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="0">치확 (+10% 치확)</option>
+                <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0" data-boss-dmg="0">약공 (+12% 약공 확률)</option>
+                <option value="subjugate" data-crit="0" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="12">토벌 (+12% 피해 증폭)</option>
+                <option value="siege" data-crit="0" data-weak-rate="0" data-wpn-dmg="10" data-boss-dmg="0">공성 (+10% 피해 증폭)</option>
+                <option value="dmg" data-crit="0" data-weak-rate="0" data-wpn-dmg="6" data-boss-dmg="0">피증 (+6% 피해 증폭)</option>
             </select>
 
             <label for="acc2">장신구2</label>
             <select id="acc2" onchange="calculateDamage()">
-                <option value="none" data-crit="0" data-weak-rate="0" data-wpn-dmg="0">장비 없음</option>
-                <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0">치확 (+10% 치확)</option>
-                <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0">약공 (+12% 약공 확률)</option>
-                <option value="subjugate" data-crit="0" data-weak-rate="0" data-wpn-dmg="12">토벌 (+12% 피해 증폭)</option>
-                <option value="siege" data-crit="0" data-weak-rate="0" data-wpn-dmg="10">공성 (+10% 피해 증폭)</option>
-                <option value="dmg" data-crit="0" data-weak-rate="0" data-wpn-dmg="6">피증 (+6% 피해 증폭)</option>
+                <option value="none" data-crit="0" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="0">장비 없음</option>
+                <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="0">치확 (+10% 치확)</option>
+                <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0" data-boss-dmg="0">약공 (+12% 약공 확률)</option>
+                <option value="subjugate" data-crit="0" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="12">토벌 (+12% 피해 증폭)</option>
+                <option value="siege" data-crit="0" data-weak-rate="0" data-wpn-dmg="10" data-boss-dmg="0">공성 (+10% 피해 증폭)</option>
+                <option value="dmg" data-crit="0" data-weak-rate="0" data-wpn-dmg="6" data-boss-dmg="0">피증 (+6% 피해 증폭)</option>
             </select>
 
             <label for="atk">기본 공격력 (Base ATK)</label>
