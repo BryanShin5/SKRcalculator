@@ -50,7 +50,7 @@
         }
         if (out1 && out2) {
             // [수정] 백틱(`)을 추가하여 변수가 문자열에 정상 바인딩되도록 교정
-            out1.innerText = `[${skill1Name}] 타격 준비 완료`;
+            out1.innerText = `[${skill1Name}] : $calculateDamage(characterDb.characters[attackerName].skill1.atkmult,0,0)`;
             out2.innerText = `[${skill2Name}] 타격 준비 완료`;
         } else if (displayBox) {
             // [수정] 백틱(`)을 추가하고 유실되었던 구문 마감 및 중괄호 정렬 완료
@@ -74,12 +74,14 @@
         const acc2DmgAmp  = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-wpn-dmg')) || 0) : 0;
         
         const finalatk = (atk + (characterDb.characters[attackerName].stat.atk*atk-pet-atk));
+        const finaldef = 0;
+        const finalhp = 0;
         const finalcrit = Math.max((crit-rate + acc1CritRate + acc2CritRate + characterDb.characters[attackerName].passive.critrateconst),100);
         return false;
     }
 
     function calculateDamage(atkmult,defmult,hpmult){
-        return finalatk * atkmult + finaldef * defmult + finalhp * ;
+        return (finalatk * atkmult + finaldef * defmult + finalhp * hpmult);
     }
     window.onload = fetchCharactersData;
     </script>
