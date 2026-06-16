@@ -137,23 +137,23 @@
             if (pet.buff1){
                 const buff1 = pet.buff1;
                 if(pet.buff1.target==="enemy"){
-                    if((buff1.atk && (buff1.type === characterDb.characters[defenderName].stat.type)|| !buff2.type)){ enemyatkBuff = enemyatkBuff - parseFloat(buff1.atk);}
+                    if((buff1.atk && (buff1.type === characterDb.characters[defenderName].stat.type)|| !buff1.type)){ enemyatkBuff = enemyatkBuff - parseFloat(buff1.atk);}
                     if(buff1.def){ enemydefBuff = enemydefBuff - parseFloat(buff1.def);}
                     if(buff1.critrate){ enemycritrateBuff = enemycritrateBuff - parseFloat(buff1.critrate);}
                     if(buff1.critdmg){ enemycritdmgBuff = enemycritdmgBuff - parseFloat(buff1.critdmg);}
                     if(buff1.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff1.weakrate);}
                     if(buff1.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff1.weakdmg);}
-                    if(buff1.dmgamp){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff1.dmgamp);}
+                    if(buff1.dmgamp && (!buff1.type)){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff1.dmgamp);}
                     if(buff1.dmgamp && (buff1.type === "boss")){ enemybossampBuff = enemybossampBuff - parseFloat(buff1.dmgamp);}
                 }
                 else{
-                    if(buff1.atk && ((buff1.type === characterDb.characters[attackerName].stat.type)|| !buff2.type)){ atkBuff = atkBuff + parseFloat(buff1.atk);}
+                    if(buff1.atk && ((buff1.type === characterDb.characters[attackerName].stat.type)|| !buff1.type)){ atkBuff = atkBuff + parseFloat(buff1.atk);}
                     if(buff1.def){ defBuff = defBuff + parseFloat(buff1.def);}
                     if(buff1.critrate){ critrateBuff = critrateBuff + parseFloat(buff1.critrate);}
                     if(buff1.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff1.critdmg);}
                     if(buff1.weakrate){ weakrateBuff = weakrateBuff + parseFloat(buff1.weakrate);}
                     if(buff1.weakdmg){ weakdmgBuff = weakdmgBuff + parseFloat(buff1.weakdmg);}
-                    if(buff1.dmgamp){ dmgampBuff = dmgampBuff + parseFloat(buff1.dmgamp);}
+                    if(buff1.dmgamp && (!buff1.type)){ dmgampBuff = dmgampBuff + parseFloat(buff1.dmgamp);}
                     if(buff1.dmgamp && (buff1.type === "boss")){ bossampBuff = bossampBuff + parseFloat(buff1.dmgamp);}
                 }
             } 
@@ -166,7 +166,7 @@
                     if(buff2.critdmg){ enemycritdmgBuff = enemycritdmgBuff - parseFloat(buff2.critdmg);}
                     if(buff2.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff2.weakrate);}
                     if(buff2.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff2.weakdmg);}
-                    if(buff2.dmgamp){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff2.dmgamp);}
+                    if(buff2.dmgamp && (!buff2.type)){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff2.dmgamp);}
                     if(buff2.dmgamp && (buff2.type === "boss")){ enemybossampBuff = enemybossampBuff - parseFloat(buff2.dmgamp);}
                 }
                 else{
@@ -176,7 +176,7 @@
                     if(buff2.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff2.critdmg);}
                     if(buff2.weakrate){ weakrateBuff = weakrateBuff + parseFloat(buff2.weakrate);}
                     if(buff2.weakdmg){ weakdmgBuff = weakdmgBuff + parseFloat(buff2.weakdmg);}
-                    if(buff2.dmgamp){ dmgampBuff = dmgampBuff + parseFloat(buff2.dmgamp);}
+                    if(buff2.dmgamp && (!buff2.type)){ dmgampBuff = dmgampBuff + parseFloat(buff2.dmgamp);}
                     if(buff2.dmgamp && (buff2.type === "boss")){ bossampBuff = bossampBuff + parseFloat(buff2.dmgamp);}
                 }
             } 
