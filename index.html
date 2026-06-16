@@ -83,7 +83,7 @@
         const acc2CritRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-crit')) || 0) : 0;
         const acc2WeakRate = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-weak-rate')) || 0) : 0;
         const acc2DmgAmp  = selectedAcc2 ? (parseFloat(selectedAcc2.getAttribute('data-wpn-dmg')) || 0) : 0;
-        const acc2BossAmp  = selectedAcc1 ? (parseFloat(selectedAcc1.getAttribute('data-boss-dmg')) || 0) : 0;
+        const acc2BossAmp  = selectedAcc1 ? (parseFloat(selectedAcc2.getAttribute('data-boss-dmg')) || 0) : 0;
         // 장비 세트옵 추출
         const gearElement = document.getElementById('eq_set');
         const selectedgear = gearElement ? gearElement.options[gearElement.selectedIndex] : null;
