@@ -124,13 +124,13 @@
         }
         //진형 체크
         const frontInputs = document.querySelectorAll('.front-hero');
-        const frontHeroes = Array.from(frontInputs).map(input => input.value);
+        const frontHeroes = Array.from(frontInputs).map(input => input.value.trim());
         const backInputs = document.querySelectorAll('.back-hero');
-        const backHeroes = Array.from(backInputs).map(input => input.value);
+        const backHeroes = Array.from(backInputs).map(input => input.value.trim());
 
         const inFront = frontHeroes.includes(attackerName);
         const inBack = backHeroes.includes(attackerName);  
-
+        console.error(inFront, inBack);
         let formationAtk = 0;
         let formationDef = 0;
         const formationElement = document.getElementById('formation-select');
