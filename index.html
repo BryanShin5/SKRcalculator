@@ -171,14 +171,14 @@
 
       // 지정한 영역의 innerHTML을 교체하여 단 하나의 화면만 렌더링
       displayArea.innerHTML = `
-        <h4>[전방 ${frontCount} / 후방 ${backCount}] 영웅 입력</h4>
+        <h4>[전열 ${frontCount} / 후열 ${backCount}] 영웅 입력</h4>
         <div class="form-group">
-          <label>전방 영웅 (${frontCount}명)</label>
-          ${frontInputs}
+          <label>후열 영웅 (${backCount}명)</label>
+          ${backInputs}
         </div>
         <div class="form-group">
-          <label>후방 영웅 (${backCount}명)</label>
-          ${backInputs}
+          <label>전열 영웅 (${frontCount}명)</label>
+          ${frontInputs}
         </div>
       `;
     }
@@ -376,7 +376,7 @@
             <h2>진형을 선택하세요</h2>
   
   <select id="formation-select" onchange="renderFormation(this.value)">
-  <option value="">-- 진형 선택 --</option>
+  <option value="">-- 공격팀 진형 선택 --</option>
   <option value="4-1">보호 진형</option>
   <option value="3-2">밸런스 진형</option>
   <option value="2-3">기본 진형</option>
