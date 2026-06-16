@@ -101,9 +101,31 @@
         const petAtk  = parseFloat(document.getElementById('atk-pet-atk')?.value) / 100 || 0; 
         const critRate = parseFloat(document.getElementById('crit-rate').value) || 0;
         const weakRate = parseFloat(document.getElementById('weak-rate').value) || 0;
-        finalAtk = (Atk + (baseAtk*petAtk));
-        finalDef = 0;
-        finalHp = 0;
+
+        const petStar = parseInt(document.getElementById('atk-pet-star')?.value) || 0;
+        const petLevel = parseInt(document.getElementById('atk-pet-level')?.value) || 0;
+        const petBaseAtk = 0;
+        const petBaseDef = 0;
+        const petBaseHp = 0;
+        if(petStar === 4){
+            petBaseAtk = 14 * petLevel + 231;
+            petBaseDef = 8 * petLevel + 140;
+            petBaseHp = 46 * petLevel + 774;
+        }
+        else if(petStar === 5){
+            petBaseAtk = 18 * petLevel + 301;
+            petBaseDef = 11 * petLevel + 182;
+            petBaseHp = 60 * petLevel + 1007;
+        }
+        else if(petStar === 6){
+            petBaseAtk = 32 * petLevel + 404;
+            petBaseDef = 20 * petLevel + 244;
+            petBaseHp = 108 * petLevel + 1355;
+        }
+
+        finalAtk = (Atk + (baseAtk*petAtk)) + petBaseAtk;
+        finalDef = petBaseDef;
+        finalHp = petBaseHp;
         finalCritRate = Math.min((critRate + acc1CritRate + acc2CritRate + heroCritRate),100);
         finalCritDmg = parseFloat(document.getElementById('crit-dmg').value) || 150;
         finalWeakDmg = 130 + gearWeakDmg;
@@ -351,11 +373,11 @@
             <label for="atk-pet-name">공격자 펫 이름</label>
             <input type="text" id="atk-pet-name" value="루">
 
-            <label for="atk-pet-level">공격자 펫 등급</label>
-            <input type="number" id="atk-pet-atk" value="0" min="0">
+            <label for="atk-pet-star">공격자 펫 등급</label>
+            <input type="number" id="atk-pet-star" value="0" min="4" max = "6">
 
-            <label for="atk-pet-enchant">공격자 펫 강화</label>
-            <input type="number" id="atk-pet-atk" value="0" min="0">
+            <label for="atk-pet-level">공격자 펫 강화</label>
+            <input type="number" id="atk-pet-level" value="0" min="0" max = "5">
             
             <label for="atk-pet-atk">공격자 펫 공격 잠재</label>
             <input type="number" id="atk-pet-atk" value="0" min="0">
@@ -372,11 +394,11 @@
             <label for="def-pet-name">방어자 펫 이름</label>
             <input type="text" id="def-pet-name" value="이린">
 
-            <label for="def-pet-level">방어자 펫 등급</label>
-            <input type="number" id="atk-pet-atk" value="0" min="0">
+            <label for="def-pet-star">방어자 펫 등급 (별 등급)</label>
+            <input type="number" id="atk-pet-star" value="0" min="4" max = "6">
 
-            <label for="def-pet-enchant">방어자 펫 강화</label>
-            <input type="number" id="atk-pet-atk" value="0" min="0">
+            <label for="def-pet-level">방어자 펫 강화</label>
+            <input type="number" id="atk-pet-level" value="0" min="0" max = "5">
 
             <label for="def-pet-atk">방어자 펫 공격 잠재</label>
             <input type="number" id="def-pet-atk" value="0" min="0">
