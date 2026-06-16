@@ -61,7 +61,7 @@
             return;
         }
         if (out1 && out2) {
-            out1.innerText = `[${skill1Name}] : ${calculateDamage(characterDb.characters[attackerName].skill1.atkmult,0,0)}`;
+            out1.innerText = `[${skill1Name}] : ${calculateDamage(parseFloat(characterDb.characters[attackerName].skill1.atkmult),0,0)}`;
             out2.innerText = `[${skill2Name}] 타격 준비 완료`;
         } else if (displayBox) {
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
