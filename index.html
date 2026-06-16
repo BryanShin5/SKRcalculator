@@ -107,6 +107,24 @@
         }
     }
     function buffIterator(){
+        atkBuff = 0;
+        defBuff = 0;
+        critrateBuff = 0;
+        critdmgBuff = 0;
+        weakrateBuff = 0;
+        weakdmgBuff = 0;
+        dmgampBuff = 0;
+        bossampBuff = 0;
+        defignoreBuff = 0;
+        enemyatkBuff = 0;
+        enemydefBuff = 0;
+        enemycritrateBuff = 0;
+        enemycritdmgBuff = 0;
+        enemyweakrateBuff = 0;
+        enemyweakdmgBuff = 0;
+        enemydmgampBuff = 0;
+        enemybossampBuff = 0;
+        enemydefignoreBuff = 0;
         const atkPetInput = document.querySelector('#atk-pet-name');
         const defPetInput = document.querySelector('#def-pet-name');
         attackerPetName = atkPetInput ? atkPetInput.value.trim() : '';
