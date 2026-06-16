@@ -110,7 +110,7 @@
         const atkPetInput = document.querySelector('#atk-pet-name');
         const defPetInput = document.querySelector('#def-pet-name');
         attackerPetName = atkPetInput ? atkPetInput.value.trim() : '';
-        defenderPetName = defPetInput ? defNameInput.value.trim() : '';
+        defenderPetName = defPetInput ? defPetInput.value.trim() : '';
         let pet  = null;
         // 1.펫 데이터 로딩
         if (characterDb && characterDb.pets && characterDb.pets[attackerPetName]) {
