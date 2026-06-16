@@ -122,8 +122,8 @@
         console.error(atkmult, defmult, hpmult)
         calculateStat();
         console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, finalDefIgnore, finalBreak, attackerName, defenderName);
-        console.error(finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * finalDmgAmp * finalAmp;
-        return finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100);
+        console.error((finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100));
+        return (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100);
     }
     window.onload = fetchCharactersData;
     </script>
@@ -262,10 +262,10 @@
             <div class="section-title">🔴 공격자 설정 (Attacker)</div>
 
             <label for="atk_name">캐릭터 이름</label>
-            <input type="text" id="atk_name" value="에반" oninput="calculateDamage()">
+            <input type="text" id="atk_name" value="에반">
 
             <label for="eq_set">장비 세트효과</label>
-            <select id="eq_set" onchange="calculateDamage()">
+            <select id="eq_set">
                 <option value="none" data-weak-dmg="0" data-ignore-def="0" data-wpn-dmg="0" data-boss-dmg="0">없음</option>
                 <option value="chase" data-weak-dmg="30" data-ignore-def="0" data-wpn-dmg="0" data-boss-dmg="0">추적 (+30% 약점 공격 피해량)</option>
                 <option value="assassin" data-weak-dmg="0" data-ignore-def="15" data-wpn-dmg="0" data-boss-dmg="0">암살 (+15% 방어력 무시)</option>
@@ -273,7 +273,7 @@
             </select>
 
             <label for="acc1">장신구1</label>
-            <select id="acc1" onchange="calculateDamage()">
+            <select id="acc1">
                 <option value="none" data-crit="0" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="0">장비 없음</option>
                 <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="0">치확 (+10% 치확)</option>
                 <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0" data-boss-dmg="0">약공 (+12% 약공 확률)</option>
@@ -283,7 +283,7 @@
             </select>
 
             <label for="acc2">장신구2</label>
-            <select id="acc2" onchange="calculateDamage()">
+            <select id="acc2">
                 <option value="none" data-crit="0" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="0">장비 없음</option>
                 <option value="crit" data-crit="10" data-weak-rate="0" data-wpn-dmg="0" data-boss-dmg="0">치확 (+10% 치확)</option>
                 <option value="weak" data-crit="0" data-weak-rate="12" data-wpn-dmg="0" data-boss-dmg="0">약공 (+12% 약공 확률)</option>
@@ -293,22 +293,22 @@
             </select>
 
             <label for="atk">공격력</label>
-            <input type="number" id="atk" value="0" min="0" oninput="calculateDamage()">
+            <input type="number" id="atk" value="0" min="0">
 
             <label for="atk-def">방어력</label>
-            <input type="number" id="atk-def" value="0" min="0" oninput="calculateDamage()">
+            <input type="number" id="atk-def" value="0" min="0">
 
             <label for="atk-hp">체력</label>
-            <input type="number" id="atk-def" value="0" min="0" oninput="calculateDamage()">
+            <input type="number" id="atk-def" value="0" min="0">
 
             <label for="crit-rate">기본 치명타 확률 (치확 %)</label>
-            <input type="number" id="crit-rate" value="0" min="0" max="100" oninput="calculateDamage()">
+            <input type="number" id="crit-rate" value="0" min="0" max="100">
 
             <label for="crit-dmg">치명타 피해 (치피 %)</label>
-            <input type="number" id="crit-dmg" value="150" min="0" oninput="calculateDamage()">
+            <input type="number" id="crit-dmg" value="150" min="0">
 
             <label for="weak-rate">약점 공격 확률 (약공 %)</label>
-            <input type="number" id="weak-rate" value="20" min="0" max="100" oninput="calculateDamage()">
+            <input type="number" id="weak-rate" value="20" min="0" max="100">
 
             <label for="break">전장 파쇄 (%)</label>
             <input type="number" id="break" value="0" min="0" oninput="calculateDamage()">
