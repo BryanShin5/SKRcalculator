@@ -36,8 +36,9 @@
 
     function processSkillView() {
         const nameInput = document.querySelector('#atk_name');
+        const defNameInput = document.querySelector('#def_name');
         attackerName = nameInput ? nameInput.value.trim() : '에반';
-        console.error(attackerName);
+        defenderName = defNameInput ? nameInput.value.trim() : '에반';
         let skill1Name = "스킬 1";
         let skill2Name = "스킬 2";
 
@@ -98,16 +99,20 @@
         const baseAtk = parseFloat(heroData?.stat?.atk) || 0;
         const petAtk  = parseFloat(document.getElementById('atk-pet-atk')?.value) / 100 || 0; 
         const critRate = parseFloat(document.getElementById('crit-rate').value) || 0;
+        const weakRate = parseFloat(document.getElementById('weak-rate').value) || 0;
         finalAtk = (Atk + (baseAtk*petAtk));
         finalDef = 0;
         finalHp = 0;
         finalCritRate = Math.min((critRate + acc1CritRate + acc2CritRate + heroCritRate),100);
         finalCritDmg = parseFloat(document.getElementById('crit-dmg').value) || 150;
         finalWeakDmg = 130 + gearWeakDmg;
-        finalWeakRate = parseFloat(document.getElementById('weak-rate').value) || 0;
+        finalWeakRate = weakRate + acc1WeakRate + acc2WeakRate;
         finalDefIgnore = gearDefIgn;
         finalDmgAmp = acc1DmgAmp + acc2DmgAmp + gearDmgAmp;
         finalBossAmp = acc1BossAmp + acc2BossAmp + gearBossAmp;
+        if(defenderName === "보스"){
+            finalDmgAmp = finalDmgAmp + finalBossAmp;
+        }
         return false;
     }
 
@@ -115,7 +120,8 @@
         console.error(atkmult, defmult, hpmult)
         calculateStat();
         console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, finalDefIgnore, finalBreak, attackerName, defenderName);
-        return (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100));
+        console.error(finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * finalDmgAmp;
+        return;
     }
     window.onload = fetchCharactersData;
     </script>
