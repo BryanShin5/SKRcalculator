@@ -104,9 +104,9 @@
 
         const petStar = parseInt(document.getElementById('atk-pet-star')?.value) || 0;
         const petLevel = parseInt(document.getElementById('atk-pet-level')?.value) || 0;
-        const petBaseAtk = 0;
-        const petBaseDef = 0;
-        const petBaseHp = 0;
+        let petBaseAtk = 0;
+        let petBaseDef = 0;
+        let petBaseHp = 0;
         if(petStar === 4){
             petBaseAtk = 14 * petLevel + 231;
             petBaseDef = 8 * petLevel + 140;
