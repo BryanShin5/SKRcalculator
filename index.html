@@ -101,7 +101,7 @@
         finalAtk = (Atk + (baseAtk*petAtk));
         finalDef = 0;
         finalHp = 0;
-        finalCritRate = Math.max((critRate + acc1CritRate + acc2CritRate + heroCritRate),100);
+        finalCritRate = Math.min((critRate + acc1CritRate + acc2CritRate + heroCritRate),100);
         finalCritDmg = parseFloat(document.getElementById('crit-dmg').value) || 150;
         finalWeakDmg = 130 + gearWeakDmg;
         finalWeakRate = parseFloat(document.getElementById('weak-rate').value) || 0;
