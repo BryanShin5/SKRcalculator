@@ -112,7 +112,7 @@
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
       "passive": {"name": "죽음의 경계", "allybuff": {"const": {"amplify" : 20, "type": "physical"}, "stack": {"critdmg": 64}}},
       "skill1": { "name": "사신의 심판", "atkmult": 97, "hits": 2},
-      "skill2": { "name": "사신난무", "atkmult": 174, "hits": 5}
+      "skill2": { "name": "사신난무", "atkmult": 174, "hits": 5},
       "skill3": { "name": "파멸의 손아귀"}
     }, 
     "에이스": {
