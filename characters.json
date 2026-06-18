@@ -256,7 +256,7 @@
     "레긴레이프": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
       "passive": {"name": "조화의 비원", "debuff":{"const":{"def": 24}}},
-      "skill1": { "name": "광명의 도래", "atkmult": 75, "hits": 2, "critrate":100, "debuff": {"stack": {"vulnerability": 20,"type":"magic"}}},
+      "skill1": { "name": "광명의 도래", "atkmult": 75, "hits": 2, "debuffmult": 7, "debuffcap": 7, "critrate":100, "debuff": {"stack": {"vulnerability": 20,"type":"magic"}}},
       "skill2": { "name": "우주의 균열", "atkmult": 42, "hpmult": [5,50], "hits": 3, "critrate":100, "debuff": {"stack": {"vulnerability": 20,"type":"magic"}}}
     }, 
     "란드그리드": {
