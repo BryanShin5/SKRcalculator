@@ -347,7 +347,7 @@
                     }
                 }
             }
-            if(skill1.selfbuff && characterDb.characters[attackerName] === allyName){
+            if(skill1.selfbuff && attackerName === allyName){
                 if(skill1.selfbuff.const){
                     if(skill1.selfbuff.const.atk && parseFloat(skill1.selfbuff.const.atk) > constatkBuff){
                         constatkBuff = parseFloat(skill1.selfbuff.const.atk);
@@ -590,7 +590,7 @@
                     }
                 }
             }
-            if(skill2.selfbuff && characterDb.characters[attackerName] === allyName){
+            if(skill2.selfbuff && attackerName === allyName){
                 if(skill2.selfbuff.const){
                     if(skill2.selfbuff.const.atk && parseFloat(skill2.selfbuff.const.atk) > constatkBuff){
                         constatkBuff = parseFloat(skill2.selfbuff.const.atk);
@@ -833,7 +833,7 @@
                     }
                 }
             }
-            if(passive.selfbuff && characterDb.characters[attackerName] === allyName){
+            if(passive.selfbuff && attackerName === allyName){
                 if(passive.selfbuff.const){
                     if(passive.selfbuff.const.atk && passive.selfbuff.const.type === "raw"){
                         rawatkBuff = parseFloat(passive.selfbuff.const.atk);
