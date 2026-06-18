@@ -1,16 +1,57 @@
 {
   "characters": {
+    "파이": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "솟구치는 불꽃", "debuff": {"const": {"vulnerability" : 20, "type": "physical"}}},
+      "skill1": { "name": "아그니아의 창", "atkmult": 57, "hits": 2,  "debuff": {"turn": {"def" : 29, "count":3}}},
+      "skill2": { "name": "염룡의 연주", "atkmult": 535, "enemyhpmult": [40,300], "hits": 1}
+    },
+    "로지": {
+      "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
+      "passive": {"name": "망자의 축복", "selfbuff": {"const": {"def" : 900, "type": "raw"}}},
+      "skill1": { "name": "달빛의 심판", "atkmult": 30, "hpmult": 7, "hits": 2},
+      "skill2": { "name": 성령의 기도"}
+    },
+    "쥬리": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "신의 저울"},
+      "skill1": { "name": "천상의 심판", "atkmult": 77, "hits": 2,  "debuff": {"turn": {"def" : 29, "count":3}}},
+      "skill2": { "name": "최고 판결", "atkmult": 80, "hits": 2}
+    },
+    "밀리아": {
+      "stat":{"atk":1500, "def":1580, "hp":7255, "type": "magic"},
+      "passive": {"name": "광채의 수정비늘", "debuff": {"const": {"vulnerability" : 20, "type": "magic"}}},
+      "skill1": { "name": "수정룡의 거울", "atkmult": 30, "defmult": 32, "hits": 2},
+      "skill2": { "name": "수정의 숨결", "atkmult": 30, "defmult": 32, "hits": 2}
+    },
+    "겔리두스": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "얼음여왕의 가호", "selfbuff": {"const": {"reduction" : 16, "guard":33}}},
+      "skill1": { "name": "패왕의 기억", "atkmult": 75, "defmult": 85, "hits": 1},
+      "skill2": { "name": "창공의 패왕", "atkmult": 35,  "defmult": 38,  "hits": 2}
+    },
+    "루디": {
+      "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
+      "passive": {"name": "견고한 방패", "selfbuff": {"const": {"reduction" : 20, "def":24}}},
+      "skill1": { "name": "돌격", "atkmult": 200, "defmult": 235, "hits": 1},
+      "skill2": { "name": "방어준비", "allybuff": {"turn": {"link": 10}}}
+    },
+    "아일린": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "포디나의 분노", "allybuff": {"const": {"atk" : 25, "type": "physical"}}},
+      "skill1": { "name": "뇌제의 분노", "atkmult": 136, "hits": 3},
+      "skill2": { "name": "청천벽력", "atkmult": 75, "hits": 2}
+    },
+    "세인": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": { "name": "악마의 힘", "selfbuff":{"const": {"critrate" : 41, "debuffamp": 20}}},
+      "skill2": { "name": "귀신 베기", "atkmult": 690, "hits": 1, "debuffmult": 50, "debuffcap": 4}
+    },
     "에반": {
       "stat":{"atk":704, "def":818, "hp":4572, "type": "physical"},
       "passive": {"name": "의지", "allybuff": {"const": {"def" : 18}}},
       "skill1": { "name": "연속공격", "atkmult": 170, "defmult":200, "hits": 1 },
       "skill2": { "name": "균형의방패", "mult": 0, "hits": 0, "allybuff": {"turn": {"guard" : 21}}}
-    },
-    
-    "세인": {
-      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
-      "passive": { "name": "악마의 힘", "selfbuff":{"const": {"critrate" : 41, "debuffamp": 20}}},
-      "skill2": { "name": "귀신 베기", "atkmult": 690, "hits": 1, "debuffmult": 50, "debuffcap": 4}
     }
   },
   "pets": {
