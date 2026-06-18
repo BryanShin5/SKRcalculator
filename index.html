@@ -23,6 +23,12 @@
     let attackerName = null;
     let defenderName = null;
 
+    let defFinalDef = 0;
+    let defFinalHp = 0;
+    let defFinalGuard = 0;v
+    let defFinalReduction = 0;
+    let defFinalElasticity = 0;
+        
     //버프 수치 할당
     let atkBuff = 0;
     let defBuff = 0;
@@ -281,6 +287,69 @@
             finalDmgAmp = finalDmgAmp + finalBossAmp;
         }
         finalAmp =  parseFloat(document.getElementById('dmg-buff').value) || 0;
+
+        //방어자 스탯
+        const defHeroData = characterDb?.characters?.[defenerName];
+        const defDef = parseFloat(document.getElementById('def').value) || 0;
+        const defHp = parseFloat(document.getElementById('hp').value) || 0;
+        const defGuard = parseFloat(document.getElementById('guard').value) || 0;
+        const defReduction = parseFloat(document.getElementById('dmg-red').value) || 0;
+        const defElasticity = parseFloat(document.getElementById('ela').value) || 0;
+        const defBaseDef = parseFloat(defHeroData?.stat?.def) || 0;
+        const defBaseHp = parseFloat(defHeroData?.stat?.hp) || 0;
+        const defPetAtk  = parseFloat(document.getElementById('def-pet-atk')?.value) / 100 || 0; 
+        const defPetDef  = parseFloat(document.getElementById('def-pet-def')?.value) / 100 || 0; 
+        const defPetHp  = parseFloat(document.getElementById('def-pet-hp')?.value) / 100 || 0;
+        const defPetStar = parseInt(document.getElementById('def-pet-star')?.value) || 0;
+        const defPetLevel = parseInt(document.getElementById('def-pet-level')?.value) || 0;
+        let defPetBaseAtk = 0;
+        let defPetBaseDef = 0;
+        let defPetBaseHp = 0;
+        if(defPetStar === 4){
+            defPetBaseAtk = 14 * defPetLevel + 231;
+            defPetBaseDef = 8 * defPetLevel + 140;
+            defPetBaseHp = 46 * defPetLevel + 774;
+        }
+        else if(defPetStar === 5){
+            defPetBaseAtk = 18 * defPetLevel + 301;
+            defPetBaseDef = 11 * defPetLevel + 182;
+            defPetBaseHp = 60 * defPetLevel + 1007;
+        }
+        else if(petStar === 6){
+            defPetBaseAtk = 32 * defPetLevel + 404;
+            defPetBaseDef = 20 * defPetLevel + 244;
+            defPetBaseHp = 108 * defPetLevel + 1355;
+        }
+        
+        const defFrontInputs = document.querySelectorAll('.front-def-hero');
+        const defFrontHeroes = Array.from(defFrontInputs).map(input => input.value.trim());
+        const defBackInputs = document.querySelectorAll('.back-def-hero');
+        const defBackHeroes = Array.from(defBackInputs).map(input => input.value.trim());
+
+        const defInFront = defFrontHeroes.includes(defenderName);
+        const defInBack = defBackHeroes.includes(defenderName); 
+        let defFormationAtk = 0;
+        let defFormationDef = 0;
+        const defFormationElement = document.getElementById('defformation-select');
+        const defSelectedFormation = defFormationElement ? defFormationElement.options[defFormationElement.selectedIndex] : null;
+        const defFormationId = defSelectedFormation.id;
+        if(idefInBack){
+            if(formationId === "1"){defFormationAtk = 42;}
+            if(formationId === "2"){defFormationAtk = 21;}
+            if(formationId === "3"){defFormationAtk = 14;}
+            if(formationId === "4"){defFormationAtk = 10.5;}
+        }
+        if(defInFront){
+            if(formationId === "4"){defFormationDef = 42;}
+            if(formationId === "3"){defFormationDef = 21;}
+            if(formationId === "2"){defFormationDef = 14;}
+            if(formationId === "1"){defFormationDef = 10.5;}
+        }
+        defFinalDef = defDef + defPetBaseDef + (defBaseDef * defPetDef) + ((defBaseDef * defFormationDef / 100));
+        defFinalHp = defHp + defPetBaseHp + (defBaseHp * defPetHp);
+        defFinalGuard = defGuard;
+        defFinalReduction = defReduction;
+        defFinalElasticity = defElasticity;
         return false;
     }
 
@@ -294,7 +363,7 @@
         console.error(baseDmg * finalCritDmg / 100);
         console.error(baseDmg * finalWeakDmg / 100);
         console.error(baseDmg * finalCritDmg / 100 * finalWeakDmg / 100);
-        return (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100);
+        return baseDmg * (465 / (465 + defFinalDef)) * (100 - defFinalReduction) / 100;
     }
     function renderFormation(selectedOption) {
       const displayArea = document.getElementById('formation-display-area');
