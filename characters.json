@@ -135,7 +135,7 @@
     },
     "여포": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
-      "passive": {"name": "초인적인 힘", "allybuff": {"const": {"atk" : 31, "type": "physical"}, "turn": {"weakdmg":28}},"bless":1},
+      "passive": {"name": "초인적인 힘", "allybuff": {"const": {"atk" : 31, "type": "physical"}}, "selfbuff":{"turn": {"weakdmg":28}},"bless":1},
       "skill1": { "name": "혈풍벽파", "atkmult": 67, "weakmult": 25, "hits": 2, "debuff": {"turn":{"def": 29}}, "allybuff":{"turn": {"defignore": 10}}},
       "skill2": { "name": "적토질풍격", "atkmult": 60, "weakmult": 32, "defignore": 40, "hits": 2, "debuff": {"turn":{"def": 29}}, "allybuff":{"turn": {"defignore": 10}}}
     },  
