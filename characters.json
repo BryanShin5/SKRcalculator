@@ -68,7 +68,7 @@
     },
     "바네사": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
-      "passive": {"name": "사막의 마법사", "debuff": {"const": {"def" : 24}}},
+      "passive": {"name": "사막의 마법사" , "debuff": {"const": {"def" : 24}}},
       "skill1": { "name": "모래열풍", "atkmult": 110, "hits": 2,  "debuff": {"turn": {"vulnerability" : 24, "type":"magic"}}},
       "skill2": { "name": "메마른 해일", "atkmult": 82, "hits": 2, "debuff": {"turn": {"vulnerability" : 24, "type":"magic"}}}
     },
