@@ -36,7 +36,7 @@
     let critdmgBuff = 0;
     let weakrateBuff = 0;
     let weakdmgBuff = 0;
-    let dmgampBuff = 0;
+    let dmgampBuff = 0; //단순 피증
     let bossampBuff = 0;
     let defignoreBuff = 0;
     let enemyatkBuff = 0;
@@ -48,7 +48,15 @@
     let enemydmgampBuff = 0;
     let enemybossampBuff = 0;
     let enemydefignoreBuff = 0;
-    
+    let vulnerabilityBuff = 0;
+    let reductionBuff = 0;
+    let vulnerability = 0;
+    let bossvulnerability = 0;
+    let amplifyBuff = 0; //물피증, 마피증
+    let debuffCount = 0;
+    let enemydebuffCount = 0;
+    let buffCount = 0;
+    let enemybuffCount = 0;
     async function fetchCharactersData() {
     try {
         const response = await fetch('characters.json');
@@ -109,19 +117,19 @@
                 const atkMult = parseFloat(hero?.skill1?.atkmult) || 0; 
                 const defMult = parseFloat(hero?.skill1?.defmult) || 0; 
                 const hpMult = parseFloat(hero?.skill1?.hpmult) || 0; 
-                out1.innerText = `[${skill1Name}] : ${calculateDamage(atkMult,defMult,hpMult)}`;
+                out1.innerText = `[${skill1Name}] : ${calculateDamage(skill1Name)}`;
             }
             if(hero.skill2){
                 const atkMult = parseFloat(hero?.skill2?.atkmult) || 0; 
                 const defMult = parseFloat(hero?.skill2?.defmult) || 0; 
                 const hpMult = parseFloat(hero?.skill2?.hpmult) || 0; 
-                out2.innerText = `[${skill2Name}] : ${calculateDamage(atkMult,defMult,hpMult)}`;
+                out2.innerText = `[${skill2Name}] : ${calculateDamage(skill2Name)}`;
             }
         } else if (displayBox) {
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
         }
     }
-    function buffIterator(){
+    function buffIterator(allyTeam, enemyTeam){
         atkBuff = 0;
         defBuff = 0;
         critrateBuff = 0;
@@ -140,6 +148,14 @@
         enemydmgampBuff = 0;
         enemybossampBuff = 0;
         enemydefignoreBuff = 0;
+        bossvulnerability = 0;
+        vulnerability = 0;
+        reductionBuff = 0;
+        amplifyBuff = 0; //물피증, 마피증
+        debuffCount = 0;
+        enemydebuffCount = 0;
+        buffCount = 0;
+        enemybuffCount = 0;
         const atkPetInput = document.querySelector('#atk-pet-name');
         const defPetInput = document.querySelector('#def-pet-name');
         attackerPetName = atkPetInput ? atkPetInput.value.trim() : '';
@@ -159,10 +175,10 @@
                     if(buff1.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff1.weakrate);}
                     if(buff1.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff1.weakdmg);}
                     if(buff1.dmgamp && (!buff1.type)){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff1.dmgamp);}
-                    if(buff1.dmgamp && (buff1.type === "boss")){ enemybossampBuff = enemybossampBuff - parseFloat(buff1.dmgamp);}
+                    if(buff1.dmgamp && (buff1.type === "boss")){ bossvulnerability = bossvulnerability + parseFloat(buff1.dmgamp);}
                 }
                 else{
-                    if(buff1.atk && ((buff1.type === characterDb.characters[attackerName].stat.type)|| !buff1.type)){ atkBuff = atkBuff + parseFloat(buff1.atk);}
+                    if(buff1.atk && ((buff1.type === characterDb.characters[defenerName].stat.type)|| !buff1.type)){ atkBuff = atkBuff + parseFloat(buff1.atk);}
                     if(buff1.def){ defBuff = defBuff + parseFloat(buff1.def);}
                     if(buff1.critrate){ critrateBuff = critrateBuff + parseFloat(buff1.critrate);}
                     if(buff1.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff1.critdmg);}
@@ -182,7 +198,7 @@
                     if(buff2.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff2.weakrate);}
                     if(buff2.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff2.weakdmg);}
                     if(buff2.dmgamp && (!buff2.type)){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff2.dmgamp);}
-                    if(buff2.dmgamp && (buff2.type === "boss")){ enemybossampBuff = enemybossampBuff - parseFloat(buff2.dmgamp);}
+                    if(buff2.dmgamp && (buff2.type === "boss")){ bossvulnerability = bossvulnerability + parseFloat(buff2.dmgamp);}
                 }
                 else{
                     if(buff2.atk && ((buff2.type === characterDb.characters[attackerName].stat.type) || !buff2.type)){ atkBuff = atkBuff + parseFloat(buff2.atk);}
@@ -196,6 +212,58 @@
                 }
             } 
         }
+        if (characterDb && characterDb.pets && characterDb.pets[defenderPetName]) {
+            pet = characterDb.pets[defenderPetName];
+            if (pet.buff1){
+                const buff1 = pet.buff1;
+                if(pet.buff1.target==="enemy"){
+                    if((buff1.atk && (buff1.type === characterDb.characters[attackerName].stat.type)|| !buff1.type)){ atkBuff = atkBuff - parseFloat(buff1.atk);}
+                    if(buff1.def){ defBuff = defBuff - parseFloat(buff1.def);}
+                    if(buff1.critrate){ critrateBuff = critrateBuff - parseFloat(buff1.critrate);}
+                    if(buff1.critdmg){ critdmgBuff = critdmgBuff - parseFloat(buff1.critdmg);}
+                    if(buff1.weakrate){ weakrateBuff = weakrateBuff - parseFloat(buff1.weakrate);}
+                    if(buff1.weakdmg){ weakdmgBuff = weakdmgBuff - parseFloat(buff1.weakdmg);}
+                    if(buff1.dmgamp && (!buff1.type)){ dmgampBuff = dmgampBuff - parseFloat(buff1.dmgamp);}
+                }
+                else{
+                    if(buff1.atk && ((buff1.type === characterDb.characters[attackerName].stat.type)|| !buff1.type)){ enemyatkBuff = enemyatkBuff + parseFloat(buff1.atk);}
+                    if(buff1.def){ enemydefBuff = enemydefBuff + parseFloat(buff1.def);}
+                    if(buff1.critrate){ enemycritrateBuff = enemycritrateBuff + parseFloat(buff1.critrate);}
+                    if(buff1.critdmg){ enemycritdmgBuff = enemycritdmgBuff + parseFloat(buff1.critdmg);}
+                    if(buff1.weakrate){ enemyweakrateBuff = enemyweakrateBuff + parseFloat(buff1.weakrate);}
+                    if(buff1.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff + parseFloat(buff1.weakdmg);}
+                    if(buff1.dmgamp && (!buff1.type)){ enemydmgampBuff = enemydmgampBuff + parseFloat(buff1.dmgamp);}
+                    if(buff1.dmg-reduction){ reductionBuff = reductionBuff + parseFloat(buff1.dmg-reduction);}
+                    if(buff1.guard){ enemyguardBuff = enemyguardBuff + parseFloat(buff1.guard);}
+                }
+            } 
+            if (pet.buff2){
+                const buff2 = pet.buff2;
+                if(pet.buff2.target==="enemy"){
+                    if(buff2.atk && ((buff2.type === characterDb.characters[attackerName].stat.type) || !buff2.type)){ atkBuff = atkBuff - parseFloat(buff2.atk);}
+                    if(buff2.def){ defBuff = defBuff - parseFloat(buff2.def);}
+                    if(buff2.critrate){ critrateBuff = critrateBuff - parseFloat(buff2.critrate);}
+                    if(buff2.critdmg){ critdmgBuff = critdmgBuff - parseFloat(buff2.critdmg);}
+                    if(buff2.weakrate){ weakrateBuff = weakrateBuff - parseFloat(buff2.weakrate);}
+                    if(buff2.weakdmg){ weakdmgBuff = weakdmgBuff - parseFloat(buff2.weakdmg);}
+                    if(buff2.dmgamp && (!buff2.type)){ dmgampBuff = dmgampBuff - parseFloat(buff2.dmgamp);}
+                    if(buff2.dmgamp && (buff2.type === "boss")){ enemybossampBuff = enemybossampBuff - parseFloat(buff2.dmgamp);}
+                }
+                else{
+                    if(buff2.atk && ((buff2.type === characterDb.characters[defenderName].stat.type) || !buff2.type)){ enemyatkBuff = enemyatkBuff + parseFloat(buff2.atk);}
+                    if(buff2.def){ enemydefBuff = enemydefBuff + parseFloat(buff2.def);}
+                    if(buff2.critrate){ enemycritrateBuff = enemycritrateBuff + parseFloat(buff2.critrate);}
+                    if(buff2.critdmg){ enemycritdmgBuff = enemycritdmgBuff + parseFloat(buff2.critdmg);}
+                    if(buff2.weakrate){ enemyweakrateBuff = enemyweakrateBuff + parseFloat(buff2.weakrate);}
+                    if(buff2.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff + parseFloat(buff2.weakdmg);}
+                    if(buff2.dmgamp && (!buff2.type)){ enemydmgampBuff = enemydmgampBuff + parseFloat(buff2.dmgamp);}
+                    if(buff12.dmg-reduction){ reductionBuff = reductionBuff + parseFloat(buff2.dmg-reduction);}
+                    if(buff2.guard){ enemyguardBuff = enemyguardBuff + parseFloat(buff2.guard);}
+                }
+            } 
+        }
+        //2.영웅 버프 로딩
+        
     }
     function calculateStat() {
         const acc1Element = document.getElementById('acc1');
@@ -362,8 +430,52 @@
         return false;
     }
 
-    function calculateDamage(atkmult,defmult,hpmult){
-        console.error(atkmult, defmult, hpmult)
+    function calculateDamage(skillname){
+        const heroData = characterDb?.characters?.[attackerName];
+        const atkmult = parseFloat(heroData?.skillname?.atkmult) || 0;
+        const defmult = parseFloat(heroData?.skillname?.defmult) || 0;
+        const hpmult = parseFloat(heroData?.skillname?.hpmult) || 0;
+        const enemyhpmult = parseFloat(heroData?.skillname?.enemyhpmult[0]) || 0;
+        const limitmult = parseFloat(heroData?.skillname?.enemyhpmult[1]) || 0;
+        const debuffmult = parseFloat(heroData?.skillname?.debuffmult) || 0;
+        const debuffcap = parseFloat(heroData?.skillname?.debuffcap) || 0;
+        const weakmult = parseFloat(heroData?.skillname?.weakmult) || 0;
+        const critmult = parseFloat(heroData?.skillname?.critmult) || 0;
+        console.error(atkmult, defmult, hpmult);
+        const frontInputs = document.querySelectorAll('.front-hero');
+        const frontHeroes = Array.from(frontInputs).map(input => input.value.trim());
+        const backInputs = document.querySelectorAll('.back-hero');
+        const backHeroes = Array.from(backInputs).map(input => input.value.trim());
+        const frontHeroData = Array.from(frontInputs)
+            .map(input => {
+            const name = input.value.trim();
+            if (!name) return null; // 빈 입력창 제외
+
+            // input을 감싸고 있는 가장 가까운 .hero-card 카드를 찾습니다.
+            const card = input.closest('.hero-card');
+            const skill1 = card.querySelector('.front-skill1')?.checked || false;
+            const skill2 = card.querySelector('.front-skill2')?.checked || false;
+            return [name, skill1, skill2];
+        })
+        .filter(item => item !== null);
+        const backHeroData = Array.from(backInputs)
+            .map(input => {
+            const name = input.value.trim();
+            if (!name) return null; // 빈 입력창 제외
+
+            const card = input.closest('.hero-card');
+            const skill1 = card.querySelector('.back-skill1')?.checked || false;
+            const skill2 = card.querySelector('.back-skill2')?.checked || false;
+
+            return [name, skill1, skill2];
+        })
+        .filter(item => item !== null);
+        const AttackerHeroes = [...frontHeroData, ...backHeroData];
+        console.log(AttackerHeroes); 
+        const defFrontInputs = document.querySelectorAll('.front-def-hero');
+        const defFrontHeroes = Array.from(defFrontInputs).map(input => input.value.trim());
+        const defBackInputs = document.querySelectorAll('.back-def-hero');
+        const defBackHeroes = Array.from(defBackInputs).map(input => input.value.trim());
         buffIterator();
         calculateStat();
         console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, finalDefIgnore, finalBreak, attackerName, defenderName);
@@ -395,8 +507,8 @@
       let backInputs = '';
       for (let i = 1; i <= backCount; i++) {
         backInputs += `<div class="hero-card"><input type="text" class="back-hero" placeholder="후열 ${i}"><div class="checkbox-row">
-        <label class="skill-label"><input type="checkbox" class="front-skill1"> 스킬1</label>
-        <label class="skill-label"><input type="checkbox" class="front-skill2"> 스킬2</label>
+        <label class="skill-label"><input type="checkbox" class="back-skill1"> 스킬1</label>
+        <label class="skill-label"><input type="checkbox" class="back-skill2"> 스킬2</label>
       </div>
     </div>`;
       }
@@ -426,8 +538,8 @@
       for (let i = 1; i <= frontCount; i++) {
         frontInputs += `<div class="hero-card"><input type="text" class="front-def-hero" placeholder="전열 ${i}">
         <div class="checkbox-row">
-        <label class="skill-label"><input type="checkbox" class="front-skill1"> 스킬1</label>
-        <label class="skill-label"><input type="checkbox" class="front-skill2"> 스킬2</label>
+        <label class="skill-label"><input type="checkbox" class="front-def-skill1"> 스킬1</label>
+        <label class="skill-label"><input type="checkbox" class="front-def-skill2"> 스킬2</label>
       </div>
     </div>`;
       }
@@ -436,8 +548,8 @@
       let backInputs = '';
       for (let i = 1; i <= backCount; i++) {
         backInputs += `<div class="hero-card"><input type="text" class="back-def-hero" placeholder="후열 ${i}"><div class="checkbox-row">
-        <label class="skill-label"><input type="checkbox" class="front-skill1"> 스킬1</label>
-        <label class="skill-label"><input type="checkbox" class="front-skill2"> 스킬2</label>
+        <label class="skill-label"><input type="checkbox" class="back-def-skill1"> 스킬1</label>
+        <label class="skill-label"><input type="checkbox" class="back-def-skill2"> 스킬2</label>
       </div>
     </div>`;
       }
