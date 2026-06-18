@@ -121,13 +121,13 @@
                 const atkMult = parseFloat(hero?.skill1?.atkmult) || 0; 
                 const defMult = parseFloat(hero?.skill1?.defmult) || 0; 
                 const hpMult = parseFloat(hero?.skill1?.hpmult) || 0; 
-                out1.innerText = `[${skill1Name}] : ${calculateDamage(skill1Name)}`;
+                out1.innerText = `[${skill1Name}] : ${calculateDamage(1)}`;
             }
             if(hero.skill2){
                 const atkMult = parseFloat(hero?.skill2?.atkmult) || 0; 
                 const defMult = parseFloat(hero?.skill2?.defmult) || 0; 
                 const hpMult = parseFloat(hero?.skill2?.hpmult) || 0; 
-                out2.innerText = `[${skill2Name}] : ${calculateDamage(skill2Name)}`;
+                out2.innerText = `[${skill2Name}] : ${calculateDamage(2)}`;
             }
         } else if (displayBox) {
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
@@ -404,7 +404,7 @@
                         buffCount = buffCount + 1;
                     }
                     if(skill1.selfbuff.turn.critdmg && parseFloat(skill1.selfbuff.turn.critdmg) > turncritdmgBuff){
-                        turncritdgBuff = parseFloat(skill1.selfbuff.turn.critdmg);
+                        turncritdmgBuff = parseFloat(skill1.selfbuff.turn.critdmg);
                         buffCount = buffCount + 1;
                     }
                     if(skill1.selfbuff.turn.weakrate && parseFloat(skill1.selfbuff.turn.weakrate) > turnweakrateBuff){
@@ -647,7 +647,7 @@
                         buffCount = buffCount + 1;
                     }
                     if(skill2.selfbuff.turn.critdmg && parseFloat(skill2.selfbuff.turn.critdmg) > turncritdmgBuff){
-                        turncritdgBuff = parseFloat(skill2.selfbuff.turn.critdmg);
+                        turncritdmgBuff = parseFloat(skill2.selfbuff.turn.critdmg);
                         buffCount = buffCount + 1;
                     }
                     if(skill2.selfbuff.turn.weakrate && parseFloat(skill2.selfbuff.turn.weakrate) > turnweakrateBuff){
@@ -890,7 +890,7 @@
                         buffCount = buffCount + 1;
                     }
                     if(passive.selfbuff.turn.critdmg && parseFloat(passive.selfbuff.turn.critdmg) > turncritdmgBuff){
-                        turncritdgBuff = parseFloat(passive.selfbuff.turn.critdmg);
+                        turncritdmgBuff = parseFloat(passive.selfbuff.turn.critdmg);
                         buffCount = buffCount + 1;
                     }
                     if(passive.selfbuff.turn.weakrate && parseFloat(passive.selfbuff.turn.weakrate) > turnweakrateBuff){
@@ -1211,17 +1211,23 @@
         return false;
     }
 
-    function calculateDamage(skillname){
+    function calculateDamage(skillId){
+        if(skillId === 1){
+            skillname = "skill1"
+        }
+        if(skillId === 2){
+            skillname = "skill2"
+        }
         const heroData = characterDb?.characters?.[attackerName];
-        const atkmult = parseFloat(heroData?.skillname?.atkmult) || 0;
-        const defmult = parseFloat(heroData?.skillname?.defmult) || 0;
-        const hpmult = parseFloat(heroData?.skillname?.hpmult) || 0;
-        const enemyhpmult = parseFloat(heroData?.skillname?.enemyhpmult[0]) || 0;
-        const limitmult = parseFloat(heroData?.skillname?.enemyhpmult[1]) || 0;
-        const debuffmult = parseFloat(heroData?.skillname?.debuffmult) || 0;
-        const debuffcap = parseFloat(heroData?.skillname?.debuffcap) || 0;
-        const weakmult = parseFloat(heroData?.skillname?.weakmult) || 0;
-        const critmult = parseFloat(heroData?.skillname?.critmult) || 0;
+        const atkmult = parseFloat(heroData?.[skillname]?.atkmult) || 0;
+        const defmult = parseFloat(heroData?.[skillname]?.defmult) || 0;
+        const hpmult = parseFloat(heroData?.[skillname]?.hpmult) || 0;
+        const enemyhpmult = parseFloat(heroData?.[skillname]?.enemyhpmult[0]) || 0;
+        const limitmult = parseFloat(heroData?.[skillname]?.enemyhpmult[1]) || 0;
+        const debuffmult = parseFloat(heroData?.[skillname]?.debuffmult) || 0;
+        const debuffcap = parseFloat(heroData?.[skillname]?.debuffcap) || 0;
+        const weakmult = parseFloat(heroData?.[skillname]?.weakmult) || 0;
+        const critmult = parseFloat(heroData?.[skillname]?.critmult) || 0;
         console.error(atkmult, defmult, hpmult);
         const frontInputs = document.querySelectorAll('.front-hero');
         const frontHeroes = Array.from(frontInputs).map(input => input.value.trim());
