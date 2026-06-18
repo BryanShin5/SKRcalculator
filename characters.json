@@ -331,7 +331,7 @@
     },
      "카람": {
       "buff1":{"guard": 20},
-      "buff2":{"dmg-reduction": 10}
+      "buff2":{"reduction": 10}
     },
     "유": {
       "buff1":{"def": 12, "target": "enemy"},
@@ -343,7 +343,7 @@
     },
     "제브": {
       "buff1":{"heal": 30},
-      "buff2":{"dmg-reduction": 10}
+      "buff2":{"reduction": 10}
     },
     "윈디": {
       "buff1":{"atk": 15},
