@@ -182,7 +182,7 @@
                     if(buff1.dmgamp && (buff1.type === "boss")){ bossvulnerability = bossvulnerability + parseFloat(buff1.dmgamp);}
                 }
                 else{
-                    if(buff1.atk && ((buff1.type === characterDb.characters[defenerName].stat.type)|| !buff1.type)){ atkBuff = atkBuff + parseFloat(buff1.atk);}
+                    if(buff1.atk && ((buff1.type === characterDb.characters[defenderName].stat.type)|| !buff1.type)){ atkBuff = atkBuff + parseFloat(buff1.atk);}
                     if(buff1.def){ defBuff = defBuff + parseFloat(buff1.def);}
                     if(buff1.critrate){ critrateBuff = critrateBuff + parseFloat(buff1.critrate);}
                     if(buff1.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff1.critdmg);}
@@ -237,7 +237,7 @@
                     if(buff1.weakrate){ enemyweakrateBuff = enemyweakrateBuff + parseFloat(buff1.weakrate);}
                     if(buff1.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff + parseFloat(buff1.weakdmg);}
                     if(buff1.dmgamp && (!buff1.type)){ enemydmgampBuff = enemydmgampBuff + parseFloat(buff1.dmgamp);}
-                    if(buff1.reduction){ reductionBuff = reductionBuff + parseFloat(buff1.dmg-reduction);}
+                    if(buff1.reduction){ reductionBuff = reductionBuff + parseFloat(buff1.reduction);}
                     if(buff1.guard){ enemyguardBuff = enemyguardBuff + parseFloat(buff1.guard);}
                 }
             } 
@@ -261,7 +261,7 @@
                     if(buff2.weakrate){ enemyweakrateBuff = enemyweakrateBuff + parseFloat(buff2.weakrate);}
                     if(buff2.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff + parseFloat(buff2.weakdmg);}
                     if(buff2.dmgamp && (!buff2.type)){ enemydmgampBuff = enemydmgampBuff + parseFloat(buff2.dmgamp);}
-                    if(buff12.reduction){ reductionBuff = reductionBuff + parseFloat(buff2.dmg-reduction);}
+                    if(buff2.reduction){ reductionBuff = reductionBuff + parseFloat(buff2.reduction);}
                     if(buff2.guard){ enemyguardBuff = enemyguardBuff + parseFloat(buff2.guard);}
                 }
             } 
@@ -294,7 +294,7 @@
         let turnenemydefDebuff = 0;
         let constenemyguardDebuff = 0;
         let turnenemyguardDebuff = 0;
-        allyTeam.forEach{heroInfo => {
+        allyTeam.forEach(heroInfo => {
         const allyName = heroInfo[0];
         const isSkill1On = heroInfo[1];
         const isSkill2On = heroInfo[2];
@@ -306,7 +306,7 @@
             return; // 다음 영웅으로 패스
         }
         if(isSkill1On){
-            const skill1 = atackerData.skill1;
+            const skill1 = attackerData.skill1;
             if(skill1.debuff){
                 if(skill1.debuff.const){
                     if(skill1.debuff.const.def && skill1.debuff.const.def > constenemydefDebuff){
@@ -549,7 +549,7 @@
             }
         }
         if(isSkill2On){
-            const skill2 = atackerData.skill2;
+            const skill2 = attackerData.skill2;
             if(skill2.debuff){
                 if(skill2.debuff.const){
                     if(skill2.debuff.const.def && skill2.debuff.const.def > constenemydefDebuff){
@@ -1043,7 +1043,7 @@
             }
         }
         }
-        }
+        )
         atkBuff = atkBuff + constatkBuff + turnatkBuff;
         defBuff = defBuff + constdefBuff + turndefBuff;
         critrateBuff = critrateBuff + constcritrateBuff + turncritrateBuff;
