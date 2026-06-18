@@ -58,9 +58,9 @@
     let enemydebuffCount = 0;
     let buffCount = 0;
     let enemybuffCount = 0;
-    let rawatkBuff;
-    let rawdefBuff;
-    let rawenemydefBuff;
+    let rawatkBuff = 0;
+    let rawdefBuff = 0;
+    let rawenemydefBuff = 0;
     async function fetchCharactersData() {
     try {
         const response = await fetch('characters.json');
@@ -835,6 +835,14 @@
             }
             if(passive.selfbuff && characterDb.characters[attackerName] === allyName){
                 if(passive.selfbuff.const){
+                    if(passive.selfbuff.const.atk && passive.selfbuff.const.type === "raw"){
+                        rawatkBuff = parseFloat(passive.selfbuff.const.atk);
+                        buffCount = buffCount + 1;
+                    }
+                    if(passive.selfbuff.const.def && passive.selfbuff.const.type === "raw"){
+                        rawatkBuff = parseFloat(passive.selfbuff.const.def);
+                        buffCount = buffCount + 1;
+                    }
                     if(passive.selfbuff.const.atk && parseFloat(passive.selfbuff.const.atk) > constatkBuff){
                         constatkBuff = parseFloat(passive.selfbuff.const.atk);
                         buffCount = buffCount + 1;
@@ -1173,7 +1181,7 @@
             defPetBaseDef = 11 * defPetLevel + 182;
             defPetBaseHp = 60 * defPetLevel + 1007;
         }
-        else if(petStar === 6){
+        else if(defpetStar === 6){
             defPetBaseAtk = 32 * defPetLevel + 404;
             defPetBaseDef = 20 * defPetLevel + 244;
             defPetBaseHp = 108 * defPetLevel + 1355;
