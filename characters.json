@@ -54,6 +54,255 @@
       "skill1": { "name": "혹한의 일격", "atkmult": 270, "hpmult": 65, "hits": 1},
       "skill2": { "name": "혹한의 지진", "atkmult": 40, "hpmult": 9, "hits": 2}
     },
+    "제이브": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "복수의 갑옷", "selfbuff": {"const": {"def" : 1375, "type": "raw"}},
+      "skill1": { "name": "분노의 일격", "atkmult": 150, "hits": 1},
+      "skill2": { "name": "용의 분노", "atkmult": 80, "hits": 2}
+    },
+    "크리스": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "어둠의 일격"},
+      "skill1": { "name": "어둠의 일격", "atkmult": 370, "hits": 1},
+      "skill2": { "name": "어둠의 속삭임", "atkmult": 115, "hits": 1}
+    },
+    "바네사": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "사막의 마법사" "debuff": {"const": {"def" : 24}}},
+      "skill1": { "name": "모래열풍", "atkmult": 110, "hits": 2,  "debuff": {"turn": {"vulnerability" : 24, "type":"magic"}}},
+      "skill2": { "name": "메마른 해일", "atkmult": 82, "hits": 2, "debuff": {"turn": {"vulnerability" : 24, "type":"magic"}}}
+    },
+    "멜키르": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "타락한 마법사", "bless":1},
+      "skill1": { "name": "어둠강탈", "atkmult": 70, "hits": 1},
+      "skill2": { "name": "금지된 실험", "atkmult": 52, "hits": 2}
+    },
+    "콜트": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "방랑의 사냥꾼", "selfbuff": {"const": {"atk" : 1320, "type": "raw"}}},
+      "skill1": { "name": "빠르고, 멋있게.", "atkmult": 40, "hits": 2},
+      "skill2": { "name": "어때, 화려하지?", "atkmult": 125, "hits": 1}
+    },
+    "플라튼": {
+      "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
+      "passive": {"name": "네스트라의 가호"},
+      "skill1": { "name": "심판대행", "atkmult": 50, "defmult": 55, "hits": 2},
+      "skill2": { "name": "이계의 빛"}
+    },
+    "브란즈&브란셀": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "선악의 권능", "allybuff": {"turn": {"atk" : 25}}},
+      "skill1": { "name": "괴력의 난동", "atkmult": 45, "hits": 3},
+      "skill2": { "name": "구원의 일격", "atkmult": 297, "hits": 2}
+    },
+    "팔라누스": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "지휘관의 저력", "selfbuff": {"const": {"stat-reduction" : 13.5}, "stack": {"amplify":50, "type": physical}}},
+      "skill1": { "name": "강고한 검격", "atkmult": 67, "hits": 2,  "defignore":65, "weakrate": 100},
+      "skill2": { "name": "작전명: 섬멸", "atkmult": 90, "hits": 2, "defignore":65, "weakrate": 100}
+    },
+    "델론즈": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "죽음의 경계", "allybuff": {"const": {"aplify" : 20, "type": "physical"}}},
+      "skill1": { "name": "사신강림", "atkmult": 135, "hits": 1},
+      "skill2": { "name": "죽음의 일격", "atkmult": 158, "hits": 5}
+    },
+    "각성델론즈": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "죽음의 경계", "allybuff": {"const": {"amplify" : 20, "type": "physical"}, "stack": {"critdmg": 64}}},
+      "skill1": { "name": "사신의 심판", "atkmult": 97, "hits": 2},
+      "skill2": { "name": "사신난무", "atkmult": 174, "hits": 5}
+      "skill3": { "name": "파멸의 손아귀"}
+    }, 
+    "에이스": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "불굴의 지휘", "debuff": {"const": {"def" : 24}}},
+      "skill1": { "name": "달빛 베기", "atkmult": 85, "hits": 2, "defignore": 40},
+      "skill2": { "name": "일도천화엽", "atkmult": 140, "hits": 1, "debuff": {"turn": {"guard" : 33}}}
+    },
+    "린": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "홍린포", "allybuff": {"const": {"weakdmg" : 23}}, "debuff":{"const": {"weakrate": 22}}},
+      "skill1": { "name": "용린성하", "atkmult": 62, "weakmult": 37, "hits": 2},
+      "skill2": { "name": "용제의 진노", "atkmult": 132, "hits": 2}
+    },  
+    "오공": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "미후분신술", "selfbuff": {"const": {"def" : 1125, "type": "raw"}}},
+      "skill1": { "name": "환.대봉승타격", "atkmult": 102, "enemyhpmult": [6, 100] "hits": 3, "defignore": 40, "critrate": 100},
+      "skill2": { "name": "환.여의난참무", "atkmult": 82, "hits": 3, "critrate": 100, "debuff": {"turn": {"guard" : 33}}, "allybuff": {"turn": {"reduction": 15}}}
+    },
+    "여포": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "초인적인 힘", "allybuff": {"const": {"atk" : 31, "type": "physical"}, "turn": {"weakdmg":28}},"bless":1},
+      "skill1": { "name": "혈풍벽파", "atkmult": 67, "weakmult": 25, "hits": 2, "debuff": {"turn":{"def": 29}}, "allybuff":{"turn": {"defignore": 10}}},
+      "skill2": { "name": "적토질풍격", "atkmult": 60, "weakmult": 32, "defignore": 40, "hits": 2, "debuff": {"turn":{"def": 29}}, "allybuff":{"turn": {"defignore": 10}}}
+    },  
+    "태오": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "까마귀 눈동자", "selfbuff": {"const": {"critrate" : 100}}},
+      "skill1": { "name": "흑풍참", "atkmult": 170, "hits": 1},
+      "skill2": { "name": "적토질풍격", "atkmult": 90, "hits": 2}
+    },
+    "연희": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "혜안", "allybuff": {"const": {"atk" : 25, "type":"magic"}}},
+      "skill1": { "name": "파괴의 손짓", "atkmult": 51, "enemyhpmult": [7, 100], "hits": 3},
+      "skill2": { "name": "종말의 영면", "atkmult": 41, "defignore": 40, "hits": 3}
+    },
+    "카르마": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "magic"},
+      "passive": {"name": "타락한 신선", "allybuff": {"const": {"dmgamp" : 15}, "stack": {"reduction": 20}}, "selfbuff":{"stack":{"def":52}}},
+      "skill1": { "name": "과오의 화옥", "atkmult": 28, "defmult": 33, "hits": 3, "defignore": 40},
+      "skill2": { "name": "절망의 폭풍", "atkmult": 62, "defmult": 71, "hits": 3}
+    },
+    "카일": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "소검쌍무", "selfbuff": {"const": {"critrate" : 27}}},
+      "skill1": { "name": "철쇄폭압", "atkmult": 72, "enemyhpmult": [10, 75], "defignore": 40, "hits": 1},
+      "skill2": { "name": "사슬의 무덤", "atkmult": 90, "hits": 2, "defignore": 40}
+    },
+    "타카": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "소검쌍무", "debuff": {"stack": {"vulnerability" : 32, "type": "physical"}}},
+      "skill1": { "name": "바람의 칼날", "atkmult": 170, "critdmg": 46, "hits": 1},
+      "skill2": { "name": "죽음의 무도", "atkmult": 430, "hits": 1, "defignore": 40}
+    },  
+    "오를리": {
+      "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
+      "passive": {"name": "통찰의 빛", "allybuff": {"const": {"critrate" : 17, "critdmg": 25}}},
+      "skill1": { "name": "고결한 유성", "atkmult": 60, "hpmult": 14, "hits": 1, "debuff":{"turn":{"def":36}}},
+      "skill2": { "name": "빛의 일갈", "atkmult": 22, "hpmult": 6, "hits": 2, "defignore": 40}
+    },
+    "아킬라": {
+      "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
+      "passive": {"name": "어둠의 인도자"},
+      "skill1": { "name": "잔혹한 폭풍", "atkmult": 13, "hpmult": 3, "hits": 2, "debuff":{"turn":{"weakrate": 30}}, "selfbuff":{"turn":{"reduction":28}}},
+      "skill2": { "name": "칠흑의 장막", "atkmult": 30, "hpmult": 7, "hit": 1}
+    },
+    "오목": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "신목의 가호", "selfbuff": {"const": {"atk" : 25, "type": "magic"}}},
+      "skill1": { "name": "맹호의 무도", "atkmult": 305, "hits": 1},
+      "skill2": { "name": "만월화차 맹호전", "atkmult": 80, "enemyhpmult": [9, 75], "skillamp": 50, "hits": 2, "defignore": 65}
+    },  
+    "칼 헤론": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "쌍창의 달인", "allybuff": {"const": {"critdmg" : 31}, "turn": {"amplify":19, "type": "physical"}}},
+      "skill1": { "name": "뇌광포", "atkmult": 53, "hits": 3, "debuff": {"turn": {"vulnerability": 28, "type": "physical"}}},
+      "skill2": { "name": "청천벽력 개", "atkmult": 57, "hits": 2}
+    },  
+    "키리엘": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "쌍창의 달인", "allybuff": {"const": {"amplify":20, "type": "magic"}}, "selfbuff":{"const":{"atk": 1320, "type": "raw"}}},
+      "skill1": { "name": "레굴루스", "atkmult": 267, "hits": 2},
+      "skill2": { "name": "유성우", "atkmult": 67, "hits": 2}
+    },  
+    "엘리시아": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "혁명단의 인도자", "debuff": {"const": {"def" : 24}},
+      "skill1": { "name": "천공의 빛", "atkmult": 80, "hits": 1},
+      "skill2": { "name": "별빛 낙하", "atkmult": 115, "hits": 1}
+    },
+    "라이언": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "쾌속의 마검사", "allybuff": {"const": {"dmgamp":31}}},
+      "skill1": { "name": "강자사냥", "atkmult": 155, "hits": 1, "defignore": 40},
+      "skill2": { "name": "광풍참", "atkmult": 170, "weakmult": 270, "hits": 1, "skillamp:50","defignore":40}
+    },  
+    "클라한": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "호랑이의 용맹", "selfbuff": {"const": {"atk":33, "amplify":33}}},
+      "skill1": { "name": "비호선풍", "atkmult": 265, "hits": 1, "defignore": 40},
+      "skill2": { "name": "질풍 몰아치기", "atkmult": 300, "hits": 1}
+    }, 
+    "카구라": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "팔사의 저주", "allybuff": {"const": {"critdmg":34}}},
+      "skill1": { "name": "해방-팔사검", "atkmult": 62, "hits": 2, "debuff": {"turn":{"vulnerability": 24, "type": "physical"}}},
+      "skill2": { "name": "해방-뱀사냥", "atkmult": 57, "hits": 2, "debuff": {"turn":{"vulnerability": 24, "type": "physical"}}}
+    }, 
+    "미호": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "호시탐탐", "allybuff": {"const": {"weakdmg":23}}},
+      "skill1": { "name": "살육의 춤", "atkmult": 170, "weakmult": 75, "hits": 1, "debuff": {"turn":{"vulnerability": 22, "type": "magic"}}},
+      "skill2": { "name": "교만의 일격", "atkmult": 185, "weakmult": 85, "hits": 1}
+    }, 
+    "아멜리아": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "첨단 나노 슈트"},
+      "skill1": { "name": "통행금지", "atkmult": 70, "hits": 1},
+      "skill2": { "name": "위기대응", "atkmult": 165, "hits": 2}
+    }, 
+    "트루드": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "전투의 희열", "selfbuff": {"const": {"critrate" : 100}},
+      "skill1": { "name": "한방이면 끝", "atkmult": 150, "hits": 1},
+      "skill2": { "name": "놀아 볼까!", "atkmult": 68, "hits": 3, "selfbuff":{"turn":{"critdmg": 37}}}
+    },
+    "프레이야": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "아름다운 지배자", "selfbuff":{"stack":{"atk": 20}}, "blessing": 1},
+      "skill1": { "name": "고결한 금풍", "atkmult": 67, "hits": 2, "debuff": {"stack": {"def": 11}}},
+      "skill2": { "name": "금빛 검우", "atkmult": 80, "hits": 2, "defignore": 40}
+    }, 
+    "라드그리드": {
+      "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
+      "passive": {"name": "준비된 병략", "selfbuff":{"const":{"def":39}}},
+      "skill1": { "name": "전창의 비", "atkmult": 25, "defmult": 27, "hits": 2, "debuff":{"turn":{"weakrate": 30, "critrate":25}}},
+      "skill2": { "name": "작렬하는 창연", "atkmult": 50, "hpmult": 55, "hit": 2}
+    },
+    "레긴레이프": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "조화의 비원", "debuff":{"const":{"def": 24}},
+      "skill1": { "name": "광명의 도래", "atkmult": 75, "hits": 2, "critrate":100, "debuff": {"stack": {"vulnerability": 20,"type":"magic"}}},
+      "skill2": { "name": "우주의 균열", "atkmult": 42, "hpmult": [5,50], "hits": 3, "critrate":100, "debuff": {"stack": {"vulnerability": 20,"type":"magic"}}}
+    }, 
+    "란드그리드": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "영웅 무쌍", "debuff":{"const":{"def": 24, "guard": 23}},
+      "skill1": { "name": "약속된 전장", "atkmult": 145, "hits": 1, "selfbuff": {"turn": {"weakdmg": 31}}, "debuff":{"turn":{"guard":25}}},
+      "skill2": { "name": "절대 창의 주스트", "atkmult": 192, "hits": 4}
+    }, 
+    "미스트": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "magic"},
+      "passive": {"name": "파멸의 안개", "selfbuff": {"const": {"weakrate" : 27}},
+      "skill1": { "name": "깨어난 야수", "atkmult": 57, "hits": 2},
+      "skill2": { "name": "죽음의 안개", "atkmult": 687, "hits": 2}
+    },
+    "스쿨드": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "초승달 예언가"},
+      "skill1": { "name": "반짝! 별자리 여행", "atkmult": 32, "hits": 2},
+      "skill2": { "name": "성좌의 비밀", "atkmult": 26, "hits": 3}
+    }, 
+    "각성스쿨드": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "초승달 예언가"},
+      "skill1": { "name": "반짝! 별자리 여행", "atkmult": 37, "hits": 2},
+      "skill2": { "name": "성좌의 비밀", "atkmult": 26, "hits": 3},
+      "skill2": { "name": "천운의 광휘", "atkmult": 155, "hits": 1}
+    }, 
+    "실베스타": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "기사의 의지"},
+      "skill1": { "name": "정의의 단죄", "atkmult": 85, "hits": 2, "defignore":40},
+      "skill2": { "name": "정화의 일격", "atkmult": 75, "hits": 2, "defignore":40}
+    }, 
+    "각성실베스타": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "기사의 의지"},
+      "skill1": { "name": "정의의 단죄", "atkmult": 95, "hits": 2, "defignore":40},
+      "skill2": { "name": "정화의 일격", "atkmult": 75, "enemyhpmult": [7,75], "hits": 2, "defignore":40},
+      "skill1": { "name": "정화하는 어둠", "atkmult": 100, "hits": 2, "defignore":40}
+    }, 
+    "클레미스": {
+      "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
+      "passive": {"name": "신묘한 지능", "debuff": {"const": {"atk" : 16}}, "selfbuff":{"const":{"guard":33}}},
+      "skill1": { "name": "완벽한 함정", "atkmult": 30, "hpmult": 7, "hits": 1},
+      "skill2": { "name": "섭리의 조율", "debuff":{"turn":{"dmgamp":16}}, "allybuff":{"turn":{"def":39}}}
+    },
     "세인": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
       "passive": { "name": "악마의 힘", "selfbuff":{"const": {"critrate" : 41, "debuffamp": 20}}},
