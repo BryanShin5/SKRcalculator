@@ -1266,7 +1266,7 @@
         const defFrontHeroes = Array.from(defFrontInputs).map(input => input.value.trim());
         const defBackInputs = document.querySelectorAll('.back-def-hero');
         const defBackHeroes = Array.from(defBackInputs).map(input => input.value.trim());
-        const deffrontHeroData = Array.from(deffrontInputs)
+        const deffrontHeroData = Array.from(defFrontInputs)
             .map(input => {
             const name = input.value.trim();
             if (!name) return null; // 빈 입력창 제외
@@ -1278,7 +1278,7 @@
             return [name, skill1, skill2];
         })
         .filter(item => item !== null);
-        const defbackHeroData = Array.from(defbackInputs)
+        const defbackHeroData = Array.from(defBackInputs)
             .map(input => {
             const name = input.value.trim();
             if (!name) return null; // 빈 입력창 제외
