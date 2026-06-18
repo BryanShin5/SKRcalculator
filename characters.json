@@ -37,10 +37,22 @@
       "skill2": { "name": "방어준비", "allybuff": {"turn": {"link": 10}}}
     },
     "아일린": {
-      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
       "passive": {"name": "포디나의 분노", "allybuff": {"const": {"atk" : 25, "type": "physical"}}},
       "skill1": { "name": "뇌제의 분노", "atkmult": 136, "hits": 3},
       "skill2": { "name": "청천벽력", "atkmult": 75, "hits": 2}
+    },
+    "레이첼": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "화염의 힘", "allybuff": {"const": {"weakrate" : 27}},
+      "skill1": { "name": "염화", "atkmult": 122, "hits": 2, "debuff": {"turn": {"dmgamp" : 17, "atk": 22}}},
+      "skill2": { "name": "불새", "atkmult": 160, "hits": 1, "debuff": {"turn": {"def": 36, "vulnerability" : 28, "type": "physical"}}}
+    },
+    "스파이크": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "혹한의 심장", "selfbuff": {"const": {"atk" : 1080, "type": "raw"}},
+      "skill1": { "name": "혹한의 일격", "atkmult": 270, "hpmult": 65, "hits": 1},
+      "skill2": { "name": "혹한의 지진", "atkmult": 40, "hpmult": 9, "hits": 2}
     },
     "세인": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
