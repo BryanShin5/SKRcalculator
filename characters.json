@@ -10,7 +10,7 @@
       "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
       "passive": {"name": "망자의 축복", "selfbuff": {"const": {"def" : 900, "type": "raw"}}},
       "skill1": { "name": "달빛의 심판", "atkmult": 30, "hpmult": 7, "hits": 2},
-      "skill2": { "name": 성령의 기도"}
+      "skill2": { "name": "성령의 기도"}
     },
     "쥬리": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
