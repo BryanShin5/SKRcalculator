@@ -1278,7 +1278,7 @@
             return [name, skill1, skill2];
         })
         .filter(item => item !== null);
-        const backHeroData = Array.from(defbackInputs)
+        const defbackHeroData = Array.from(defbackInputs)
             .map(input => {
             const name = input.value.trim();
             if (!name) return null; // 빈 입력창 제외
