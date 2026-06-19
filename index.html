@@ -1236,6 +1236,11 @@
         const debuffcap = parseFloat(heroData?.[skillname]?.debuffcap) || 0;
         const weakmult = parseFloat(heroData?.[skillname]?.weakmult) || 0;
         const critmult = parseFloat(heroData?.[skillname]?.critmult) || 0;
+        const defignore = parseFloat(heroData?.[skillname]?.defignore) || 0;
+        const critrate = parseFloat(heroData?.[skillname]?.critrate) || 0;
+        const critdmg = parseFloat(heroData?.[skillname]?.critdmg) || 0;
+        const weakrate = parseFloat(heroData?.[skillname]?.weakrate) || 0;
+        const weakdmg = parseFloat(heroData?.[skillname]?.weakdmg) || 0;
         console.error(atkmult, defmult, hpmult);
         const frontInputs = document.querySelectorAll('.front-hero');
         const frontHeroes = Array.from(frontInputs).map(input => input.value.trim());
@@ -1301,13 +1306,18 @@
         console.log(AttackerHeroes, DefenderHeroes); 
         buffIterator(AttackerHeroes,DefenderHeroes);
         calculateStat();
+        const skillCritRate = critrate + finalCritRate;
+        const skillCritDmg = critdmg + finalCritDmg;
+        const skillWeakRate = weakrate + finalWeakRate;
+        const skillWeakDmg = weakdmg + finalWeakDmg;
+        const skillDefIgnore = Math.min((defignore + finalDefIgnore),95);
         console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, finalDefIgnore, finalBreak, attackerName, defenderName);
         console.error((finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100));
-        const baseDmg = (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100);
+        const baseDmg = (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100) + (debuffmult/100)* Math.min(debuffCount, debuffcap)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
         console.error(baseDmg * finalCritDmg / 100);
         console.error(baseDmg * finalWeakDmg / 100);
         console.error(baseDmg * finalCritDmg / 100 * finalWeakDmg / 100);
-        return baseDmg * (465 / (465 + defFinalDef)) * (100 - defFinalReduction) / 100;
+        return baseDmg * (465 / ((465 + defFinalDef)*(100 - skillDefIgnore)/100)) * ((100 - defFinalReduction) / 100) * ((100 - reductionBuff)/100);
     }
     function renderFormation(selectedOption) {
       const displayArea = document.getElementById('formation-display-area');
