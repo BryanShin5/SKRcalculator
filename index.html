@@ -1195,7 +1195,7 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                     if(passive.selfbuff.const.statreduction){
-                        statreductionbuff = parseFloat(passive.selfbuff.const.statreduction);
+                        statreductionBuff = parseFloat(passive.selfbuff.const.statreduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
@@ -1495,7 +1495,7 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                     if(passive.allybuff.const.statreduction){
-                        statreductionbuff = parseFloat(passive.allybuff.const.statreduction);
+                        statreductionBuff = parseFloat(passive.allybuff.const.statreduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
@@ -1800,7 +1800,7 @@
         defFinalDef = (defDef + defPetBaseDef + (defBaseDef * defPetDef) + ((defBaseDef * defFormationDef / 100))) * ((100 + enemydefBuff) / 100) + rawenemydefBuff ;
         defFinalHp = defHp + defPetBaseHp + (defBaseHp * defPetHp);
         defFinalGuard = defGuard + enemyguardBuff;
-        defFinalReduction = defReduction + statreductionbuff;
+        defFinalReduction = defReduction + statreductionBuff;
         defFinalElasticity = defElasticity;
         finalCritDmg = finalCritDmg - defFinalElasticity;
         return false;
