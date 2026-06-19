@@ -342,7 +342,7 @@
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                     if(skill1.debuff.stack.vulnerability && (!skill1.debuff.stack.type || (skill1.debuff.stack.type === characterDb.characters[attackerName].stat.type))){
-                        vulnerability = parseFloat(skill1.debuff.stack.vulnerability);
+                        vulnerability = vulnerability + parseFloat(skill1.debuff.stack.vulnerability);
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                 }
@@ -585,7 +585,7 @@
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                     if(skill2.debuff.stack.vulnerability && (!skill2.debuff.stack.type || (skill2.debuff.stack.type === characterDb.characters[attackerName].stat.type))){
-                        vulnerability = parseFloat(skill2.debuff.stack.vulnerability);
+                        vulnerability = vulnerability + parseFloat(skill2.debuff.stack.vulnerability);
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                 }
@@ -828,7 +828,7 @@
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                     if(passive.debuff.stack.vulnerability && (!passive.debuff.stack.type || (passive.debuff.stack.type === characterDb.characters[attackerName].stat.type))){
-                        vulnerability = parseFloat(passive.debuff.stack.vulnerability);
+                        vulnerability = vulnerability + parseFloat(passive.debuff.stack.vulnerability);
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                 }
@@ -1151,6 +1151,7 @@
         finalBossAmp = acc1BossAmp + acc2BossAmp + gearBossAmp + bossampBuff;
         if(defenderName === "보스"){
             finalDmgAmp = finalDmgAmp + finalBossAmp;
+            vulnerability = vulnerability + bossvulnerability;
         }
         finalAmp =  parseFloat(document.getElementById('dmg-buff').value) || 0;
 
@@ -1295,7 +1296,7 @@
             if (!name) return null; // 빈 입력창 제외
 
             const card = input.closest('.hero-card');
-            const skill1 = card.querySelector('.back--def-skill1')?.checked || false;
+            const skill1 = card.querySelector('.back-def-skill1')?.checked || false;
             const skill2 = card.querySelector('.back-def-skill2')?.checked || false;
 
             return [name, skill1, skill2];
