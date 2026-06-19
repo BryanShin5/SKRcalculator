@@ -1126,7 +1126,7 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                     if(skill1.selfbuff.stack.reduction){
-                        reductionBuff = enemyreductionbuff + parseFloat(skill1.selfbuff.const.reduction);
+                        reductionBuff = reductionBuff + parseFloat(skill1.selfbuff.const.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
@@ -1173,7 +1173,7 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                     if(skill2.selfbuff.stack.reduction){
-                        reductionBuff = enemyreductionbuff + parseFloat(skill2.selfbuff.const.reduction);
+                        reductionBuff = reductionBuff + parseFloat(skill2.selfbuff.const.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
@@ -1209,11 +1209,11 @@
                         turnenemydefbuff = parseFloat(passive.selfbuff.turn.def);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(passive.selfbuff.turn.guard && parseFloat(passive.selfbuff.turn.guard)>turnenemydefbuff){
+                    if(passive.selfbuff.turn.guard && parseFloat(passive.selfbuff.turn.guard)>turnenemyguardbuff){
                         turnenemyguardbuff = parseFloat(passive.selfbuff.turn.guard);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(passive.selfbuff.turn.reduction && parseFloat(passive.selfbuff.turn.reduction)>turnenemydefbuff){
+                    if(passive.selfbuff.turn.reduction && parseFloat(passive.selfbuff.turn.reduction)>turnenemyreductionbuff){
                         turnenemyreductionbuff = parseFloat(passive.selfbuff.turn.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
@@ -1228,7 +1228,7 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                     if(passive.selfbuff.stack.reduction){
-                        reductionBuff = enemyreductionbuff + parseFloat(passive.selfbuff.const.reduction);
+                        reductionBuff = reductionBuff + parseFloat(passive.selfbuff.const.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
@@ -1243,11 +1243,11 @@
                         constenemydefbuff = parseFloat(skill1.allybuff.const.def);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(skill1.allybuff.const.guard && parseFloat(skill1.allybuff.const.guard)>constenemydefbuff){
+                    if(skill1.allybuff.const.guard && parseFloat(skill1.allybuff.const.guard)>constenemyguardbuff){
                         constenemyguardbuff = parseFloat(skill1.allybuff.const.guard);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(skill1.allybuff.const.reduction && parseFloat(skill1.allybuff.const.reduction)>constenemydefbuff){
+                    if(skill1.allybuff.const.reduction && parseFloat(skill1.allybuff.const.reduction)>constenemyreductionbuff){
                         constenemyreductionbuff = parseFloat(skill1.allybuff.const.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
@@ -1257,11 +1257,11 @@
                         turnenemydefbuff = parseFloat(skill1.allybuff.turn.def);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(skill1.allybuff.turn.guard && parseFloat(skill1.allybuff.turn.guard)>turnenemydefbuff){
+                    if(skill1.allybuff.turn.guard && parseFloat(skill1.allybuff.turn.guard)>turnenemyguardbuff){
                         turnenemyguardbuff = parseFloat(skill1.allybuff.turn.guard);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(skill1.allybuff.turn.reduction && parseFloat(skill1.allybuff.turn.reduction)>turnenemydefbuff){
+                    if(skill1.allybuff.turn.reduction && parseFloat(skill1.allybuff.turn.reduction)>turnenemyreductionbuff){
                         turnenemyreductionbuff = parseFloat(skill1.allybuff.turn.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
@@ -1276,7 +1276,7 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                     if(skill1.allybuff.stack.reduction){
-                        reductionBuff = enemyreductionbuff + parseFloat(skill1.allybuff.const.reduction);
+                        reductionBuff = reductionBuff + parseFloat(skill1.allybuff.const.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
@@ -1370,11 +1370,11 @@
                         constenemydefbuff = parseFloat(skill2.allybuff.const.def);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(skill2.allybuff.const.guard && parseFloat(skill2.allybuff.const.guard)>constenemydefbuff){
+                    if(skill2.allybuff.const.guard && parseFloat(skill2.allybuff.const.guard)>constenemyguardbuff){
                         constenemyguardbuff = parseFloat(skill2.allybuff.const.guard);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(skill2.allybuff.const.reduction && parseFloat(skill2.allybuff.const.reduction)>constenemydefbuff){
+                    if(skill2.allybuff.const.reduction && parseFloat(skill2.allybuff.const.reduction)>constenemyreductionbuff){
                         constenemyreductionbuff = parseFloat(skill2.allybuff.const.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
@@ -1384,11 +1384,11 @@
                         turnenemydefbuff = parseFloat(skill2.allybuff.turn.def);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(skill2.allybuff.turn.guard && parseFloat(skill2.allybuff.turn.guard)>turnenemydefbuff){
+                    if(skill2.allybuff.turn.guard && parseFloat(skill2.allybuff.turn.guard)>turnenemyguardbuff){
                         turnenemyguardbuff = parseFloat(skill2.allybuff.turn.guard);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(skill2.allybuff.turn.reduction && parseFloat(skill2.allybuff.turn.reduction)>turnenemydefbuff){
+                    if(skill2.allybuff.turn.reduction && parseFloat(skill2.allybuff.turn.reduction)>turnenemyreductionbuff){
                         turnenemyreductionbuff = parseFloat(skill2.allybuff.turn.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
@@ -1403,7 +1403,7 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                     if(skill2.allybuff.stack.reduction){
-                        reductionBuff = enemyreductionbuff + parseFloat(skill2.allybuff.const.reduction);
+                        reductionBuff = reductionBuff + parseFloat(skill2.allybuff.const.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
@@ -1519,11 +1519,11 @@
                         turnenemydefbuff = parseFloat(passive.allybuff.turn.def);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(passive.allybuff.turn.guard && parseFloat(passive.allybuff.turn.guard)>turnenemydefbuff){
+                    if(passive.allybuff.turn.guard && parseFloat(passive.allybuff.turn.guard)>turnenemyguardbuff){
                         turnenemyguardbuff = parseFloat(passive.allybuff.turn.guard);
                         enemybuffCount = enemybuffCount + 1;
                     }
-                    if(passive.allybuff.turn.reduction && parseFloat(passive.allybuff.turn.reduction)>turnenemydefbuff){
+                    if(passive.allybuff.turn.reduction && parseFloat(passive.allybuff.turn.reduction)>turnenemyreductionbuff){
                         turnenemyreductionbuff = parseFloat(passive.allybuff.turn.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
@@ -1538,7 +1538,7 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                     if(passive.allybuff.stack.reduction){
-                        reductionBuff = enemyreductionbuff + parseFloat(passive.allybuff.const.reduction);
+                        reductionBuff = reductionBuff + parseFloat(passive.allybuff.const.reduction);
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
@@ -1649,7 +1649,7 @@
         dmgampBuff = dmgampBuff - dmgampdebuff;
         enemydefBuff = enemydefBuff + constenemydefbuff + turnenemydefbuff;
         enemyguardBuff = enemyguardBuff + constenemyguardbuff + turnenemyguardbuff;
-        enemyreductionBuff = enemyreductionBuff + constenemyreductionbuff + turnenemyreductionbuff;
+        reductionBuff = reductionBuff + constenemyreductionbuff + turnenemyreductionbuff;
         enemydefDebuff = enemydefDebuff + constenemydefDebuff + turnenemydefDebuff;
         enemyguardDebuff = enemyguardDebuff + constenemyguardDebuff + turnenemyguardDebuff;
         vulnerability = vulnerability + constvulnerability + turnvulnerability;
