@@ -1081,12 +1081,13 @@
         // DB에서 공격 영웅 데이터 추출
         const defenderData = characterDb.characters[enemyName];
         if (!defenderData) {
-            console.error(`DB에서 방어팀 영웅 '${defenderName}'을 찾을 수 없습니다.`);
+            console.error(`DB에서 방어팀 영웅 '${enemyName}'을 찾을 수 없습니다.`);
             return; // 다음 영웅으로 패스
         }
         if(enemyName === defenderName){
             if(isSkill1On){
                 const skill1 = defenderData.skill1;
+                if(skill1.selfbuff){
                 if(skill1.selfbuff.const){
                     if(skill1.selfbuff.const.def && parseFloat(skill1.selfbuff.const.def)>constenemydefbuff){
                         constenemydefbuff = parseFloat(skill1.selfbuff.const.def);
@@ -1129,9 +1130,11 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
+                }
             }
             if(isSkill2On){
                 const skill2 = defenderData.skill2;
+                if(skill2.selfbuff){
                 if(skill2.selfbuff.const){
                     if(skill2.selfbuff.const.def && parseFloat(skill2.selfbuff.const.def)>constenemydefbuff){
                         constenemydefbuff = parseFloat(skill2.selfbuff.const.def);
@@ -1174,9 +1177,11 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
+                }
             }
             if(defenderData.passive){
                 const passive = defenderData.passive;
+                if(passive.selfbuff){
                 if(passive.selfbuff.const){
                     if(passive.selfbuff.const.def && passive?.selfbuff?.const?.type === "raw"){
                         rawenemydefBuff = parseFloat(passive.selfbuff.const.def);
@@ -1227,10 +1232,12 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
+                }
             }
         }
         if(isSkill1On){
                 const skill1 = defenderData.skill1;
+                if(skill1.allybuff){
                 if(skill1.allybuff.const){
                     if(skill1.allybuff.const.def && parseFloat(skill1.allybuff.const.def)>constenemydefbuff){
                         constenemydefbuff = parseFloat(skill1.allybuff.const.def);
@@ -1273,6 +1280,8 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
+                }
+            if(skill1.debuff){
                 if(skill1.debuff.const){
                     if(skill1.debuff.const.atk && parseFloat(skill1.debuff.const.atk)>constatkdebuff){
                         constatkdebuff = parseFloat(skill1.debuff.const.atk);
@@ -1352,8 +1361,10 @@
                     }
                 }
             }
+            }
             if(isSkill2On){
                 const skill2 = defenderData.skill2;
+                if(skill2.allybuff){
                 if(skill2.allybuff.const){
                     if(skill2.allybuff.const.def && parseFloat(skill2.allybuff.const.def)>constenemydefbuff){
                         constenemydefbuff = parseFloat(skill2.allybuff.const.def);
@@ -1396,6 +1407,8 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
+                }
+                if(skill2.debuff){
                 if(skill2.debuff.const){
                     if(skill2.debuff.const.atk && parseFloat(skill2.debuff.const.atk)>constatkdebuff){
                         constatkdebuff = parseFloat(skill2.debuff.const.atk);
@@ -1475,8 +1488,10 @@
                     }
                 }
             }
+            }
             if(defenderData.passive){
                 const passive = defenderData.passive;
+                if(passive.allybuff){
                 if(passive.allybuff.const){
                     if(passive.allybuff.const.def && passive?.allybuff?.const?.type === "raw"){
                         rawenemydefBuff = parseFloat(passive.allybuff.const.def);
@@ -1527,6 +1542,8 @@
                         enemybuffCount = enemybuffCount + 1;
                     }
                 }
+                }
+                if(passive.debuff){
                 if(passive.debuff.const){
                     if(passive.debuff.const.atk && parseFloat(passive.debuff.const.atk)>constatkdebuff){
                         constatkdebuff = parseFloat(passive.debuff.const.atk);
@@ -1604,6 +1621,7 @@
                         dmgampdebuff = parseFloat(passive.debuff.stack.dmgamp);
                         debuffCount = debuffCount + 1;
                     }
+                }
                 }
             }
         })
