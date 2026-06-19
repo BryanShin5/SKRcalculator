@@ -1826,7 +1826,7 @@
 
     function calculateDamage(skillId){
         if(skillId === 1){
-            skillname = "skill2"
+            skillname = "skill1"
         }
         if(skillId === 2){
             skillname = "skill2"
@@ -1922,7 +1922,7 @@
         console.error(baseDmg * finalCritDmg / 100);
         console.error(baseDmg * finalWeakDmg / 100);
         console.error(baseDmg * finalCritDmg / 100 * finalWeakDmg / 100);
-        return baseDmg * (465 / ((465 + defFinalDef)*(100 - skillDefIgnore)/100)) * ((100 - defFinalReduction) / 100) * ((100 - reductionBuff)/100);
+        return baseDmg * (465 / ((465 + (defFinalDef*(100 - skillDefIgnore)/100)))) * ((100 - defFinalReduction) / 100) * ((100 - reductionBuff)/100);
     }
     function renderFormation(selectedOption) {
       const displayArea = document.getElementById('formation-display-area');
