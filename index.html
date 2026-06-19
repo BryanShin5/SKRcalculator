@@ -50,7 +50,8 @@
     let enemydefignoreBuff = 0;
     let enemyguardBuff = 0;
     let vulnerabilityBuff = 0;
-    let reductionBuff = 0;
+    let reductionBuff = 0; //감쇄 패시브
+    let statreductionBuff = 0; //받피감 패시브(팔라)
     let vulnerability = 0;
     let bossvulnerability = 0;
     let amplifyBuff = 0; //물피증, 마피증
@@ -289,11 +290,39 @@
         let turndefignoreBuff = 0;
         let turnvulnerability = 0;
         let turnamplifyBuff = 0;
-
+        let enemydefDebuff = 0;
+        let enemyguardDebuff = 0;
+        let enemyreductionBuff = 0;
+        
+        let constenemydefBuff = 0;
+        let turnenemydefBuff = 0;
+        let constenemyguardBuff = 0;
+        let turnenemyguardBuff = 0;
+        let constenemyreductionbuff = 0;
+        let turnenemyreductionbuff = 0;
         let constenemydefDebuff = 0;
         let turnenemydefDebuff = 0;
         let constenemyguardDebuff = 0;
         let turnenemyguardDebuff = 0;
+        let atkdebuff = 0;
+        let defdebuff = 0;
+        let critratedebuff = 0;
+        let critdmgdebuff = 0;
+        let weakratedebuff = 0;
+        let dmgampdebuff = 0;
+        let constatkdebuff = 0;
+        let constdefdebuff = 0;
+        let constcritratedebuff = 0;
+        let constcritdmgdebuff = 0;
+        let constweakratedebuff = 0;
+        let constdmgampdebuff = 0;
+        let turnatkdebuff = 0;
+        let turndefdebuff = 0;
+        let turncritratedebuff = 0;
+        let turncritdmgdebuff = 0;
+        let turnweakratedebuff = 0;
+        let turndmgampdebuff = 0;
+        
         allyTeam.forEach(heroInfo => {
         const allyName = heroInfo[0].trim();
         const isSkill1On = heroInfo[1];
@@ -318,7 +347,7 @@
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                     if(skill1.debuff.const.vulnerability && parseFloat(skill1.debuff.const.vulnerability) > constvulnerability && (!skill1.debuff.const.type || (skill1.debuff.const.type === characterDb.characters[attackerName].stat.type))){
-                        constenemydefDebuff = parseFloat(skill1.debuff.const.vulnerability);
+                        constvulnerability = parseFloat(skill1.debuff.const.vulnerability);
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                 }
@@ -332,7 +361,7 @@
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                     if(skill1.debuff.turn.vulnerability && parseFloat(skill1.debuff.turn.vulnerability) > turnvulnerability && (!skill1.debuff.turn.type || (skill1.debuff.turn.type === characterDb.characters[attackerName].stat.type))){
-                        turnenemydefDebuff = parseFloat(skill1.debuff.turn.vulnerability);
+                        turnvulnerability = parseFloat(skill1.debuff.turn.vulnerability);
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                 }
@@ -561,7 +590,7 @@
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                     if(skill2.debuff.const.vulnerability && parseFloat(skill2.debuff.const.vulnerability) > constvulnerability && (!skill2.debuff.const.type || (skill2.debuff.const.type === characterDb.characters[attackerName].stat.type))){
-                        constenemydefDebuff = parseFloat(skill2.debuff.const.vulnerability);
+                        constvulnerability = parseFloat(skill2.debuff.const.vulnerability);
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                 }
@@ -575,7 +604,7 @@
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                     if(skill2.debuff.turn.vulnerability && parseFloat(skill2.debuff.turn.vulnerability) > turnvulnerability && (!skill2.debuff.turn.type || (skill2.debuff.turn.type === characterDb.characters[attackerName].stat.type))){
-                        turnenemydefDebuff = parseFloat(skill2.debuff.turn.vulnerability);
+                        turnvulnerability = parseFloat(skill2.debuff.turn.vulnerability);
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                 }
@@ -804,7 +833,7 @@
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                     if(passive.debuff.const.vulnerability && parseFloat(passive.debuff.const.vulnerability) > constvulnerability && (!passive.debuff.const.type || (passive.debuff.const.type === characterDb.characters[attackerName].stat.type))){
-                        constenemydefDebuff = parseFloat(passive.debuff.const.vulnerability);
+                        constvulnerability = parseFloat(passive.debuff.const.vulnerability);
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                 }
@@ -818,7 +847,7 @@
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                     if(passive.debuff.turn.vulnerability && parseFloat(passive.debuff.turn.vulnerability) > turnvulnerability && (!passive.debuff.turn.type || (passive.debuff.turn.type === characterDb.characters[attackerName].stat.type))){
-                        turnenemydefDebuff = parseFloat(passive.debuff.turn.vulnerability);
+                        turnvulnerability = parseFloat(passive.debuff.turn.vulnerability);
                         enemydebuffCount = enemydebuffCount + 1;
                     }
                 }
@@ -840,14 +869,14 @@
                         buffCount = buffCount + 1;
                     }
                     if(passive.selfbuff.const.def && passive.selfbuff.const.type === "raw"){
-                        rawatkBuff = parseFloat(passive.selfbuff.const.def);
+                        rawdefBuff = parseFloat(passive.selfbuff.const.def);
                         buffCount = buffCount + 1;
                     }
-                    if(passive.selfbuff.const.atk && parseFloat(passive.selfbuff.const.atk) > constatkBuff){
+                    if(passive.selfbuff.const.atk && (parseFloat(passive.selfbuff.const.atk) > constatkBuff) && (passive?.selfbuff?.const?.type !== "raw")){
                         constatkBuff = parseFloat(passive.selfbuff.const.atk);
                         buffCount = buffCount + 1;
                     }
-                    if(passive.selfbuff.const.def && parseFloat(passive.selfbuff.const.def) > constdefBuff){
+                    if(passive.selfbuff.const.def && (parseFloat(passive.selfbuff.const.def) > constdefBuff) && (passive?.selfbuff?.const?.type !== "raw")){
                         constdefBuff = parseFloat(passive.selfbuff.const.def);
                         buffCount = buffCount + 1;
                     }
@@ -1043,6 +1072,541 @@
             }
         }
         });
+        //방어팀 버프 계산
+        enemyTeam.forEach(heroInfo => {
+        const enemyName = heroInfo[0].trim();
+        const isSkill1On = heroInfo[1];
+        const isSkill2On = heroInfo[2];
+
+        // DB에서 공격 영웅 데이터 추출
+        const defenderData = characterDb.characters[enemyName];
+        if (!defenderData) {
+            console.error(`DB에서 방어팀 영웅 '${defenderName}'을 찾을 수 없습니다.`);
+            return; // 다음 영웅으로 패스
+        }
+        if(enemyName === defenderName){
+            if(isSkill1On){
+                const skill1 = defenderData.skill1;
+                if(skill1.selfbuff.const){
+                    if(skill1.selfbuff.const.def && parseFloat(skill1.selfbuff.const.def)>constenemydefbuff){
+                        constenemydefbuff = parseFloat(skill1.selfbuff.const.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.selfbuff.const.guard && parseFloat(skill1.selfbuff.const.guard)>constenemydefbuff){
+                        constenemyguardbuff = parseFloat(skill1.selfbuff.const.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.selfbuff.const.reduction && parseFloat(skill1.selfbuff.const.reduction)>constenemydefbuff){
+                        constenemyreductionbuff = parseFloat(skill1.selfbuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(skill1.selfbuff.turn){
+                    if(skill1.selfbuff.turn.def && parseFloat(skill1.selfbuff.turn.def)>turnenemydefbuff){
+                        turnenemydefbuff = parseFloat(skill1.selfbuff.turn.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.selfbuff.turn.guard && parseFloat(skill1.selfbuff.turn.guard)>turnenemydefbuff){
+                        turnenemyguardbuff = parseFloat(skill1.selfbuff.turn.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.selfbuff.turn.reduction && parseFloat(skill1.selfbuff.turn.reduction)>turnenemydefbuff){
+                        turnenemyreductionbuff = parseFloat(skill1.selfbuff.turn.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(skill1.selfbuff.stack){
+                    if(skill1.selfbuff.stack.def){
+                        enemydefBuff = enemydefbuff + parseFloat(skill1.selfbuff.stack.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.selfbuff.stack.guard){
+                        enemyguardBuff = enemyguardbuff + parseFloat(skill1.selfbuff.stack.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.selfbuff.stack.reduction){
+                        reductionBuff = enemyreductionbuff + parseFloat(skill1.selfbuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+            }
+            if(isskill2On){
+                const skill2 = defenderData.skill2;
+                if(skill2.selfbuff.const){
+                    if(skill2.selfbuff.const.def && parseFloat(skill2.selfbuff.const.def)>constenemydefbuff){
+                        constenemydefbuff = parseFloat(skill2.selfbuff.const.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.selfbuff.const.guard && parseFloat(skill2.selfbuff.const.guard)>constenemydefbuff){
+                        constenemyguardbuff = parseFloat(skill2.selfbuff.const.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.selfbuff.const.reduction && parseFloat(skill2.selfbuff.const.reduction)>constenemydefbuff){
+                        constenemyreductionbuff = parseFloat(skill2.selfbuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(skill2.selfbuff.turn){
+                    if(skill2.selfbuff.turn.def && parseFloat(skill2.selfbuff.turn.def)>turnenemydefbuff){
+                        turnenemydefbuff = parseFloat(skill2.selfbuff.turn.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.selfbuff.turn.guard && parseFloat(skill2.selfbuff.turn.guard)>turnenemydefbuff){
+                        turnenemyguardbuff = parseFloat(skill2.selfbuff.turn.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.selfbuff.turn.reduction && parseFloat(skill2.selfbuff.turn.reduction)>turnenemydefbuff){
+                        turnenemyreductionbuff = parseFloat(skill2.selfbuff.turn.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(skill2.selfbuff.stack){
+                    if(skill2.selfbuff.stack.def){
+                        enemydefBuff = enemydefbuff + parseFloat(skill2.selfbuff.stack.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.selfbuff.stack.guard){
+                        enemyguardBuff = enemyguardbuff + parseFloat(skill2.selfbuff.stack.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.selfbuff.stack.reduction){
+                        reductionBuff = enemyreductionbuff + parseFloat(skill2.selfbuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+            }
+            if(defenderData.passive){
+                const passive = defenderData.passive;
+                if(passive.selfbuff.const){
+                    if(passive.selfbuff.const.def && passive?.selfbuff?.const?.type === "raw"){
+                        rawenemydefBuff = parseFloat(passive.selfbuff.const.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.selfbuff.const.def && (parseFloat(passive.selfbuff.const.def)>constenemydefbuff) && (passive?.selfbuff?.const?.type !== "raw")){
+                        constenemydefbuff = parseFloat(passive.selfbuff.const.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.selfbuff.const.guard && parseFloat(passive.selfbuff.const.guard)>constenemyguardbuff){
+                        constenemyguardbuff = parseFloat(passive.selfbuff.const.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.selfbuff.const.reduction && parseFloat(passive.selfbuff.const.reduction)>constenemyreductionbuff){
+                        constenemyreductionbuff = parseFloat(passive.selfbuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.selfbuff.const.statreduction){
+                        statreductionbuff = parseFloat(passive.selfbuff.const.statreduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(passive.selfbuff.turn){
+                    if(passive.selfbuff.turn.def && parseFloat(passive.selfbuff.turn.def)>turnenemydefbuff){
+                        turnenemydefbuff = parseFloat(passive.selfbuff.turn.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.selfbuff.turn.guard && parseFloat(passive.selfbuff.turn.guard)>turnenemydefbuff){
+                        turnenemyguardbuff = parseFloat(passive.selfbuff.turn.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.selfbuff.turn.reduction && parseFloat(passive.selfbuff.turn.reduction)>turnenemydefbuff){
+                        turnenemyreductionbuff = parseFloat(passive.selfbuff.turn.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(passive.selfbuff.stack){
+                    if(passive.selfbuff.stack.def){
+                        enemydefBuff = enemydefbuff + parseFloat(passive.selfbuff.stack.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.selfbuff.stack.guard){
+                        enemyguardBuff = enemyguardbuff + parseFloat(passive.selfbuff.stack.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.selfbuff.stack.reduction){
+                        reductionBuff = enemyreductionbuff + parseFloat(passive.selfbuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+            }
+        }
+        if(isSkill1On){
+                const skill1 = defenderData.skill1;
+                if(skill1.allybuff.const){
+                    if(skill1.allybuff.const.def && parseFloat(skill1.allybuff.const.def)>constenemydefbuff){
+                        constenemydefbuff = parseFloat(skill1.allybuff.const.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.allybuff.const.guard && parseFloat(skill1.allybuff.const.guard)>constenemydefbuff){
+                        constenemyguardbuff = parseFloat(skill1.allybuff.const.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.allybuff.const.reduction && parseFloat(skill1.allybuff.const.reduction)>constenemydefbuff){
+                        constenemyreductionbuff = parseFloat(skill1.allybuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(skill1.allybuff.turn){
+                    if(skill1.allybuff.turn.def && parseFloat(skill1.allybuff.turn.def)>turnenemydefbuff){
+                        turnenemydefbuff = parseFloat(skill1.allybuff.turn.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.allybuff.turn.guard && parseFloat(skill1.allybuff.turn.guard)>turnenemydefbuff){
+                        turnenemyguardbuff = parseFloat(skill1.allybuff.turn.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.allybuff.turn.reduction && parseFloat(skill1.allybuff.turn.reduction)>turnenemydefbuff){
+                        turnenemyreductionbuff = parseFloat(skill1.allybuff.turn.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(skill1.allybuff.stack){
+                    if(skill1.allybuff.stack.def){
+                        enemydefBuff = enemydefbuff + parseFloat(skill1.allybuff.stack.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.allybuff.stack.guard){
+                        enemyguardBuff = enemyguardbuff + parseFloat(skill1.allybuff.stack.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill1.allybuff.stack.reduction){
+                        reductionBuff = enemyreductionbuff + parseFloat(skill1.allybuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                if(skill1.debuff.const){
+                    if(skill1.debuff.const.atk && parseFloat(skill1.debuff.const.atk)>constatkdebuff){
+                        constatkdebuff = parseFloat(skill1.debuff.const.atk);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.const.def && parseFloat(skill1.debuff.const.def)>constdefdebuff){
+                        constdefdebuff = parseFloat(skill1.debuff.const.def);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.const.critrate && parseFloat(skill1.debuff.const.critrate)>constcritratedebuff){
+                        constcritratedebuff = parseFloat(skill1.debuff.const.critrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.const.critdmg && parseFloat(skill1.debuff.const.critdmg)>constcritdmgdebuff){
+                        constcritdmgdebuff = parseFloat(skill1.debuff.const.critdmg);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.const.weakrate && parseFloat(skill1.debuff.const.weakrate)>constweakratedebuff){
+                        constweakratedebuff = parseFloat(skill1.debuff.const.weakrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.const.dmgamp && parseFloat(skill1.debuff.const.dmgamp)>constdmgampdebuff){
+                        constdmgampdebuff = parseFloat(skill1.debuff.const.dmgamp);
+                        debuffCount = debuffCount + 1;
+                    }
+                }
+                if(skill1.debuff.turn){
+                    if(skill1.debuff.turn.atk && parseFloat(skill1.debuff.turn.atk)>turnatkdebuff){
+                        turnatkdebuff = parseFloat(skill1.debuff.turn.atk);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.turn.def && parseFloat(skill1.debuff.turn.def)>turndefdebuff){
+                        turndefdebuff = parseFloat(skill1.debuff.turn.def);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.turn.critrate && parseFloat(skill1.debuff.turn.critrate)>turncritratedebuff){
+                        turncritratedebuff = parseFloat(skill1.debuff.turn.critrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.turn.critdmg && parseFloat(skill1.debuff.turn.critdmg)>turncritdmgdebuff){
+                        turncritdmgdebuff = parseFloat(skill1.debuff.turn.critdmg);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.turn.weakrate && parseFloat(skill1.debuff.turn.weakrate)>turnweakratedebuff){
+                        turnweakratedebuff = parseFloat(skill1.debuff.turn.weakrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.turn.dmgamp && parseFloat(skill1.debuff.turn.dmgamp)>turndmgampdebuff){
+                        turndmgampdebuff = parseFloat(skill1.debuff.turn.dmgamp);
+                        debuffCount = debuffCount + 1;
+                    }
+                }
+                if(skill1.debuff.stack){
+                    if(skill1.debuff.stack.atk){
+                        atkdebuff = parseFloat(skill1.debuff.stack.atk);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.stack.def){
+                        defdebuff = parseFloat(skill1.debuff.stack.def);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.stack.critrate){
+                        critratedebuff = parseFloat(skill1.debuff.stack.critrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.stack.critdmg){
+                        critdmgdebuff = parseFloat(skill1.debuff.stack.critdmg);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.stack.weakrate){
+                        weakratedebuff = parseFloat(skill1.debuff.stack.weakrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill1.debuff.stack.dmgamp){
+                        dmgampdebuff = parseFloat(skill1.debuff.stack.dmgamp);
+                        debuffCount = debuffCount + 1;
+                    }
+                }
+            }
+            if(isskill2On){
+                const skill2 = defenderData.skill2;
+                if(skill2.allybuff.const){
+                    if(skill2.allybuff.const.def && parseFloat(skill2.allybuff.const.def)>constenemydefbuff){
+                        constenemydefbuff = parseFloat(skill2.allybuff.const.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.allybuff.const.guard && parseFloat(skill2.allybuff.const.guard)>constenemydefbuff){
+                        constenemyguardbuff = parseFloat(skill2.allybuff.const.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.allybuff.const.reduction && parseFloat(skill2.allybuff.const.reduction)>constenemydefbuff){
+                        constenemyreductionbuff = parseFloat(skill2.allybuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(skill2.allybuff.turn){
+                    if(skill2.allybuff.turn.def && parseFloat(skill2.allybuff.turn.def)>turnenemydefbuff){
+                        turnenemydefbuff = parseFloat(skill2.allybuff.turn.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.allybuff.turn.guard && parseFloat(skill2.allybuff.turn.guard)>turnenemydefbuff){
+                        turnenemyguardbuff = parseFloat(skill2.allybuff.turn.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.allybuff.turn.reduction && parseFloat(skill2.allybuff.turn.reduction)>turnenemydefbuff){
+                        turnenemyreductionbuff = parseFloat(skill2.allybuff.turn.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(skill2.allybuff.stack){
+                    if(skill2.allybuff.stack.def){
+                        enemydefBuff = enemydefbuff + parseFloat(skill2.allybuff.stack.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.allybuff.stack.guard){
+                        enemyguardBuff = enemyguardbuff + parseFloat(skill2.allybuff.stack.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(skill2.allybuff.stack.reduction){
+                        reductionBuff = enemyreductionbuff + parseFloat(skill2.allybuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                if(skill2.debuff.const){
+                    if(skill2.debuff.const.atk && parseFloat(skill2.debuff.const.atk)>constatkdebuff){
+                        constatkdebuff = parseFloat(skill2.debuff.const.atk);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.const.def && parseFloat(skill2.debuff.const.def)>constdefdebuff){
+                        constdefdebuff = parseFloat(skill2.debuff.const.def);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.const.critrate && parseFloat(skill2.debuff.const.critrate)>constcritratedebuff){
+                        constcritratedebuff = parseFloat(skill2.debuff.const.critrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.const.critdmg && parseFloat(skill2.debuff.const.critdmg)>constcritdmgdebuff){
+                        constcritdmgdebuff = parseFloat(skill2.debuff.const.critdmg);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.const.weakrate && parseFloat(skill2.debuff.const.weakrate)>constweakratedebuff){
+                        constweakratedebuff = parseFloat(skill2.debuff.const.weakrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.const.dmgamp && parseFloat(skill2.debuff.const.dmgamp)>constdmgampdebuff){
+                        constdmgampdebuff = parseFloat(skill2.debuff.const.dmgamp);
+                        debuffCount = debuffCount + 1;
+                    }
+                }
+                if(skill2.debuff.turn){
+                    if(skill2.debuff.turn.atk && parseFloat(skill2.debuff.turn.atk)>turnatkdebuff){
+                        turnatkdebuff = parseFloat(skill2.debuff.turn.atk);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.turn.def && parseFloat(skill2.debuff.turn.def)>turndefdebuff){
+                        turndefdebuff = parseFloat(skill2.debuff.turn.def);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.turn.critrate && parseFloat(skill2.debuff.turn.critrate)>turncritratedebuff){
+                        turncritratedebuff = parseFloat(skill2.debuff.turn.critrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.turn.critdmg && parseFloat(skill2.debuff.turn.critdmg)>turncritdmgdebuff){
+                        turncritdmgdebuff = parseFloat(skill2.debuff.turn.critdmg);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.turn.weakrate && parseFloat(skill2.debuff.turn.weakrate)>turnweakratedebuff){
+                        turnweakratedebuff = parseFloat(skill2.debuff.turn.weakrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.turn.dmgamp && parseFloat(skill2.debuff.turn.dmgamp)>turndmgampdebuff){
+                        turndmgampdebuff = parseFloat(skill2.debuff.turn.dmgamp);
+                        debuffCount = debuffCount + 1;
+                    }
+                }
+                if(skill2.debuff.stack){
+                    if(skill2.debuff.stack.atk){
+                        atkdebuff = parseFloat(skill2.debuff.stack.atk);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.stack.def){
+                        defdebuff = parseFloat(skill2.debuff.stack.def);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.stack.critrate){
+                        critratedebuff = parseFloat(skill2.debuff.stack.critrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.stack.critdmg){
+                        critdmgdebuff = parseFloat(skill2.debuff.stack.critdmg);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.stack.weakrate){
+                        weakratedebuff = parseFloat(skill2.debuff.stack.weakrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(skill2.debuff.stack.dmgamp){
+                        dmgampdebuff = parseFloat(skill2.debuff.stack.dmgamp);
+                        debuffCount = debuffCount + 1;
+                    }
+                }
+            }
+            if(defenderData.passive){
+                const passive = defenderData.passive;
+                if(passive.allybuff.const){
+                    if(passive.allybuff.const.def && passive?.allybuff?.const?.type === "raw"){
+                        rawenemydefBuff = parseFloat(passive.allybuff.const.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.allybuff.const.def && (parseFloat(passive.allybuff.const.def)>constenemydefbuff) && (passive?.allybuff?.const?.type !== "raw")){
+                        constenemydefbuff = parseFloat(passive.allybuff.const.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.allybuff.const.guard && parseFloat(passive.allybuff.const.guard)>constenemyguardbuff){
+                        constenemyguardbuff = parseFloat(passive.allybuff.const.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.allybuff.const.reduction && parseFloat(passive.allybuff.const.reduction)>constenemyreductionbuff){
+                        constenemyreductionbuff = parseFloat(passive.allybuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.allybuff.const.statreduction){
+                        statreductionbuff = parseFloat(passive.allybuff.const.statreduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(passive.allybuff.turn){
+                    if(passive.allybuff.turn.def && parseFloat(passive.allybuff.turn.def)>turnenemydefbuff){
+                        turnenemydefbuff = parseFloat(passive.allybuff.turn.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.allybuff.turn.guard && parseFloat(passive.allybuff.turn.guard)>turnenemydefbuff){
+                        turnenemyguardbuff = parseFloat(passive.allybuff.turn.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.allybuff.turn.reduction && parseFloat(passive.allybuff.turn.reduction)>turnenemydefbuff){
+                        turnenemyreductionbuff = parseFloat(passive.allybuff.turn.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                 if(passive.allybuff.stack){
+                    if(passive.allybuff.stack.def){
+                        enemydefBuff = enemydefbuff + parseFloat(passive.allybuff.stack.def);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.allybuff.stack.guard){
+                        enemyguardBuff = enemyguardbuff + parseFloat(passive.allybuff.stack.guard);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                    if(passive.allybuff.stack.reduction){
+                        reductionBuff = enemyreductionbuff + parseFloat(passive.allybuff.const.reduction);
+                        enemybuffCount = enemybuffCount + 1;
+                    }
+                }
+                if(passive.debuff.const){
+                    if(passive.debuff.const.atk && parseFloat(passive.debuff.const.atk)>constatkdebuff){
+                        constatkdebuff = parseFloat(passive.debuff.const.atk);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.const.def && parseFloat(passive.debuff.const.def)>constdefdebuff){
+                        constdefdebuff = parseFloat(passive.debuff.const.def);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.const.critrate && parseFloat(passive.debuff.const.critrate)>constcritratedebuff){
+                        constcritratedebuff = parseFloat(passive.debuff.const.critrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.const.critdmg && parseFloat(passive.debuff.const.critdmg)>constcritdmgdebuff){
+                        constcritdmgdebuff = parseFloat(passive.debuff.const.critdmg);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.const.weakrate && parseFloat(passive.debuff.const.weakrate)>constweakratedebuff){
+                        constweakratedebuff = parseFloat(passive.debuff.const.weakrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.const.dmgamp && parseFloat(passive.debuff.const.dmgamp)>constdmgampdebuff){
+                        constdmgampdebuff = parseFloat(passive.debuff.const.dmgamp);
+                        debuffCount = debuffCount + 1;
+                    }
+                }
+                if(passive.debuff.turn){
+                    if(passive.debuff.turn.atk && parseFloat(passive.debuff.turn.atk)>turnatkdebuff){
+                        turnatkdebuff = parseFloat(passive.debuff.turn.atk);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.turn.def && parseFloat(passive.debuff.turn.def)>turndefdebuff){
+                        turndefdebuff = parseFloat(passive.debuff.turn.def);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.turn.critrate && parseFloat(passive.debuff.turn.critrate)>turncritratedebuff){
+                        turncritratedebuff = parseFloat(passive.debuff.turn.critrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.turn.critdmg && parseFloat(passive.debuff.turn.critdmg)>turncritdmgdebuff){
+                        turncritdmgdebuff = parseFloat(passive.debuff.turn.critdmg);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.turn.weakrate && parseFloat(passive.debuff.turn.weakrate)>turnweakratedebuff){
+                        turnweakratedebuff = parseFloat(passive.debuff.turn.weakrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.turn.dmgamp && parseFloat(passive.debuff.turn.dmgamp)>turndmgampdebuff){
+                        turndmgampdebuff = parseFloat(passive.debuff.turn.dmgamp);
+                        debuffCount = debuffCount + 1;
+                    }
+                }
+                if(passive.debuff.stack){
+                    if(passive.debuff.stack.atk){
+                        atkdebuff = parseFloat(passive.debuff.stack.atk);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.stack.def){
+                        defdebuff = parseFloat(passive.debuff.stack.def);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.stack.critrate){
+                        critratedebuff = parseFloat(passive.debuff.stack.critrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.stack.critdmg){
+                        critdmgdebuff = parseFloat(passive.debuff.stack.critdmg);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.stack.weakrate){
+                        weakratedebuff = parseFloat(passive.debuff.stack.weakrate);
+                        debuffCount = debuffCount + 1;
+                    }
+                    if(passive.debuff.stack.dmgamp){
+                        dmgampdebuff = parseFloat(passive.debuff.stack.dmgamp);
+                        debuffCount = debuffCount + 1;
+                    }
+                }
+            }
+        })
         atkBuff = atkBuff + constatkBuff + turnatkBuff;
         defBuff = defBuff + constdefBuff + turndefBuff;
         critrateBuff = critrateBuff + constcritrateBuff + turncritrateBuff;
@@ -1053,6 +1617,27 @@
         bossampBuff = bossampBuff + constbossampBuff + turnbossampBuff;
         amplifyBuff = amplifyBuff + constamplifyBuff + turnamplifyBuff;
         defignoreBuff = defignoreBuff + constdefignoreBuff + turndefignoreBuff;
+        atkdebuff = atkdebuff + constatkdebuff + turnatkdebuff; 
+        defdebuff = defdebuff + constdefdebuff + turndefdebuff; 
+        critratedebuff = critratedebuff + constcritratedebuff + turncritratedebuff;
+        critdmgdebuff = critdmgdebuff + constcritdmgdebuff + turncritdmgdebuff; 
+        weakratedebuff = weakratedebuff + constweakratedebuff + turnweakratedebuff; 
+        dmgampdebuff = dmgampdebuff + constdmgampdebuff + turndmgampdebuff; 
+        atkBuff = atkBuff - atkdebuff;
+        defBuff = defBuff - defdebuff;
+        critrateBuff = critrateBuff - critratedebuff;
+        critdmgBuff = critdmgBuff - critdmgdebuff;
+        weakrateBuff = weakrateBuff - weakratedebuff;
+        dmgampBuff = dmgampBuff - dmgampdebuff;
+        enemydefBuff = enemydefBuff + constenemydefbuff + turnenemydefbuff;
+        enemyguardBuff = enemyguardBuff + constenemyguardbuff + turnenemyguardbuff;
+        enemyreductionBuff = enemyreductionBuff + constenemyreductionbuff + turnenemyreductionbuff;
+        enemydefdebuff = enemydefdeBuff + constenemydefdeBuff + turnenemydefdeBuff;
+        enemyguarddebuff = enemyguarddeBuff + constenemyguarddeBuff + turnenemyguarddeBuff;
+        vulnerability = vulnerability + constvulnerability + turnvulnerability;
+        enemydefBuff = enemydefBuff - enemydefDebuff;
+        enemyguardBuff = enemyguardBuff - enemyguardDebuff;
+        
     }
     function calculateStat() {
         const acc1Element = document.getElementById('acc1');
@@ -1212,17 +1797,18 @@
             if(formationId === "2"){defFormationDef = 14;}
             if(formationId === "1"){defFormationDef = 10.5;}
         }
-        defFinalDef = defDef + defPetBaseDef + (defBaseDef * defPetDef) + ((defBaseDef * defFormationDef / 100));
+        defFinalDef = (defDef + defPetBaseDef + (defBaseDef * defPetDef) + ((defBaseDef * defFormationDef / 100))) * ((100 + enemydefBuff) / 100) + rawenemydefBuff ;
         defFinalHp = defHp + defPetBaseHp + (defBaseHp * defPetHp);
-        defFinalGuard = defGuard;
-        defFinalReduction = defReduction;
+        defFinalGuard = defGuard + enemyguardBuff;
+        defFinalReduction = defReduction + statreductionbuff;
         defFinalElasticity = defElasticity;
+        finalCritDmg = finalCritDmg - defFinalElasticity;
         return false;
     }
 
     function calculateDamage(skillId){
         if(skillId === 1){
-            skillname = "skill1"
+            skillname = "skill2"
         }
         if(skillId === 2){
             skillname = "skill2"
@@ -1314,7 +1900,7 @@
         const skillDefIgnore = Math.min((defignore + finalDefIgnore),95);
         console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, finalDefIgnore, finalBreak, attackerName, defenderName);
         console.error((finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100));
-        const baseDmg = (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100) + (debuffmult/100)* Math.min(debuffCount, debuffcap)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
+        const baseDmg = (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100) + (debuffmult/100)* Math.min(enemydebuffCount, debuffcap)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
         console.error(baseDmg * finalCritDmg / 100);
         console.error(baseDmg * finalWeakDmg / 100);
         console.error(baseDmg * finalCritDmg / 100 * finalWeakDmg / 100);
