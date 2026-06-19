@@ -1917,6 +1917,7 @@
         const skillWeakDmg = weakdmg + finalWeakDmg;
         const skillDefIgnore = Math.min((defignore + finalDefIgnore),95);
         console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, skillDefIgnore, finalBreak, attackerName, defenderName);
+        console.error(defFinalDef, defFinalHp, defFinalGuard, defFinalReduction, defFinalElasticity, vulnerability);
         console.error((finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100));
         const baseDmg = (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100) + (debuffmult/100)* Math.min(enemydebuffCount, debuffcap)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
         console.error(baseDmg * finalCritDmg / 100);
