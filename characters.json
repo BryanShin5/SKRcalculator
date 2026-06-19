@@ -98,7 +98,7 @@
     },
     "팔라누스": {
       "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
-      "passive": {"name": "지휘관의 저력", "selfbuff": {"const": {"stat-reduction" : 13.5}, "stack": {"amplify":50, "type": "physical"}}},
+      "passive": {"name": "지휘관의 저력", "selfbuff": {"const": {"statreduction" : 13.5}, "stack": {"amplify":50, "type": "physical"}}},
       "skill1": { "name": "강고한 검격", "atkmult": 67, "hits": 2,  "defignore":65, "weakrate": 100},
       "skill2": { "name": "작전명: 섬멸", "atkmult": 90, "hits": 2, "defignore":65, "weakrate": 100}
     },
