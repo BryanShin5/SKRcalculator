@@ -1817,16 +1817,16 @@
         const defSelectedFormation = defFormationElement ? defFormationElement.options[defFormationElement.selectedIndex] : null;
         const defFormationId = defSelectedFormation.id;
         if(defInBack){
-            if(formationId === "1"){defFormationAtk = 42;}
-            if(formationId === "2"){defFormationAtk = 21;}
-            if(formationId === "3"){defFormationAtk = 14;}
-            if(formationId === "4"){defFormationAtk = 10.5;}
+            if(defformationId === "1"){defFormationAtk = 42;}
+            if(defformationId === "2"){defFormationAtk = 21;}
+            if(defformationId === "3"){defFormationAtk = 14;}
+            if(defformationId === "4"){defFormationAtk = 10.5;}
         }
         if(defInFront){
-            if(formationId === "4"){defFormationDef = 42;}
-            if(formationId === "3"){defFormationDef = 21;}
-            if(formationId === "2"){defFormationDef = 14;}
-            if(formationId === "1"){defFormationDef = 10.5;}
+            if(defformationId === "4"){defFormationDef = 42;}
+            if(defformationId === "3"){defFormationDef = 21;}
+            if(defformationId === "2"){defFormationDef = 14;}
+            if(defformationId === "1"){defFormationDef = 10.5;}
         }
         defFinalDef = (defDef + defPetBaseDef + (defBaseDef * defPetDef) + ((defBaseDef * defFormationDef / 100))) * ((100 + enemydefBuff) / 100) + rawenemydefBuff ;
         console.log(defDef, defPetBaseDef, defBaseDef, defPetDef, defFormationDef, enemydefBuff, rawenemydefBuff);
