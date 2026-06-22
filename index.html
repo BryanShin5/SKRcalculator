@@ -1829,7 +1829,7 @@
             if(formationId === "1"){defFormationDef = 10.5;}
         }
         defFinalDef = (defDef + defPetBaseDef + (defBaseDef * defPetDef) + ((defBaseDef * defFormationDef / 100))) * ((100 + enemydefBuff) / 100) + rawenemydefBuff ;
-        console.log(defDef, defPetBaseDef, defBaseDef, defpetDef, defFormationDef, enemydefBuff, rawenemydefBuff);
+        console.log(defDef, defPetBaseDef, defBaseDef, defPetDef, defFormationDef, enemydefBuff, rawenemydefBuff);
         defFinalHp = defHp + defPetBaseHp + (defBaseHp * defPetHp);
         defFinalGuard = Math.max(Math.min((defGuard + enemyguardBuff - finalBreak),100),0) / 100;
         defFinalReduction = defReduction + statreductionBuff;
