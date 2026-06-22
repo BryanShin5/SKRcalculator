@@ -1829,7 +1829,7 @@
         defFinalGuard = Math.max(Math.min((defGuard + enemyguardBuff - finalBreak),100),0) / 100;
         defFinalReduction = defReduction + statreductionBuff;
         defFinalElasticity = defElasticity;
-        finalCritDmg = finalCritDmg - defFinalElasticity;
+        finalCritDmg = Math.max((finalCritDmg - defFinalElasticity),100);
         return false;
     }
 
