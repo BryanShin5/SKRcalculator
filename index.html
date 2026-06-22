@@ -1941,7 +1941,7 @@
         const critprob = skillCritRate * (1-defFinalGuard);
         const reductionRate =  (466 / ((466 + (defFinalDef*(100 - skillDefIgnore)/100)))) * ((100 - defFinalReduction) / 100) * ((100 - reductionBuff)/100);
         
-        return [baseDmg / reductionRate, critDmg / reductionRate, weakDmg / reductionRate, critWeakDmg / reductionRate, ((baseDmg / reductionRate) * whiteprob * (1-skillWeakRate) + (critDmg / reductionRate) * critprob * (1-skillWeakRate) + (weakDmg / reductionRate) * whiteprob * (skillWeakRate) + (critWeakDmg / reductionRate) * critprob * (skillWeakRate) * hits)];
+        return [baseDmg * reductionRate, critDmg * reductionRate, weakDmg * reductionRate, critWeakDmg * reductionRate, ((baseDmg * reductionRate) * whiteprob * (1-skillWeakRate) + (critDmg * reductionRate) * critprob * (1-skillWeakRate) + (weakDmg * reductionRate) * whiteprob * (skillWeakRate) + (critWeakDmg * reductionRate) * critprob * (skillWeakRate) * hits)];
     }
     function renderFormation(selectedOption) {
       const displayArea = document.getElementById('formation-display-area');
