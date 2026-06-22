@@ -455,6 +455,9 @@
       "passive": {"name": "의지", "allybuff": {"const": {"def" : 18}}},
       "skill1": { "name": "연속공격", "atkmult": 170, "defmult":200, "hits": 1 },
       "skill2": { "name": "균형의방패", "mult": 0, "hits": 0, "allybuff": {"turn": {"guard" : 21}}}
+    },
+    "보스":{
+      "stat":{"atk":704, "def":1510, "hp":1000000, "type": "physical"}
     }
   },
   "pets": {
