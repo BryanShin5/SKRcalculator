@@ -120,7 +120,8 @@
         if (out1 && out2) {
             if(hero.skill1){
                 const res = calculateDamage(1);
-                out1.innerText = `[${skill1Name}] : ${res[0]}\n` 
+                out1.innerText = `\n`
+                + `[${skill1Name}] : ${res[0]}\n` 
                 + `치명타 : ${res[1]}\n`
                 + `약공 : ${res[2]}\n`
                 + `치명 + 약공 : ${res[3]}\n`
@@ -129,7 +130,8 @@
             }
             if(hero.skill2){
                 const res = calculateDamage(2);
-                out2.innerText = `[${skill2Name}] : ${res[0]}\n` 
+                out2.innerText = `\n` 
+                + `[${skill2Name}] : ${res[0]}\n` 
                 + `치명타 : ${res[1]}\n`
                 + `약공 : ${res[2]}\n`
                 + `치명 + 약공 : ${res[3]}\n`
