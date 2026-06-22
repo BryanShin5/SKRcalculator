@@ -269,7 +269,7 @@
       "stat":{"atk":1306, "def":659, "hp":3693, "type": "magic"},
       "passive": {"name": "파멸의 안개", "selfbuff": {"const": {"weakrate" : 27}}},
       "skill1": { "name": "깨어난 야수", "atkmult": 57, "hits": 2},
-      "skill2": { "name": "죽음의 안개", "atkmult": 687, "hits": 2}
+      "skill2": { "name": "죽음의 안개", "atkmult": 87, "hits": 2}
     },
     "스쿨드": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
@@ -308,6 +308,148 @@
       "passive": { "name": "악마의 힘", "selfbuff":{"const": {"critrate" : 41, "debuffamp": 20}}},
       "skill2": { "name": "귀신 베기", "atkmult": 690, "hits": 1, "debuffmult": 50, "debuffcap": 4}
     },
+    "룩": {
+      "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
+      "passive": {"name": "공성 방패", "allybuff":{"const":{"guard":23}}, "selfbuff":{"const":{"reduction":20}}},
+      "skill1": { "name": "투창", "atkmult": 380, "hpmult": 91, "hits": 1, "critrate":100},
+      "skill2": { "name": "진형 굳히기" }
+    },
+    "챈슬러": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "magic"},
+      "passive": {"name": "위압감", "debuff": {"const": {"dmgamp" : 13}}},
+      "skill1": { "name": "분쇄", "atkmult": 145, "defmult": 165, "hits": 1, "debuff": {"turn": {"def" : 44}}},
+      "skill2": { "name": "대지 파괴", "atkmult": 85, "defmult":100, "hits": 2, "debuff": {"turn": {"atk" : 24}}}
+    },
+    "엘리스": {
+      "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
+      "passive": {"name": "나. 너. 로맨틱", "allybuff":{"turn":{"def":31}}},
+      "skill1": { "name": "비밀의 문", "allybuff":{"turn":{"def":39}}},
+      "skill2": { "name": "내 카드 속엔?"}
+    },
+    "아라곤": {
+      "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
+      "passive": {"name": "노장의 위엄", "debuff": {"const": {"atk" : 13}}},
+      "skill2": { "name": "포격 지원", "atkmult":130, "defmult": 150, "hits":1, "debuff": {"turn": {"critrate" : 27}} }
+    },
+    "비스킷": {
+      "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
+      "passive": {"name": "대장장이의 강화", "debuff": {"const": {"def" : 24}}},
+      "skill1": { "name": "장비 강화", "allybuff":{"turn":{"bossamp":40, "weakrate": 54}}},
+      "skill2": { "name": "리프어택", "atkmult": 115, "defmult": 135, "hits": 1}
+    },
+    "돼오": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "상회대표"},
+      "skill1": { "name": "룰렛맨", "allybuff": {"turn": {"critdmg": 49}}, "debuff":{"turn":{"atk":30}}},
+      "skill2": { "name": "진수성참", "atkmult": 170, "hits": 1, "critamp": 65}
+    }, 
+    "루리": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "뒷거래", "selfbuff":{"const":{"amplify":29, "type":"magic", "weakrate": 39}}},
+      "skill1": { "name": "근거리 연사", "atkmult": 90, "weakmult": 42, "hits": 2, "selfbuff": {"turn": {"weakdmg": 48}}},
+      "skill2": { "name": "폭격 지원", "atkmult": 170, "weakmult": 155, "hits": 1, "defignore": 40, "selfbuff": {"turn": {"weakdmg": 48}}}
+    }, 
+    "니아": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "magic"},
+      "passive": {"name": "예비 전력"},
+      "skill1": { "name": "100만 볼트", "atkmult": 110, "hits": 1},
+      "skill2": { "name": "시간 조작", "atkmult": 135, "hits": 1}
+    },
+    "에스파다": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "마력 정화", "selfbuff":{"stack":{"amplify":40, "type":"magic", "critrate": 40}}},
+      "skill1": { "name": "정화탄", "atkmult": 340, "hits": 1, "debuff": {"turn": {"vulnerability": 33, "type": "magic"}}},
+      "skill2": { "name": "신의 심판", "atkmult": 515, "enemyhpmult": [32, 1600], "hits": 1}
+    }, 
+    "지크": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "magic"},
+      "passive": {"name": "나만 믿어", "allybuff":{"const":{"atk":27}}},
+      "skill1": { "name": "부숴버려", "atkmult": 375, "hits": 1, "debuff":{"turn":{"dmgamp":23}}},
+      "skill2": { "name": "봉인해제!", "atkmult": 655, "hits": 1, "defignore": 40}
+    },
+    "발리스타": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "사신의 딸"},
+      "skill2": { "name": "죽음의 그림자", "atkmult": 110, "hits": 2}
+    }, 
+    "녹스": {
+      "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
+      "passive": {"name": "지옥의 기사"},
+      "skill1": { "name": "지옥의 방패"},
+      "skill2": { "name": "지옥의 일격", "atkmult":80, "hpmult": 19, "hits":1}
+    },
+    "리나": {
+      "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
+      "passive": {"name": "불협화음", "allybuff": {"const": {"critdmg" : 34}}},
+      "skill1": { "name": "행진가"},
+      "skill2": { "name": "따뜻한 울림", "allybuff": {"turn": {"dmgamp" : 28}}, "debuff": {"turn": {"def" : 41}}}
+    },
+    "백룡": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "전설의 부활", "selfbuff": {"const": {"defignore": 10, "critrate": 33}}},
+      "skill1": { "name": "섬광십무", "atkmult":410, "hits":1, "defignore": 65},
+      "skill2": { "name": "쌍절태풍격", "atkmult": 575, "hits": 1, "defignore": 65}
+    }, 
+     "유신": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "신선의 가르침"},
+      "skill1": { "name": "뇌운 흑영랑", "atkmult":92, "hits":2},
+      "skill2": { "name": "번뇌", "atkmult": 135, "hits": 1}
+    }, 
+     "비담": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "전설의 부활", "selfbuff": {"const": {"amplify": 35, "type": "physical"}}},
+      "skill1": { "name": "거궁신포", "atkmult":85, "hits":2},
+      "skill2": { "name": "태전포화", "atkmult": 205, "hits": 1}
+    }, 
+    "백각": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "magic"},
+      "passive": {"name": "어둠의 주술", "allybuff":{"const":{"atk":27}}},
+      "skill1": { "name": "백각환독", "atkmult": 110, "hits": 3},
+      "skill2": { "name": "마신주령", "atkmult": 110, "hits": 3}
+    },
+    "소교": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "전장의 공주", "selfbuff": {"const": {"amplify": 29, "weakrate": 39, "type": "magic"}}},
+      "skill1": { "name": "우후죽순", "atkmult":330, "weakmult": 215, "hits":1, "defignore": 40},
+      "skill2": { "name": "호접지몽", "atkmult": 340, "defignore": 40, "hits": 1, "allybuff": {"turn": {"atk": 31, "critdmg": 46, "type": "magic"}}, "debuff": {"turn": {"vulnerability": 26, "type": "magic"}}}
+    }, 
+    "나타": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "연꽃의 보호", "allybuff": {"const": {"dmgamp": 33}}, "selfbuff":{"const":{"critrate":33}}},
+      "skill1": { "name": "화첨창술", "atkmult":337.5, "hits":1},
+      "skill2": { "name": "혼천릉파", "atkmult": 502.5, "defignore": 40, "hits": 1}
+    }, 
+    "파스칼": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "천자의 권능", "selfbuff": {"const": {"atk": 33, "critdmg":40}}},
+      "skill1": { "name": "어둠의 문"},
+      "skill2": { "name": "파괴의 거인", "atkmult": 470, "defignore": 65, "critrate":100, "hits": 1}
+    }, 
+    "초선": {
+      "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
+      "passive": {"name": "폐월의 미소"},
+      "skill1": { "name": "진군가"},
+      "skill2": { "name": "보호의 노래", "allybuff": {"turn": {"critdmg" : 43, "atk": 30}}}
+    },
+    "관우": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "만인지적", "allybuff":{"turn":{"amplify":20, "critdmg": 40, "type": "physical"}}},
+      "skill1": { "name": "청룡월파참", "atkmult": 470, "critdmg": 100, "hits": 1},
+      "skill2": { "name": "진두지휘"}
+    },
+    "성진우": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "천자의 권능", "allybuff": {"const": {"amplify": 20, "type":"magic"}}},
+      "skill1": { "name": "급소 찌르기": "atkmult": "67", "enemyhpmult":[9,75],"hits": 2},
+      "skill2": { "name": "그림자 소환", "atkmult": 117, "defignore": 40, "hits": 2}
+    }, 
+    "차해인": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "passive": {"name": "마나 감지"},
+      "skill1": { "name": "무희", "atkmult": "72", "hits": 2},
+      "skill2": { "name": "검무", "atkmult": 75, "critmult": 27, "hits": 2}
+    }, 
     "에반": {
       "stat":{"atk":704, "def":818, "hp":4572, "type": "physical"},
       "passive": {"name": "의지", "allybuff": {"const": {"def" : 18}}},
