@@ -440,8 +440,8 @@
     },
     "성진우": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
-      "passive": {"name": "천자의 권능", "allybuff": {"const": {"amplify": 20, "type":"magic"}}},
-      "skill1": { "name": "급소 찌르기": "atkmult": "67", "enemyhpmult":[9,75],"hits": 2},
+      "passive": {"name": "레벨업", "allybuff": {"const": {"amplify": 20, "type" : "magic"}}},
+      "skill1": { "name": "급소 찌르기", "atkmult": "67", "enemyhpmult":[9,75], "hits": 2},
       "skill2": { "name": "그림자 소환", "atkmult": 117, "defignore": 40, "hits": 2}
     }, 
     "차해인": {
