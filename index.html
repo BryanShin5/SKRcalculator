@@ -119,16 +119,22 @@
         
         if (out1 && out2) {
             if(hero.skill1){
-                const atkMult = parseFloat(hero?.skill1?.atkmult) || 0; 
-                const defMult = parseFloat(hero?.skill1?.defmult) || 0; 
-                const hpMult = parseFloat(hero?.skill1?.hpmult) || 0; 
-                out1.innerText = `[${skill1Name}] : ${calculateDamage(1)}`;
+                const res = calculateDamage(1);
+                out1.innerText = `[${skill1Name}] : ${res[0]}\n` 
+                + `치명타 : ${res[1]}\n`
+                + `약공 : ${res[2]}\n`
+                + `치명 + 약공 : ${res[3]}\n`
+                + `기댓값 : ${res[4]}\n`
+                ;
             }
             if(hero.skill2){
-                const atkMult = parseFloat(hero?.skill2?.atkmult) || 0; 
-                const defMult = parseFloat(hero?.skill2?.defmult) || 0; 
-                const hpMult = parseFloat(hero?.skill2?.hpmult) || 0; 
-                out2.innerText = `[${skill2Name}] : ${calculateDamage(2)}`;
+                const res = calculateDamage(2);
+                out2.innerText = `[${skill2Name}] : ${res[0]}\n` 
+                + `치명타 : ${res[1]}\n`
+                + `약공 : ${res[2]}\n`
+                + `치명 + 약공 : ${res[3]}\n`
+                + `기댓값 : ${res[4]}\n`
+                ;
             }
         } else if (displayBox) {
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
@@ -1757,6 +1763,7 @@
             vulnerability = vulnerability + bossvulnerability;
         }
         finalAmp =  parseFloat(document.getElementById('dmg-buff').value) || 0;
+        finalBreak = parseFloat(document.getElementById('break').value) || 0;
 
         //방어자 스탯
         const defHeroData = characterDb?.characters?.[defenderName];
@@ -1817,7 +1824,7 @@
         }
         defFinalDef = (defDef + defPetBaseDef + (defBaseDef * defPetDef) + ((defBaseDef * defFormationDef / 100))) * ((100 + enemydefBuff) / 100) + rawenemydefBuff ;
         defFinalHp = defHp + defPetBaseHp + (defBaseHp * defPetHp);
-        defFinalGuard = defGuard + enemyguardBuff;
+        defFinalGuard = Math.max(Math.min((defGuard + enemyguardBuff - finalBreak),100),0) / 100;
         defFinalReduction = defReduction + statreductionBuff;
         defFinalElasticity = defElasticity;
         finalCritDmg = finalCritDmg - defFinalElasticity;
@@ -1911,19 +1918,22 @@
         console.log(AttackerHeroes, DefenderHeroes); 
         buffIterator(AttackerHeroes,DefenderHeroes);
         calculateStat();
-        const skillCritRate = critrate + finalCritRate;
+        const skillCritRate = Math.min(Math.max((critrate + finalCritRate),0),100) / 100;
         const skillCritDmg = critdmg + finalCritDmg;
-        const skillWeakRate = weakrate + finalWeakRate;
+        const skillWeakRate = Math.min(Math.max((weakrate + finalWeakRate),0),100) / 100;
         const skillWeakDmg = weakdmg + finalWeakDmg;
         const skillDefIgnore = Math.min((defignore + finalDefIgnore),95);
         console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, skillDefIgnore, finalBreak, attackerName, defenderName);
         console.error(defFinalDef, defFinalHp, defFinalGuard, defFinalReduction, defFinalElasticity, vulnerability);
-        console.error((finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100));
         const baseDmg = (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100) + (debuffmult/100)* Math.min(enemydebuffCount, debuffcap)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
-        console.error(baseDmg * finalCritDmg / 100);
-        console.error(baseDmg * finalWeakDmg / 100);
-        console.error(baseDmg * finalCritDmg / 100 * finalWeakDmg / 100);
-        return baseDmg * (466 / ((466 + (defFinalDef*(100 - skillDefIgnore)/100)))) * ((100 - defFinalReduction) / 100) * ((100 - reductionBuff)/100);
+        const critDmg = (finalAtk * (atkmult/100) + (finalDef * (defmult/100)) + (finalHp * (hpmult/100)) + (critmult/100 * finalAtk) + ((debuffmult/100)* Math.min(enemydebuffCount, debuffcap))) * (skillCritDmg / 100) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
+        const weakDmg = (finalAtk * (atkmult/100) + (finalDef * (defmult/100)) + (finalHp * (hpmult/100)) + (weakmult/100 * finalAtk) + ((debuffmult/100)* Math.min(enemydebuffCount, debuffcap))) * (skillWeakDmg / 100) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
+        const critWeakDmg = (finalAtk * (atkmult/100) + (finalDef * (defmult/100)) + (finalHp * (hpmult/100)) + (critmult/100 * finalAtk) + (weakmult/100 * finalAtk) + ((debuffmult/100)* Math.min(enemydebuffCount, debuffcap))) * (skillCritDmg / 100) * (skillWeakDmg / 100) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
+
+        const whiteprob = skillCritRate * defFinalGuard + (1-skillCritRate) * (1-defFinalGuard);
+        const critprob = skillCritRate * (1-defFinalGuard);
+        const reductionRate =  (466 / ((466 + (defFinalDef*(100 - skillDefIgnore)/100)))) * ((100 - defFinalReduction) / 100) * ((100 - reductionBuff)/100);
+        return [baseDmg / reductionRate, critDmg / reductionRate, weakDmg / reductionRate, critWeakDmg / reductionRate, (baseDmg / reductionRate) * whiteprob * (1-skillWeakRate) + (critDmg / reductionRate) * critprob * (1-skillWeakRate) + (weakDmg / reductionRate) * whiteprob * (skillWeakRate) + (critWeakDmg / reductionRate) * critprob * (skillWeakRate)];
     }
     function renderFormation(selectedOption) {
       const displayArea = document.getElementById('formation-display-area');
