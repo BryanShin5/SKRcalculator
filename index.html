@@ -968,6 +968,10 @@
                         atkBuff = atkBuff + parseFloat(passive.selfbuff.stack.atk);
                         buffCount = buffCount + 1;
                     }
+                    if(passive.selfbuff.stack.critrate){
+                        critrateBuff = critrateBuff + parseFloat(passive.selfbuff.stack.critrate);
+                        buffCount = buffCount + 1;
+                    }
                     if(passive.selfbuff.stack.critdmg){
                         critdmgBuff = critdmgBuff + parseFloat(passive.selfbuff.stack.critdmg);
                         buffCount = buffCount + 1;
@@ -1855,6 +1859,7 @@
         const critdmg = parseFloat(heroData?.[skillname]?.critdmg) || 0;
         const weakrate = parseFloat(heroData?.[skillname]?.weakrate) || 0;
         const weakdmg = parseFloat(heroData?.[skillname]?.weakdmg) || 0;
+        const hits = parseFloat(heroData?.[skillname]?.hits) || 0;
         console.error(atkmult, defmult, hpmult);
         const frontInputs = document.querySelectorAll('.front-hero');
         const frontHeroes = Array.from(frontInputs).map(input => input.value.trim());
@@ -1935,7 +1940,8 @@
         const whiteprob = skillCritRate * defFinalGuard + (1-skillCritRate) * (1-defFinalGuard);
         const critprob = skillCritRate * (1-defFinalGuard);
         const reductionRate =  (466 / ((466 + (defFinalDef*(100 - skillDefIgnore)/100)))) * ((100 - defFinalReduction) / 100) * ((100 - reductionBuff)/100);
-        return [baseDmg / reductionRate, critDmg / reductionRate, weakDmg / reductionRate, critWeakDmg / reductionRate, (baseDmg / reductionRate) * whiteprob * (1-skillWeakRate) + (critDmg / reductionRate) * critprob * (1-skillWeakRate) + (weakDmg / reductionRate) * whiteprob * (skillWeakRate) + (critWeakDmg / reductionRate) * critprob * (skillWeakRate)];
+        
+        return [baseDmg / reductionRate, critDmg / reductionRate, weakDmg / reductionRate, critWeakDmg / reductionRate, ((baseDmg / reductionRate) * whiteprob * (1-skillWeakRate) + (critDmg / reductionRate) * critprob * (1-skillWeakRate) + (weakDmg / reductionRate) * whiteprob * (skillWeakRate) + (critWeakDmg / reductionRate) * critprob * (skillWeakRate) * hits)];
     }
     function renderFormation(selectedOption) {
       const displayArea = document.getElementById('formation-display-area');
