@@ -297,6 +297,19 @@
       "skill2": { "name": "정화의 일격", "atkmult": 75, "enemyhpmult": [7,75], "hits": 2, "defignore":40},
       "skill3": { "name": "정화하는 어둠", "atkmult": 100, "hits": 2, "defignore":40}
     }, 
+    "오르카": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "잔혹한 거래", "allybuff": {"turn": {"atk" : 25}}},
+      "skill1": { "name": "불공정 거래", "atkmult": 60, "hits": 2, "defignore":40, "debuff": {"stack": {"def" : 20, "vulnerability": 17, "type" : "physical", "target" : "normal"}}},
+      "skill2": { "name": "무자비한 착취", "atkmult": 75, "hits": 2, "defignore":40}
+    }, 
+    "각성오르카": {
+      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "passive": {"name": "잔혹한 거래", "allybuff": {"turn": {"atk" : 25}}},
+      "skill1": { "name": "불공정 거래", "atkmult": 72, "hits": 2, "defignore":40, "debuff": {"stack": {"def" : 20, "vulnerability": 17, "type" : "physical", "target" : "normal"}}},
+      "skill2": { "name": "무자비한 착취", "atkmult": 90, "hits": 2, "defignore":40},
+      "skill3": { "name": "최후통첩", "atkmult": 72, "critmult": 60, "hits": 2, "defignore":40}
+    }, 
     "클레미스": {
       "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
       "passive": {"name": "신묘한 지능", "debuff": {"const": {"atk" : 16}}, "selfbuff":{"const":{"guard":33}}},
@@ -455,6 +468,19 @@
       "passive": {"name": "의지", "allybuff": {"const": {"def" : 18}}},
       "skill1": { "name": "연속공격", "atkmult": 170, "defmult":200, "hits": 1 },
       "skill2": { "name": "균형의방패", "mult": 0, "hits": 0, "allybuff": {"turn": {"guard" : 21}}}
+    },
+    "각성헬레니아": {
+      "stat":{"atk":704, "def":818, "hp":4572, "type": "physical"},
+      "passive": {"name": "발키리의 저력", "selfbuff": {"const": {"reduction" : 24, "type": "magic"}}},
+      "skill1": { "name": "하늘의 빛", "atkmult": 65, "defmult":75, "hits": 1, "debuff":{"turn":{"weakrate": 27}}},
+      "skill2": { "name": "하늘의 방패", "mult": 0, "hits": 0, "allybuff": {"turn": {"reduction" : 26, "type": "magic"}}},
+    },
+    "각성헤브니아": {
+      "stat":{"atk":1389, "def":533, "hp":3174, "type": "physical"},
+      "passive": {"name": "마법 포착", "allybuff": {"const": {"atk" : 25, "type": "physical"}}},
+      "skill1": { "name": "검의 심판", "atkmult": 160, "hits": 1},
+      "skill2": { "name": "맹렬한 공격", "atkmult": 340, "hits": 1, "debuff": {"turn": {"vulnerability" : 29, "type": "magic"}}},
+      "skill3": { "name": "유성 폭발", "atkmult": 350, "hits": 1, "allybuff": {"const": {"atk": 23, "critdmg": 34 ,"type": "physical"}}}
     },
     "보스":{
       "stat":{"atk":704, "def":1510, "hp":1000000, "type": "physical"}
