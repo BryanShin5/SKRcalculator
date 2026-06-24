@@ -479,7 +479,7 @@
       "stat":{"atk":1389, "def":533, "hp":3174, "type": "physical"},
       "passive": {"name": "마법 포착", "allybuff": {"const": {"atk" : 25, "type": "physical"}}},
       "skill1": { "name": "검의 심판", "atkmult": 160, "hits": 1},
-      "skill2": { "name": "맹렬한 공격", "atkmult": 340, "hits": 1, "debuff": {"turn": {"vulnerability" : 29, "type": "magic"}}},
+      "skill2": { "name": "맹렬한 공격", "atkmult": 340, "hits": 1, "debuff": {"turn": {"vulnerability" : 29, "type": "physical"}}},
       "skill3": { "name": "유성 폭발", "atkmult": 350, "hits": 1, "allybuff": {"const": {"atk": 23, "critdmg": 34 ,"type": "physical"}}}
     },
     "보스":{
