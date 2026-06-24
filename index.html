@@ -220,7 +220,7 @@
     }
     function attackerIterator(charactername, skillname){
         const attackerData = characterDb.characters[charactername];
-        const skill1 = attackerData.[skillname];
+        const skill1 = attackerData[skillname];
             if(skill1?.debuff){
                 if(skill1.debuff.const){
                     if(skill1.debuff.const.def && parseFloat(skill1.debuff.const.def) > constenemydefDebuff){
