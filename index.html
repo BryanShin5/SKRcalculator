@@ -220,7 +220,7 @@
     }
     function attackerIterator(charactername, skillname){
         const attackerData = characterDb.characters[charactername];
-        const skill1 = attackerData.skillname;
+        const skill1 = attackerData.[skillname];
             if(skill1?.debuff){
                 if(skill1.debuff.const){
                     if(skill1.debuff.const.def && parseFloat(skill1.debuff.const.def) > constenemydefDebuff){
@@ -608,16 +608,16 @@
             return; // 다음 영웅으로 패스
         }
         if(isSkill1On){
-            attackerIterator(allyName, attackerData.skill1);
+            attackerIterator(allyName, "skill1");
         }
         if(isSkill2On){
-            attackerIterator(allyName, attackerData.skill2);
+            attackerIterator(allyName, "skill2");
         }
         if(attackerData.passive){
-            attackerIterator(allyName, attackerData.passive);
+            attackerIterator(allyName, "passive");
         }
         if(isSkill3On){
-            attackerIterator(allyName, attackerData.skill3);
+            attackerIterator(allyName, "skill3");
         }
         });
         //방어팀 버프 계산
