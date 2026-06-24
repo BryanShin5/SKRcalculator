@@ -101,11 +101,13 @@
             hero = characterDb.characters[attackerName];
             if (hero.skill1) skill1Name = hero.skill1.name;
             if (hero.skill2) skill2Name = hero.skill2.name;
+            if (hero.skill3) skill3Name = hero.skill3.name;
         }
 
         // 2. 등록되지 않았을 경우 유저에게 공지
         const out1 = document.getElementById('skill1-output');
         const out2 = document.getElementById('skill2-output');
+        const out3 = document.getElementById('skill3-output');
         const displayBox = document.getElementById('display-box');
         if (!characterDb || !characterDb.characters || !characterDb.characters[attackerName]) {
             if (out1 && out2) {
@@ -117,26 +119,45 @@
             return;
         }
         
-        if (out1 && out2) {
+        if (out1 && out2 && out3) {
             if(hero.skill1){
                 const res = calculateDamage(1);
                 out1.innerText = `\n`
-                + `[${skill1Name}] : ${res[0]}\n` 
-                + `치명타 : ${res[1]}\n`
-                + `약공 : ${res[2]}\n`
-                + `치명 + 약공 : ${res[3]}\n`
-                + `기댓값 : ${res[4]}\n`
+                + `[${skill1Name}] : ${Math.floor(res[0])}\n` 
+                + `치명타 : ${Math.floor(res[1])}\n`
+                + `약공 : ${Math.floor(res[2])}\n`
+                + `치명 + 약공 : ${Math.floor(res[3])}\n`
+                + `기댓값 : ${Math.floor(res[4])}\n`
                 ;
+            } 
+            else{
+                out1.innerText = '\n';
             }
             if(hero.skill2){
                 const res = calculateDamage(2);
                 out2.innerText = `\n` 
-                + `[${skill2Name}] : ${res[0]}\n` 
-                + `치명타 : ${res[1]}\n`
-                + `약공 : ${res[2]}\n`
-                + `치명 + 약공 : ${res[3]}\n`
-                + `기댓값 : ${res[4]}\n`
+                + `[${skill2Name}] : ${Math.floor(res[0])}\n` 
+                + `치명타 : ${Math.floor(res[1])}\n`
+                + `약공 : ${Math.floor(res[2])}\n`
+                + `치명 + 약공 : ${Math.floor(res[3])}\n`
+                + `기댓값 : ${Math.floor(res[4])}\n`
                 ;
+            }
+            else{
+                out2.innerText = '\n';
+            }
+            if(hero.skill3){
+                const res = calculateDamage(3);
+                out3.innerText = `\n` 
+                + `[${skill2Name}] : ${Math.floor(res[0])}\n` 
+                + `치명타 : ${Math.floor(res[1])}\n`
+                + `약공 : ${Math.floor(res[2])}\n`
+                + `치명 + 약공 : ${Math.floor(res[3])}\n`
+                + `기댓값 : ${Math.floor(res[4])}\n`
+                ;
+            }
+            else{
+                out3.innerText = '\n';
             }
         } else if (displayBox) {
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
@@ -1876,7 +1897,8 @@
             const card = input.closest('.hero-card');
             const skill1 = card.querySelector('.front-skill1')?.checked || false;
             const skill2 = card.querySelector('.front-skill2')?.checked || false;
-            return [name, skill1, skill2];
+            const skill3 = card.querySelector('.front-skill3')?.checked || false;
+            return [name, skill1, skill2, skill3];
         })
         .filter(item => item !== null);
         const backHeroData = Array.from(backInputs)
@@ -1887,8 +1909,8 @@
             const card = input.closest('.hero-card');
             const skill1 = card.querySelector('.back-skill1')?.checked || false;
             const skill2 = card.querySelector('.back-skill2')?.checked || false;
-
-            return [name, skill1, skill2];
+            const skill3 = card.querySelector('.back-skill3')?.checked || false;
+            return [name, skill1, skill2, skill3];
         })
         .filter(item => item !== null);
         const AttackerHeroes = [...frontHeroData, ...backHeroData];
@@ -1907,7 +1929,8 @@
             const card = input.closest('.hero-card');
             const skill1 = card.querySelector('.front-def-skill1')?.checked || false;
             const skill2 = card.querySelector('.front-def-skill2')?.checked || false;
-            return [name, skill1, skill2];
+            const skill3 = card.querySelector('.front-def-skill3')?.checked || false;
+            return [name, skill1, skill2, skill3];
         })
         .filter(item => item !== null);
         const defbackHeroData = Array.from(defBackInputs)
@@ -1918,8 +1941,8 @@
             const card = input.closest('.hero-card');
             const skill1 = card.querySelector('.back-def-skill1')?.checked || false;
             const skill2 = card.querySelector('.back-def-skill2')?.checked || false;
-
-            return [name, skill1, skill2];
+            const skill3 = card.querySelector('.back-def-skill3')?.checked || false;
+            return [name, skill1, skill2, skill3];
         })
         .filter(item => item !== null);
         const DefenderHeroes = [...deffrontHeroData, ...defbackHeroData];
@@ -1958,6 +1981,7 @@
         <div class="checkbox-row">
         <label class="skill-label"><input type="checkbox" class="front-skill1"> 스킬1</label>
         <label class="skill-label"><input type="checkbox" class="front-skill2"> 스킬2</label>
+        <label class="skill-label"><input type="checkbox" class="front-skill3"> 각성기</label>
       </div>
     </div>`;
       }
@@ -1968,6 +1992,7 @@
         backInputs += `<div class="hero-card"><input type="text" class="back-hero" placeholder="후열 ${i}"><div class="checkbox-row">
         <label class="skill-label"><input type="checkbox" class="back-skill1"> 스킬1</label>
         <label class="skill-label"><input type="checkbox" class="back-skill2"> 스킬2</label>
+        <label class="skill-label"><input type="checkbox" class="back-skill3"> 각성기</label>
       </div>
     </div>`;
       }
@@ -1999,6 +2024,7 @@
         <div class="checkbox-row">
         <label class="skill-label"><input type="checkbox" class="front-def-skill1"> 스킬1</label>
         <label class="skill-label"><input type="checkbox" class="front-def-skill2"> 스킬2</label>
+        <label class="skill-label"><input type="checkbox" class="front-def-skill3"> 각성기</label>
       </div>
     </div>`;
       }
@@ -2009,6 +2035,7 @@
         backInputs += `<div class="hero-card"><input type="text" class="back-def-hero" placeholder="후열 ${i}"><div class="checkbox-row">
         <label class="skill-label"><input type="checkbox" class="back-def-skill1"> 스킬1</label>
         <label class="skill-label"><input type="checkbox" class="back-def-skill2"> 스킬2</label>
+        <label class="skill-label"><input type="checkbox" class="back-def-skill3"> 각성기</label>
       </div>
     </div>`;
       }
@@ -2373,7 +2400,8 @@
     <div class="result" id="display-box">
         <strong>💥 예상 데미지 결과</strong><br>
         • 스킬 1 피해량: <span id="skill1-output" class="damage-val">-</span><br>
-        • 스킬 2 피해량: <span id="skill2-output" class="damage-val">-</span>
+        • 스킬 2 피해량: <span id="skill2-output" class="damage-val">-</span><br>
+        • 각성기 피해량: <span id="skill3-output" class="damage-val">-</span>
     </div>
 </div>
 
