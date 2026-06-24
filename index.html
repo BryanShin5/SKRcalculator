@@ -62,6 +62,61 @@
     let rawatkBuff = 0;
     let rawdefBuff = 0;
     let rawenemydefBuff = 0;
+
+    let constatkBuff = 0;
+        let turnatkBuff = 0;
+        let constdefBuff = 0;
+        let constcritrateBuff = 0;
+        let constcritdmgBuff = 0;
+        let constweakrateBuff = 0;
+        let constweakdmgBuff = 0;
+        let constdmgampBuff = 0;
+        let constbossampBuff = 0;
+        let constdefignoreBuff = 0;
+        let constvulnerability = 0;
+        let constamplifyBuff = 0;
+        let turndefBuff = 0;
+        let turncritrateBuff = 0;
+        let turncritdmgBuff = 0;
+        let turnweakrateBuff = 0;
+        let turnweakdmgBuff = 0;
+        let turndmgampBuff = 0;
+        let turnbossampBuff = 0;
+        let turndefignoreBuff = 0;
+        let turnvulnerability = 0;
+        let turnamplifyBuff = 0;
+        let enemydefDebuff = 0;
+        let enemyguardDebuff = 0;
+        let enemyreductionBuff = 0;
+        
+        let constenemydefbuff = 0;
+        let turnenemydefbuff = 0;
+        let constenemyguardbuff = 0;
+        let turnenemyguardbuff = 0;
+        let constenemyreductionbuff = 0;
+        let turnenemyreductionbuff = 0;
+        let constenemydefDebuff = 0;
+        let turnenemydefDebuff = 0;
+        let constenemyguardDebuff = 0;
+        let turnenemyguardDebuff = 0;
+        let atkdebuff = 0;
+        let defdebuff = 0;
+        let critratedebuff = 0;
+        let critdmgdebuff = 0;
+        let weakratedebuff = 0;
+        let dmgampdebuff = 0;
+        let constatkdebuff = 0;
+        let constdefdebuff = 0;
+        let constcritratedebuff = 0;
+        let constcritdmgdebuff = 0;
+        let constweakratedebuff = 0;
+        let constdmgampdebuff = 0;
+        let turnatkdebuff = 0;
+        let turndefdebuff = 0;
+        let turncritratedebuff = 0;
+        let turncritdmgdebuff = 0;
+        let turnweakratedebuff = 0;
+        let turndmgampdebuff = 0;
     async function fetchCharactersData() {
     try {
         const response = await fetch('characters.json');
@@ -163,209 +218,10 @@
             displayBox.innerHTML = `<strong>💥 예상 데미지 결과</strong><br> • 스킬 1 피해량: <span id="skill1-output" class="damage-val">[${skill1Name}] 타격 준비 완료</span><br> • 스킬 2 피해량: <span id="skill2-output" class="damage-val">[${skill2Name}] 타격    준비 완료</span>`;
         }
     }
-    function buffIterator(allyTeam, enemyTeam){
-        atkBuff = 0;
-        defBuff = 0;
-        critrateBuff = 0;
-        critdmgBuff = 0;
-        weakrateBuff = 0;
-        weakdmgBuff = 0;
-        dmgampBuff = 0;
-        bossampBuff = 0;
-        defignoreBuff = 0;
-        enemyatkBuff = 0;
-        enemydefBuff = 0;
-        enemycritrateBuff = 0;
-        enemycritdmgBuff = 0;
-        enemyweakrateBuff = 0;
-        enemyweakdmgBuff = 0;
-        enemydmgampBuff = 0;
-        enemybossampBuff = 0;
-        enemydefignoreBuff = 0;
-        bossvulnerability = 0;
-        vulnerability = 0;
-        reductionBuff = 0;
-        amplifyBuff = 0; //물피증, 마피증
-        debuffCount = 0;
-        enemydebuffCount = 0;
-        buffCount = 0;
-        enemybuffCount = 0;
-        const atkPetInput = document.querySelector('#atk-pet-name');
-        const defPetInput = document.querySelector('#def-pet-name');
-        attackerPetName = atkPetInput ? atkPetInput.value.trim() : '';
-        defenderPetName = defPetInput ? defPetInput.value.trim() : '';
-        let pet  = null;
-        // 1.펫 데이터 로딩
-        if (characterDb && characterDb.pets && characterDb.pets[attackerPetName]) {
-            pet = characterDb.pets[attackerPetName];
-            
-            if (pet.buff1){
-                const buff1 = pet.buff1;
-                if(pet.buff1.target==="enemy"){
-                    if(buff1.atk){ enemyatkBuff = enemyatkBuff - parseFloat(buff1.atk);}
-                    if(buff1.def){ enemydefBuff = enemydefBuff - parseFloat(buff1.def);}
-                    if(buff1.critrate){ enemycritrateBuff = enemycritrateBuff - parseFloat(buff1.critrate);}
-                    if(buff1.critdmg){ enemycritdmgBuff = enemycritdmgBuff - parseFloat(buff1.critdmg);}
-                    if(buff1.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff1.weakrate);}
-                    if(buff1.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff1.weakdmg);}
-                    if(buff1.dmgamp && (!buff1.type)){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff1.dmgamp);}
-                    if(buff1.dmgamp && (buff1.type === "boss")){ bossvulnerability = bossvulnerability + parseFloat(buff1.dmgamp);}
-                }
-                else{
-                    if(buff1.atk){ atkBuff = atkBuff + parseFloat(buff1.atk);}
-                    if(buff1.def){ defBuff = defBuff + parseFloat(buff1.def);}
-                    if(buff1.critrate){ critrateBuff = critrateBuff + parseFloat(buff1.critrate);}
-                    if(buff1.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff1.critdmg);}
-                    if(buff1.weakrate){ weakrateBuff = weakrateBuff + parseFloat(buff1.weakrate);}
-                    if(buff1.weakdmg){ weakdmgBuff = weakdmgBuff + parseFloat(buff1.weakdmg);}
-                    if(buff1.dmgamp && (!buff1.type)){ dmgampBuff = dmgampBuff + parseFloat(buff1.dmgamp);}
-                    if(buff1.dmgamp && (buff1.type === "boss")){ bossampBuff = bossampBuff + parseFloat(buff1.dmgamp);}
-                }
-            } 
-            if (pet.buff2){
-                const buff2 = pet.buff2;
-                if(pet.buff2.target==="enemy"){
-                    if(buff2.atk){ enemyatkBuff = enemyatkBuff - parseFloat(buff2.atk);}
-                    if(buff2.def){ enemydefBuff = enemydefBuff - parseFloat(buff2.def);}
-                    if(buff2.critrate){ enemycritrateBuff = enemycritrateBuff - parseFloat(buff2.critrate);}
-                    if(buff2.critdmg){ enemycritdmgBuff = enemycritdmgBuff - parseFloat(buff2.critdmg);}
-                    if(buff2.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff2.weakrate);}
-                    if(buff2.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff2.weakdmg);}
-                    if(buff2.dmgamp && (!buff2.type)){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff2.dmgamp);}
-                    if(buff2.dmgamp && (buff2.type === "boss")){ bossvulnerability = bossvulnerability + parseFloat(buff2.dmgamp);}
-                }
-                else{
-                    if(buff2.atk){ atkBuff = atkBuff + parseFloat(buff2.atk);}
-                    if(buff2.def){ defBuff = defBuff + parseFloat(buff2.def);}
-                    if(buff2.critrate){ critrateBuff = critrateBuff + parseFloat(buff2.critrate);}
-                    if(buff2.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff2.critdmg);}
-                    if(buff2.weakrate){ weakrateBuff = weakrateBuff + parseFloat(buff2.weakrate);}
-                    if(buff2.weakdmg){ weakdmgBuff = weakdmgBuff + parseFloat(buff2.weakdmg);}
-                    if(buff2.dmgamp && (!buff2.type)){ dmgampBuff = dmgampBuff + parseFloat(buff2.dmgamp);}
-                    if(buff2.dmgamp && (buff2.type === "boss")){ bossampBuff = bossampBuff + parseFloat(buff2.dmgamp);}
-                }
-            } 
-        }
-        if (characterDb && characterDb.pets && characterDb.pets[defenderPetName]) {
-            pet = characterDb.pets[defenderPetName];
-            if (pet.buff1){
-                const buff1 = pet.buff1;
-                if(pet.buff1.target==="enemy"){
-                    if((buff1.atk && (buff1.type === characterDb.characters[attackerName].stat.type)|| !buff1.type)){ atkBuff = atkBuff - parseFloat(buff1.atk);}
-                    if(buff1.def){ defBuff = defBuff - parseFloat(buff1.def);}
-                    if(buff1.critrate){ critrateBuff = critrateBuff - parseFloat(buff1.critrate);}
-                    if(buff1.critdmg){ critdmgBuff = critdmgBuff - parseFloat(buff1.critdmg);}
-                    if(buff1.weakrate){ weakrateBuff = weakrateBuff - parseFloat(buff1.weakrate);}
-                    if(buff1.weakdmg){ weakdmgBuff = weakdmgBuff - parseFloat(buff1.weakdmg);}
-                    if(buff1.dmgamp && (!buff1.type)){ dmgampBuff = dmgampBuff - parseFloat(buff1.dmgamp);}
-                }
-                else{
-                    if(buff1.atk && ((buff1.type === characterDb.characters[attackerName].stat.type)|| !buff1.type)){ enemyatkBuff = enemyatkBuff + parseFloat(buff1.atk);}
-                    if(buff1.def){ enemydefBuff = enemydefBuff + parseFloat(buff1.def);}
-                    if(buff1.critrate){ enemycritrateBuff = enemycritrateBuff + parseFloat(buff1.critrate);}
-                    if(buff1.critdmg){ enemycritdmgBuff = enemycritdmgBuff + parseFloat(buff1.critdmg);}
-                    if(buff1.weakrate){ enemyweakrateBuff = enemyweakrateBuff + parseFloat(buff1.weakrate);}
-                    if(buff1.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff + parseFloat(buff1.weakdmg);}
-                    if(buff1.dmgamp && (!buff1.type)){ enemydmgampBuff = enemydmgampBuff + parseFloat(buff1.dmgamp);}
-                    if(buff1.reduction){ reductionBuff = reductionBuff + parseFloat(buff1.reduction);}
-                    if(buff1.guard){ enemyguardBuff = enemyguardBuff + parseFloat(buff1.guard);}
-                }
-            } 
-            if (pet.buff2){
-                const buff2 = pet.buff2;
-                if(pet.buff2.target==="enemy"){
-                    if(buff2.atk && ((buff2.type === characterDb.characters[attackerName].stat.type) || !buff2.type)){ atkBuff = atkBuff - parseFloat(buff2.atk);}
-                    if(buff2.def){ defBuff = defBuff - parseFloat(buff2.def);}
-                    if(buff2.critrate){ critrateBuff = critrateBuff - parseFloat(buff2.critrate);}
-                    if(buff2.critdmg){ critdmgBuff = critdmgBuff - parseFloat(buff2.critdmg);}
-                    if(buff2.weakrate){ weakrateBuff = weakrateBuff - parseFloat(buff2.weakrate);}
-                    if(buff2.weakdmg){ weakdmgBuff = weakdmgBuff - parseFloat(buff2.weakdmg);}
-                    if(buff2.dmgamp && (!buff2.type)){ dmgampBuff = dmgampBuff - parseFloat(buff2.dmgamp);}
-                    if(buff2.dmgamp && (buff2.type === "boss")){ enemybossampBuff = enemybossampBuff - parseFloat(buff2.dmgamp);}
-                }
-                else{
-                    if(buff2.atk && ((buff2.type === characterDb.characters[defenderName].stat.type) || !buff2.type)){ enemyatkBuff = enemyatkBuff + parseFloat(buff2.atk);}
-                    if(buff2.def){ enemydefBuff = enemydefBuff + parseFloat(buff2.def);}
-                    if(buff2.critrate){ enemycritrateBuff = enemycritrateBuff + parseFloat(buff2.critrate);}
-                    if(buff2.critdmg){ enemycritdmgBuff = enemycritdmgBuff + parseFloat(buff2.critdmg);}
-                    if(buff2.weakrate){ enemyweakrateBuff = enemyweakrateBuff + parseFloat(buff2.weakrate);}
-                    if(buff2.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff + parseFloat(buff2.weakdmg);}
-                    if(buff2.dmgamp && (!buff2.type)){ enemydmgampBuff = enemydmgampBuff + parseFloat(buff2.dmgamp);}
-                    if(buff2.reduction){ reductionBuff = reductionBuff + parseFloat(buff2.reduction);}
-                    if(buff2.guard){ enemyguardBuff = enemyguardBuff + parseFloat(buff2.guard);}
-                }
-            } 
-        }
-        //2.영웅 버프 로딩
-        let constatkBuff = 0;
-        let turnatkBuff = 0;
-        let constdefBuff = 0;
-        let constcritrateBuff = 0;
-        let constcritdmgBuff = 0;
-        let constweakrateBuff = 0;
-        let constweakdmgBuff = 0;
-        let constdmgampBuff = 0;
-        let constbossampBuff = 0;
-        let constdefignoreBuff = 0;
-        let constvulnerability = 0;
-        let constamplifyBuff = 0;
-        let turndefBuff = 0;
-        let turncritrateBuff = 0;
-        let turncritdmgBuff = 0;
-        let turnweakrateBuff = 0;
-        let turnweakdmgBuff = 0;
-        let turndmgampBuff = 0;
-        let turnbossampBuff = 0;
-        let turndefignoreBuff = 0;
-        let turnvulnerability = 0;
-        let turnamplifyBuff = 0;
-        let enemydefDebuff = 0;
-        let enemyguardDebuff = 0;
-        let enemyreductionBuff = 0;
-        
-        let constenemydefbuff = 0;
-        let turnenemydefbuff = 0;
-        let constenemyguardbuff = 0;
-        let turnenemyguardbuff = 0;
-        let constenemyreductionbuff = 0;
-        let turnenemyreductionbuff = 0;
-        let constenemydefDebuff = 0;
-        let turnenemydefDebuff = 0;
-        let constenemyguardDebuff = 0;
-        let turnenemyguardDebuff = 0;
-        let atkdebuff = 0;
-        let defdebuff = 0;
-        let critratedebuff = 0;
-        let critdmgdebuff = 0;
-        let weakratedebuff = 0;
-        let dmgampdebuff = 0;
-        let constatkdebuff = 0;
-        let constdefdebuff = 0;
-        let constcritratedebuff = 0;
-        let constcritdmgdebuff = 0;
-        let constweakratedebuff = 0;
-        let constdmgampdebuff = 0;
-        let turnatkdebuff = 0;
-        let turndefdebuff = 0;
-        let turncritratedebuff = 0;
-        let turncritdmgdebuff = 0;
-        let turnweakratedebuff = 0;
-        let turndmgampdebuff = 0;
-        
-        allyTeam.forEach(heroInfo => {
-        const allyName = heroInfo[0].trim();
-        const isSkill1On = heroInfo[1];
-        const isSkill2On = heroInfo[2];
-
-        // DB에서 공격 영웅 데이터 추출
-        const attackerData = characterDb.characters[allyName];
-        if (!attackerData) {
-            console.error(`DB에서 공격 영웅 '${allyName}'을 찾을 수 없습니다.`);
-            return; // 다음 영웅으로 패스
-        }
-        if(isSkill1On){
-            const skill1 = attackerData.skill1;
-            if(skill1.debuff){
+    function attackerIterator(charactername, skillname){
+        const attackerData = characterDb.characters[characterName];
+        const skill1 = attackerData.skillname;
+        if(skill1.debuff){
                 if(skill1.debuff.const){
                     if(skill1.debuff.const.def && parseFloat(skill1.debuff.const.def) > constenemydefDebuff){
                         constenemydefDebuff = parseFloat(skill1.debuff.const.def);
@@ -605,504 +461,163 @@
                     }
                 }
             }
+    }
+    function buffIterator(allyTeam, enemyTeam){
+        atkBuff = 0;
+        defBuff = 0;
+        critrateBuff = 0;
+        critdmgBuff = 0;
+        weakrateBuff = 0;
+        weakdmgBuff = 0;
+        dmgampBuff = 0;
+        bossampBuff = 0;
+        defignoreBuff = 0;
+        enemyatkBuff = 0;
+        enemydefBuff = 0;
+        enemycritrateBuff = 0;
+        enemycritdmgBuff = 0;
+        enemyweakrateBuff = 0;
+        enemyweakdmgBuff = 0;
+        enemydmgampBuff = 0;
+        enemybossampBuff = 0;
+        enemydefignoreBuff = 0;
+        bossvulnerability = 0;
+        vulnerability = 0;
+        reductionBuff = 0;
+        amplifyBuff = 0; //물피증, 마피증
+        debuffCount = 0;
+        enemydebuffCount = 0;
+        buffCount = 0;
+        enemybuffCount = 0;
+        const atkPetInput = document.querySelector('#atk-pet-name');
+        const defPetInput = document.querySelector('#def-pet-name');
+        attackerPetName = atkPetInput ? atkPetInput.value.trim() : '';
+        defenderPetName = defPetInput ? defPetInput.value.trim() : '';
+        let pet  = null;
+        // 1.펫 데이터 로딩
+        if (characterDb && characterDb.pets && characterDb.pets[attackerPetName]) {
+            pet = characterDb.pets[attackerPetName];
+            
+            if (pet.buff1){
+                const buff1 = pet.buff1;
+                if(pet.buff1.target==="enemy"){
+                    if(buff1.atk){ enemyatkBuff = enemyatkBuff - parseFloat(buff1.atk);}
+                    if(buff1.def){ enemydefBuff = enemydefBuff - parseFloat(buff1.def);}
+                    if(buff1.critrate){ enemycritrateBuff = enemycritrateBuff - parseFloat(buff1.critrate);}
+                    if(buff1.critdmg){ enemycritdmgBuff = enemycritdmgBuff - parseFloat(buff1.critdmg);}
+                    if(buff1.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff1.weakrate);}
+                    if(buff1.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff1.weakdmg);}
+                    if(buff1.dmgamp && (!buff1.type)){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff1.dmgamp);}
+                    if(buff1.dmgamp && (buff1.type === "boss")){ bossvulnerability = bossvulnerability + parseFloat(buff1.dmgamp);}
+                }
+                else{
+                    if(buff1.atk){ atkBuff = atkBuff + parseFloat(buff1.atk);}
+                    if(buff1.def){ defBuff = defBuff + parseFloat(buff1.def);}
+                    if(buff1.critrate){ critrateBuff = critrateBuff + parseFloat(buff1.critrate);}
+                    if(buff1.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff1.critdmg);}
+                    if(buff1.weakrate){ weakrateBuff = weakrateBuff + parseFloat(buff1.weakrate);}
+                    if(buff1.weakdmg){ weakdmgBuff = weakdmgBuff + parseFloat(buff1.weakdmg);}
+                    if(buff1.dmgamp && (!buff1.type)){ dmgampBuff = dmgampBuff + parseFloat(buff1.dmgamp);}
+                    if(buff1.dmgamp && (buff1.type === "boss")){ bossampBuff = bossampBuff + parseFloat(buff1.dmgamp);}
+                }
+            } 
+            if (pet.buff2){
+                const buff2 = pet.buff2;
+                if(pet.buff2.target==="enemy"){
+                    if(buff2.atk){ enemyatkBuff = enemyatkBuff - parseFloat(buff2.atk);}
+                    if(buff2.def){ enemydefBuff = enemydefBuff - parseFloat(buff2.def);}
+                    if(buff2.critrate){ enemycritrateBuff = enemycritrateBuff - parseFloat(buff2.critrate);}
+                    if(buff2.critdmg){ enemycritdmgBuff = enemycritdmgBuff - parseFloat(buff2.critdmg);}
+                    if(buff2.weakrate){ enemyweakrateBuff = enemyweakrateBuff - parseFloat(buff2.weakrate);}
+                    if(buff2.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff - parseFloat(buff2.weakdmg);}
+                    if(buff2.dmgamp && (!buff2.type)){ enemydmgampBuff = enemydmgampBuff - parseFloat(buff2.dmgamp);}
+                    if(buff2.dmgamp && (buff2.type === "boss")){ bossvulnerability = bossvulnerability + parseFloat(buff2.dmgamp);}
+                }
+                else{
+                    if(buff2.atk){ atkBuff = atkBuff + parseFloat(buff2.atk);}
+                    if(buff2.def){ defBuff = defBuff + parseFloat(buff2.def);}
+                    if(buff2.critrate){ critrateBuff = critrateBuff + parseFloat(buff2.critrate);}
+                    if(buff2.critdmg){ critdmgBuff = critdmgBuff + parseFloat(buff2.critdmg);}
+                    if(buff2.weakrate){ weakrateBuff = weakrateBuff + parseFloat(buff2.weakrate);}
+                    if(buff2.weakdmg){ weakdmgBuff = weakdmgBuff + parseFloat(buff2.weakdmg);}
+                    if(buff2.dmgamp && (!buff2.type)){ dmgampBuff = dmgampBuff + parseFloat(buff2.dmgamp);}
+                    if(buff2.dmgamp && (buff2.type === "boss")){ bossampBuff = bossampBuff + parseFloat(buff2.dmgamp);}
+                }
+            } 
+        }
+        if (characterDb && characterDb.pets && characterDb.pets[defenderPetName]) {
+            pet = characterDb.pets[defenderPetName];
+            if (pet.buff1){
+                const buff1 = pet.buff1;
+                if(pet.buff1.target==="enemy"){
+                    if((buff1.atk && (buff1.type === characterDb.characters[attackerName].stat.type)|| !buff1.type)){ atkBuff = atkBuff - parseFloat(buff1.atk);}
+                    if(buff1.def){ defBuff = defBuff - parseFloat(buff1.def);}
+                    if(buff1.critrate){ critrateBuff = critrateBuff - parseFloat(buff1.critrate);}
+                    if(buff1.critdmg){ critdmgBuff = critdmgBuff - parseFloat(buff1.critdmg);}
+                    if(buff1.weakrate){ weakrateBuff = weakrateBuff - parseFloat(buff1.weakrate);}
+                    if(buff1.weakdmg){ weakdmgBuff = weakdmgBuff - parseFloat(buff1.weakdmg);}
+                    if(buff1.dmgamp && (!buff1.type)){ dmgampBuff = dmgampBuff - parseFloat(buff1.dmgamp);}
+                }
+                else{
+                    if(buff1.atk && ((buff1.type === characterDb.characters[attackerName].stat.type)|| !buff1.type)){ enemyatkBuff = enemyatkBuff + parseFloat(buff1.atk);}
+                    if(buff1.def){ enemydefBuff = enemydefBuff + parseFloat(buff1.def);}
+                    if(buff1.critrate){ enemycritrateBuff = enemycritrateBuff + parseFloat(buff1.critrate);}
+                    if(buff1.critdmg){ enemycritdmgBuff = enemycritdmgBuff + parseFloat(buff1.critdmg);}
+                    if(buff1.weakrate){ enemyweakrateBuff = enemyweakrateBuff + parseFloat(buff1.weakrate);}
+                    if(buff1.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff + parseFloat(buff1.weakdmg);}
+                    if(buff1.dmgamp && (!buff1.type)){ enemydmgampBuff = enemydmgampBuff + parseFloat(buff1.dmgamp);}
+                    if(buff1.reduction){ reductionBuff = reductionBuff + parseFloat(buff1.reduction);}
+                    if(buff1.guard){ enemyguardBuff = enemyguardBuff + parseFloat(buff1.guard);}
+                }
+            } 
+            if (pet.buff2){
+                const buff2 = pet.buff2;
+                if(pet.buff2.target==="enemy"){
+                    if(buff2.atk && ((buff2.type === characterDb.characters[attackerName].stat.type) || !buff2.type)){ atkBuff = atkBuff - parseFloat(buff2.atk);}
+                    if(buff2.def){ defBuff = defBuff - parseFloat(buff2.def);}
+                    if(buff2.critrate){ critrateBuff = critrateBuff - parseFloat(buff2.critrate);}
+                    if(buff2.critdmg){ critdmgBuff = critdmgBuff - parseFloat(buff2.critdmg);}
+                    if(buff2.weakrate){ weakrateBuff = weakrateBuff - parseFloat(buff2.weakrate);}
+                    if(buff2.weakdmg){ weakdmgBuff = weakdmgBuff - parseFloat(buff2.weakdmg);}
+                    if(buff2.dmgamp && (!buff2.type)){ dmgampBuff = dmgampBuff - parseFloat(buff2.dmgamp);}
+                    if(buff2.dmgamp && (buff2.type === "boss")){ enemybossampBuff = enemybossampBuff - parseFloat(buff2.dmgamp);}
+                }
+                else{
+                    if(buff2.atk && ((buff2.type === characterDb.characters[defenderName].stat.type) || !buff2.type)){ enemyatkBuff = enemyatkBuff + parseFloat(buff2.atk);}
+                    if(buff2.def){ enemydefBuff = enemydefBuff + parseFloat(buff2.def);}
+                    if(buff2.critrate){ enemycritrateBuff = enemycritrateBuff + parseFloat(buff2.critrate);}
+                    if(buff2.critdmg){ enemycritdmgBuff = enemycritdmgBuff + parseFloat(buff2.critdmg);}
+                    if(buff2.weakrate){ enemyweakrateBuff = enemyweakrateBuff + parseFloat(buff2.weakrate);}
+                    if(buff2.weakdmg){ enemyweakdmgBuff = enemyweakdmgBuff + parseFloat(buff2.weakdmg);}
+                    if(buff2.dmgamp && (!buff2.type)){ enemydmgampBuff = enemydmgampBuff + parseFloat(buff2.dmgamp);}
+                    if(buff2.reduction){ reductionBuff = reductionBuff + parseFloat(buff2.reduction);}
+                    if(buff2.guard){ enemyguardBuff = enemyguardBuff + parseFloat(buff2.guard);}
+                }
+            } 
+        }
+        
+        allyTeam.forEach(heroInfo => {
+        const allyName = heroInfo[0].trim();
+        const isSkill1On = heroInfo[1];
+        const isSkill2On = heroInfo[2];
+        const isSkill3On = heroInfo[3];
+        // DB에서 공격 영웅 데이터 추출
+        const attackerData = characterDb.characters[allyName];
+        if (!attackerData) {
+            console.error(`DB에서 공격 영웅 '${allyName}'을 찾을 수 없습니다.`);
+            return; // 다음 영웅으로 패스
+        }
+        if(isSkill1On){
+            attackerIterator(allyName, attackerData.skill1);
         }
         if(isSkill2On){
-            const skill2 = attackerData.skill2;
-            if(skill2.debuff){
-                if(skill2.debuff.const){
-                    if(skill2.debuff.const.def && parseFloat(skill2.debuff.const.def) > constenemydefDebuff){
-                        constenemydefDebuff = parseFloat(skill2.debuff.const.def);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(skill2.debuff.const.guard && parseFloat(skill2.debuff.const.guard) > constenemyguardDebuff){
-                        constenemyguardDebuff = parseFloat(skill2.debuff.const.guard);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(skill2.debuff.const.vulnerability && parseFloat(skill2.debuff.const.vulnerability) > constvulnerability && (!skill2.debuff.const.type || (skill2.debuff.const.type === characterDb.characters[attackerName].stat.type))){
-                        constvulnerability = parseFloat(skill2.debuff.const.vulnerability);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                }
-                if(skill2.debuff.turn){
-                    if(skill2.debuff.turn.def && parseFloat(skill2.debuff.turn.def) > turnenemydefDebuff){
-                        turnenemydefDebuff = parseFloat(skill2.debuff.turn.def);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(skill2.debuff.turn.guard && parseFloat(skill2.debuff.turn.guard) > turnenemyguardDebuff){
-                        turnenemyguardDebuff = parseFloat(skill2.debuff.turn.guard);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(skill2.debuff.turn.vulnerability && parseFloat(skill2.debuff.turn.vulnerability) > turnvulnerability && (!skill2.debuff.turn.type || (skill2.debuff.turn.type === characterDb.characters[attackerName].stat.type))){
-                        turnvulnerability = parseFloat(skill2.debuff.turn.vulnerability);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                }
-                if(skill2.debuff.stack){
-                    if(skill2.debuff.stack.def){
-                        enemydefDebuff = parseFloat(skill2.debuff.stack.def);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(skill2.debuff.stack.vulnerability && (!skill2.debuff.stack.type || (skill2.debuff.stack.type === characterDb.characters[attackerName].stat.type))){
-                        vulnerability = vulnerability + parseFloat(skill2.debuff.stack.vulnerability);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                }
-            }
-            if(skill2.selfbuff && attackerName === allyName){
-                if(skill2.selfbuff.const){
-                    if(skill2.selfbuff.const.atk && parseFloat(skill2.selfbuff.const.atk) > constatkBuff){
-                        constatkBuff = parseFloat(skill2.selfbuff.const.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.const.def && parseFloat(skill2.selfbuff.const.def) > constdefBuff){
-                        constdefBuff = parseFloat(skill2.selfbuff.const.def);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.const.critrate && parseFloat(skill2.selfbuff.const.critrate) > constcritrateBuff){
-                        constcritrateBuff = parseFloat(skill2.selfbuff.const.critrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.const.critdmg && parseFloat(skill2.selfbuff.const.critdmg) > constcritdmgBuff){
-                        constcritdmgBuff = parseFloat(skill2.selfbuff.const.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.const.weakrate && parseFloat(skill2.selfbuff.const.weakrate) > constweakrateBuff){
-                        constweakrateBuff = parseFloat(skill2.selfbuff.const.weakrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.const.weakdmg && skill2.selfbuff.const.weakdmg > constweakdmgBuff){
-                        constweakdmgBuff = skill2.selfbuff.const.weakdmg;
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.const.dmgamp && parseFloat(skill2.selfbuff.const.dmgamp) > constdmgampBuff){
-                        constdmgampBuff = parseFloat(skill2.selfbuff.const.dmgamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.const.bossamp && parseFloat(skill2.selfbuff.const.bossamp) > constbossampBuff){
-                        constbossampBuff = skill2.selfbuff.const.bossamp;
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.const.defignore && parseFloat(skill2.selfbuff.const.defignore) > constdefignoreBuff){
-                        constdefignoreBuff = skill2.selfbuff.const.defignore;
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.const.amplify && parseFloat(skill2.selfbuff.const.amplify) > constamplifyBuff){
-                        constamplifyBuff = parseFloat(skill2.selfbuff.const.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-                if(skill2.selfbuff.turn){
-                    if(skill2.selfbuff.turn.atk && parseFloat(skill2.selfbuff.turn.atk) > turnatkBuff){
-                        turnatkBuff = parseFloat(skill2.selfbuff.turn.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.turn.def && parseFloat(skill2.selfbuff.turn.def) > turndefBuff){
-                        turndefBuff = parseFloat(skill2.selfbuff.turn.def);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.turn.critrate && parseFloat(skill2.selfbuff.turn.critrate) > turncritrateBuff){
-                        turncritrateBuff = parseFloat(skill2.selfbuff.turn.critrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.turn.critdmg && parseFloat(skill2.selfbuff.turn.critdmg) > turncritdmgBuff){
-                        turncritdmgBuff = parseFloat(skill2.selfbuff.turn.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.turn.weakrate && parseFloat(skill2.selfbuff.turn.weakrate) > turnweakrateBuff){
-                        turnweakrateBuff = parseFloat(skill2.selfbuff.turn.weakrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.turn.weakdmg && parseFloat(skill2.selfbuff.turn.weakdmg) > turnweakdmgBuff){
-                        turnweakdmgBuff = parseFloat(skill2.selfbuff.turn.weakdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.turn.dmgamp && parseFloat(skill2.selfbuff.turn.dmgamp) > turndmgampBuff){
-                        turndmgampBuff = parseFloat(skill2.selfbuff.turn.dmgamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.turn.bossamp && parseFloat(skill2.selfbuff.turn.bossamp) > turnbossampBuff){
-                        turnbossampBuff = parseFloat(skill2.selfbuff.turn.bossamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.turn.defignore && parseFloat(skill2.selfbuff.turn.defignore) > turndefignoreBuff){
-                        turndefignoreBuff = parseFloat(skill2.selfbuff.turn.defignore);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.turn.amplify && parseFloat(skill2.selfbuff.turn.amplify) > turnamplifyBuff){
-                        turnamplifyBuff = parseFloat(skill2.selfbuff.turn.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-                if(skill2.selfbuff.stack){
-                    if(skill2.selfbuff.stack.atk){
-                        atkBuff = atkBuff + parseFloat(skill2.selfbuff.stack.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.stack.critdmg){
-                        critdmgBuff = critdmgBuff + parseFloat(skill2.selfbuff.stack.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.selfbuff.stack.amplify){
-                        amplifyBuff = amplifyBuff + parseFloat(skill2.selfbuff.stack.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-            }
-            if(skill2.allybuff){
-                if(skill2.allybuff.const){
-                    if(skill2.allybuff.const.atk && (parseFloat(skill2.allybuff.const.atk) > constatkBuff) && (!skill2.allybuff.const.type || (skill2.allybuff.const.type === characterDb.characters[attackerName].stat.type))){
-                        constatkBuff = parseFloat(skill2.allybuff.const.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.const.def && parseFloat(skill2.allybuff.const.def) > constdefBuff){
-                        constdefBuff = parseFloat(skill2.allybuff.const.def);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.const.critrate && parseFloat(skill2.allybuff.const.critrate) > constcritrateBuff){
-                        constcritrateBuff = parseFloat(skill2.allybuff.const.critrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.const.critdmg && parseFloat(skill2.allybuff.const.critdmg) > constcritdmgBuff){
-                        constcritdmgBuff = parseFloat(skill2.allybuff.const.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.const.weakrate && parseFloat(skill2.allybuff.const.weakrate) > constweakrateBuff){
-                        constweakrateBuff = parseFloat(skill2.allybuff.const.weakrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.const.weakdmg && parseFloat(skill2.allybuff.const.weakdmg) > constweakdmgBuff){
-                        constweakdmgBuff = parseFloat(skill2.allybuff.const.weakdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.const.dmgamp && parseFloat(skill2.allybuff.const.dmgamp) > constdmgampBuff){
-                        constdmgampBuff = parseFloat(skill2.allybuff.const.dmgamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.const.bossamp && parseFloat(skill2.allybuff.const.bossamp) > constbossampBuff){
-                        constbossampBuff = parseFloat(skill2.allybuff.const.bossamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.const.defignore && parseFloat(skill2.allybuff.const.defignore) > constdefignoreBuff){
-                        constdefignoreBuff = parseFloat(skill2.allybuff.const.defignore);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.const.amplify && (parseFloat(skill2.allybuff.const.amplify) > constamplifyBuff) && (!skill2.allybuff.const.type || (skill2.allybuff.const.type === characterDb.characters[attackerName].stat.type))){
-                        constamplifyBuff = parseFloat(skill2.allybuff.const.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-                if(skill2.allybuff.turn){
-                    if(skill2.allybuff.turn.atk && (parseFloat(skill2.allybuff.turn.atk) > turnatkBuff) && (!skill2.allybuff.turn.type || (skill2.allybuff.turn.type === characterDb.characters[attackerName].stat.type))){
-                        turnatkBuff = parseFloat(skill2.allybuff.turn.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.turn.def && parseFloat(skill2.allybuff.turn.def) > turndefBuff){
-                        turndefBuff = parseFloat(skill2.allybuff.turn.def);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.turn.critrate && parseFloat(skill2.allybuff.turn.critrate) > turncritrateBuff){
-                        turncritrateBuff = parseFloat(skill2.allybuff.turn.critrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.turn.critdmg && parseFloat(skill2.allybuff.turn.critdmg) > turncritdmgBuff){
-                        turncritdmgBuff = parseFloat(skill2.allybuff.turn.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.turn.weakrate && parseFloat(skill2.allybuff.turn.weakrate) > turnweakrateBuff){
-                        turnweakrateBuff = parseFloat(skill2.allybuff.turn.weakrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.turn.weakdmg && parseFloat(skill2.allybuff.turn.weakdmg) > turnweakdmgBuff){
-                        turnweakdmgBuff = parseFloat(skill2.allybuff.turn.weakdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.turn.dmgamp && parseFloat(skill2.allybuff.turn.dmgamp) > turndmgampBuff){
-                        turndmgampBuff = parseFloat(skill2.allybuff.turn.dmgamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.turn.bossamp && parseFloat(skill2.allybuff.turn.bossamp) > turnbossampBuff){
-                        turnbossampBuff = parseFloat(skill2.allybuff.turn.bossamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.turn.defignore && parseFloat(skill2.allybuff.turn.defignore) > turndefignoreBuff){
-                        turndefignoreBuff = parseFloat(skill2.allybuff.turn.defignore);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.turn.amplify && (parseFloat(skill2.allybuff.turn.amplify) > turnamplifyBuff) && (!skill2.allybuff.turn.type || (skill2.allybuff.turn.type === characterDb.characters[attackerName].stat.type))){
-                        turnamplifyBuff = parseFloat(skill2.allybuff.turn.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-                if(skill2.allybuff.stack){
-                    if(skill2.allybuff.stack.atk){
-                        atkBuff = atkBuff + parseFloat(skill2.allybuff.stack.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.stack.critdmg){
-                        critdmgBuff = critdmgBuff + parseFloat(skill2.allybuff.stack.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(skill2.allybuff.stack.amplify){
-                        amplifyBuff = amplifyBuff + parseFloat(skill2.allybuff.stack.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-            }
+            attackerIterator(allyName, attackerData.skill2);
         }
         if(attackerData.passive){
-            const passive = attackerData.passive;
-            if(passive.debuff){
-                if(passive.debuff.const){
-                    if(passive.debuff.const.def && parseFloat(passive.debuff.const.def) > constenemydefDebuff){
-                        constenemydefDebuff = parseFloat(passive.debuff.const.def);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(passive.debuff.const.guard && parseFloat(passive.debuff.const.guard) > constenemyguardDebuff){
-                        constenemyguardDebuff = parseFloat(passive.debuff.const.guard);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(passive.debuff.const.vulnerability && parseFloat(passive.debuff.const.vulnerability) > constvulnerability && (!passive.debuff.const.type || (passive.debuff.const.type === characterDb.characters[attackerName].stat.type))){
-                        constvulnerability = parseFloat(passive.debuff.const.vulnerability);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                }
-                if(passive.debuff.turn){
-                    if(passive.debuff.turn.def && parseFloat(passive.debuff.turn.def) > turnenemydefDebuff){
-                        turnenemydefDebuff = parseFloat(passive.debuff.turn.def);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(passive.debuff.turn.guard && parseFloat(passive.debuff.turn.guard) > turnenemyguardDebuff){
-                        turnenemyguardDebuff = parseFloat(passive.debuff.turn.guard);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(passive.debuff.turn.vulnerability && parseFloat(passive.debuff.turn.vulnerability) > turnvulnerability && (!passive.debuff.turn.type || (passive.debuff.turn.type === characterDb.characters[attackerName].stat.type))){
-                        turnvulnerability = parseFloat(passive.debuff.turn.vulnerability);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                }
-                if(passive.debuff.stack){
-                    if(passive.debuff.stack.def){
-                        enemydefDebuff = parseFloat(passive.debuff.stack.def);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                    if(passive.debuff.stack.vulnerability && (!passive.debuff.stack.type || (passive.debuff.stack.type === characterDb.characters[attackerName].stat.type))){
-                        vulnerability = vulnerability + parseFloat(passive.debuff.stack.vulnerability);
-                        enemydebuffCount = enemydebuffCount + 1;
-                    }
-                }
-            }
-            if(passive.selfbuff && attackerName === allyName){
-                if(passive.selfbuff.const){
-                    if(passive.selfbuff.const.atk && passive.selfbuff.const.type === "raw"){
-                        rawatkBuff = parseFloat(passive.selfbuff.const.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.def && passive.selfbuff.const.type === "raw"){
-                        rawdefBuff = parseFloat(passive.selfbuff.const.def);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.atk && (parseFloat(passive.selfbuff.const.atk) > constatkBuff) && (passive?.selfbuff?.const?.type !== "raw")){
-                        constatkBuff = parseFloat(passive.selfbuff.const.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.def && (parseFloat(passive.selfbuff.const.def) > constdefBuff) && (passive?.selfbuff?.const?.type !== "raw")){
-                        constdefBuff = parseFloat(passive.selfbuff.const.def);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.critrate && parseFloat(passive.selfbuff.const.critrate) > constcritrateBuff){
-                        constcritrateBuff = parseFloat(passive.selfbuff.const.critrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.critdmg && parseFloat(passive.selfbuff.const.critdmg) > constcritdmgBuff){
-                        constcritdmgBuff = parseFloat(passive.selfbuff.const.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.weakrate && parseFloat(passive.selfbuff.const.weakrate) > constweakrateBuff){
-                        constweakrateBuff = parseFloat(passive.selfbuff.const.weakrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.weakdmg && passive.selfbuff.const.weakdmg > constweakdmgBuff){
-                        constweakdmgBuff = passive.selfbuff.const.weakdmg;
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.dmgamp && parseFloat(passive.selfbuff.const.dmgamp) > constdmgampBuff){
-                        constdmgampBuff = parseFloat(passive.selfbuff.const.dmgamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.bossamp && parseFloat(passive.selfbuff.const.bossamp) > constbossampBuff){
-                        constbossampBuff = passive.selfbuff.const.bossamp;
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.defignore && parseFloat(passive.selfbuff.const.defignore) > constdefignoreBuff){
-                        constdefignoreBuff = passive.selfbuff.const.defignore;
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.const.amplify && parseFloat(passive.selfbuff.const.amplify) > constamplifyBuff){
-                        constamplifyBuff = parseFloat(passive.selfbuff.const.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-                if(passive.selfbuff.turn){
-                    if(passive.selfbuff.turn.atk && parseFloat(passive.selfbuff.turn.atk) > turnatkBuff){
-                        turnatkBuff = parseFloat(passive.selfbuff.turn.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.turn.def && parseFloat(passive.selfbuff.turn.def) > turndefBuff){
-                        turndefBuff = parseFloat(passive.selfbuff.turn.def);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.turn.critrate && parseFloat(passive.selfbuff.turn.critrate) > turncritrateBuff){
-                        turncritrateBuff = parseFloat(passive.selfbuff.turn.critrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.turn.critdmg && parseFloat(passive.selfbuff.turn.critdmg) > turncritdmgBuff){
-                        turncritdmgBuff = parseFloat(passive.selfbuff.turn.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.turn.weakrate && parseFloat(passive.selfbuff.turn.weakrate) > turnweakrateBuff){
-                        turnweakrateBuff = parseFloat(passive.selfbuff.turn.weakrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.turn.weakdmg && parseFloat(passive.selfbuff.turn.weakdmg) > turnweakdmgBuff){
-                        turnweakdmgBuff = parseFloat(passive.selfbuff.turn.weakdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.turn.dmgamp && parseFloat(passive.selfbuff.turn.dmgamp) > turndmgampBuff){
-                        turndmgampBuff = parseFloat(passive.selfbuff.turn.dmgamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.turn.bossamp && parseFloat(passive.selfbuff.turn.bossamp) > turnbossampBuff){
-                        turnbossampBuff = parseFloat(passive.selfbuff.turn.bossamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.turn.defignore && parseFloat(passive.selfbuff.turn.defignore) > turndefignoreBuff){
-                        turndefignoreBuff = parseFloat(passive.selfbuff.turn.defignore);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.turn.amplify && parseFloat(passive.selfbuff.turn.amplify) > turnamplifyBuff){
-                        turnamplifyBuff = parseFloat(passive.selfbuff.turn.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-                if(passive.selfbuff.stack){
-                    if(passive.selfbuff.stack.atk){
-                        atkBuff = atkBuff + parseFloat(passive.selfbuff.stack.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.stack.critrate){
-                        critrateBuff = critrateBuff + parseFloat(passive.selfbuff.stack.critrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.stack.critdmg){
-                        critdmgBuff = critdmgBuff + parseFloat(passive.selfbuff.stack.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.selfbuff.stack.amplify){
-                        amplifyBuff = amplifyBuff + parseFloat(passive.selfbuff.stack.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-            }
-            if(passive.allybuff){
-                if(passive.allybuff.const){
-                    if(passive.allybuff.const.atk && (parseFloat(passive.allybuff.const.atk) > constatkBuff) && (!passive.allybuff.const.type || (passive.allybuff.const.type === characterDb.characters[attackerName].stat.type))){
-                        constatkBuff = parseFloat(passive.allybuff.const.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.const.def && parseFloat(passive.allybuff.const.def) > constdefBuff){
-                        constdefBuff = parseFloat(passive.allybuff.const.def);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.const.critrate && parseFloat(passive.allybuff.const.critrate) > constcritrateBuff){
-                        constcritrateBuff = parseFloat(passive.allybuff.const.critrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.const.critdmg && parseFloat(passive.allybuff.const.critdmg) > constcritdmgBuff){
-                        constcritdmgBuff = parseFloat(passive.allybuff.const.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.const.weakrate && parseFloat(passive.allybuff.const.weakrate) > constweakrateBuff){
-                        constweakrateBuff = parseFloat(passive.allybuff.const.weakrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.const.weakdmg && parseFloat(passive.allybuff.const.weakdmg) > constweakdmgBuff){
-                        constweakdmgBuff = parseFloat(passive.allybuff.const.weakdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.const.dmgamp && parseFloat(passive.allybuff.const.dmgamp) > constdmgampBuff){
-                        constdmgampBuff = parseFloat(passive.allybuff.const.dmgamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.const.bossamp && parseFloat(passive.allybuff.const.bossamp) > constbossampBuff){
-                        constbossampBuff = parseFloat(passive.allybuff.const.bossamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.const.defignore && parseFloat(passive.allybuff.const.defignore) > constdefignoreBuff){
-                        constdefignoreBuff = parseFloat(passive.allybuff.const.defignore);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.const.amplify && (parseFloat(passive.allybuff.const.amplify) > constamplifyBuff) && (!passive.allybuff.const.type || (passive.allybuff.const.type === characterDb.characters[attackerName].stat.type))){
-                        constamplifyBuff = parseFloat(passive.allybuff.const.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-                if(passive.allybuff.turn){
-                    if(passive.allybuff.turn.atk && (parseFloat(passive.allybuff.turn.atk) > turnatkBuff) && (!passive.allybuff.turn.type || (passive.allybuff.turn.type === characterDb.characters[attackerName].stat.type))){
-                        turnatkBuff = parseFloat(passive.allybuff.turn.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.turn.def && parseFloat(passive.allybuff.turn.def) > turndefBuff){
-                        turndefBuff = parseFloat(passive.allybuff.turn.def);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.turn.critrate && parseFloat(passive.allybuff.turn.critrate) > turncritrateBuff){
-                        turncritrateBuff = parseFloat(passive.allybuff.turn.critrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.turn.critdmg && parseFloat(passive.allybuff.turn.critdmg) > turncritdmgBuff){
-                        turncritdmgBuff = parseFloat(passive.allybuff.turn.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.turn.weakrate && parseFloat(passive.allybuff.turn.weakrate) > turnweakrateBuff){
-                        turnweakrateBuff = parseFloat(passive.allybuff.turn.weakrate);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.turn.weakdmg && parseFloat(passive.allybuff.turn.weakdmg) > turnweakdmgBuff){
-                        turnweakdmgBuff = parseFloat(passive.allybuff.turn.weakdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.turn.dmgamp && parseFloat(passive.allybuff.turn.dmgamp) > turndmgampBuff){
-                        turndmgampBuff = parseFloat(passive.allybuff.turn.dmgamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.turn.bossamp && parseFloat(passive.allybuff.turn.bossamp) > turnbossampBuff){
-                        turnbossampBuff = parseFloat(passive.allybuff.turn.bossamp);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.turn.defignore && parseFloat(passive.allybuff.turn.defignore) > turndefignoreBuff){
-                        turndefignoreBuff = parseFloat(passive.allybuff.turn.defignore);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.turn.amplify && (parseFloat(passive.allybuff.turn.amplify) > turnamplifyBuff) && (!passive.allybuff.turn.type || (passive.allybuff.turn.type === characterDb.characters[attackerName].stat.type))){
-                        turnamplifyBuff = parseFloat(passive.allybuff.turn.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-                if(passive.allybuff.stack){
-                    if(passive.allybuff.stack.atk){
-                        atkBuff = atkBuff + parseFloat(passive.allybuff.stack.atk);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.stack.critdmg){
-                        critdmgBuff = critdmgBuff + parseFloat(passive.allybuff.stack.critdmg);
-                        buffCount = buffCount + 1;
-                    }
-                    if(passive.allybuff.stack.amplify){
-                        amplifyBuff = amplifyBuff + parseFloat(passive.allybuff.stack.amplify);
-                        buffCount = buffCount + 1;
-                    }
-                }
-            }
+            attackerIterator(allyName, attackerData.passive);
+        }
+        if(attackerData.isSkill3On){
+            attackerIterator(allyName, attackerData.skill3);
         }
         });
         //방어팀 버프 계산
