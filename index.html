@@ -204,7 +204,7 @@
             if(hero.skill3){
                 const res = calculateDamage(3);
                 out3.innerText = `\n` 
-                + `[${skill2Name}] : ${Math.floor(res[0])}\n` 
+                + `[${skill3Name}] : ${Math.floor(res[0])}\n` 
                 + `치명타 : ${Math.floor(res[1])}\n`
                 + `약공 : ${Math.floor(res[2])}\n`
                 + `치명 + 약공 : ${Math.floor(res[3])}\n`
@@ -1381,6 +1381,9 @@
         }
         if(skillId === 2){
             skillname = "skill2"
+        }
+        if(skillId === 3){
+            skillname = "skill3"
         }
         const heroData = characterDb?.characters?.[attackerName];
         const atkmult = parseFloat(heroData?.[skillname]?.atkmult) || 0;
