@@ -485,7 +485,7 @@
     "샤오": {
       "stat":{"atk":1389, "def":533, "hp":3174, "type": "physical"},
       "passive": {"name": "강시의 부적", "allybuff": {"const": {"dmgamp" : 23}}},
-      "skill1": { "name": "정기흡공", "atkmult": 270, "hits": 1, "debuff": {"turn": {"vulnerability" : 39}}},
+      "skill1": { "name": "정기흡공", "atkmult": 270, "hits": 1, "debuff": {"turn": {"def" : 39}}},
       "skill2": { "name": "혈강시 소환", "atkmult": 205, "hits": 1}
     },
     "보스":{
