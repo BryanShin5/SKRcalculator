@@ -221,7 +221,7 @@
     function attackerIterator(charactername, skillname){
         const attackerData = characterDb.characters[charactername];
         const skill1 = attackerData.skillname;
-        if(skill1.debuff){
+            if(skill1?.debuff){
                 if(skill1.debuff.const){
                     if(skill1.debuff.const.def && parseFloat(skill1.debuff.const.def) > constenemydefDebuff){
                         constenemydefDebuff = parseFloat(skill1.debuff.const.def);
@@ -261,7 +261,7 @@
                     }
                 }
             }
-            if(skill1.selfbuff && attackerName === allyName){
+            if(skill1?.selfbuff && attackerName === charactername){
                 if(skill1.selfbuff.const){
                     if(skill1.selfbuff.const.atk && parseFloat(skill1.selfbuff.const.atk) > constatkBuff){
                         constatkBuff = parseFloat(skill1.selfbuff.const.atk);
@@ -361,7 +361,7 @@
                     }
                 }
             }
-            if(skill1.allybuff){
+            if(skill1?.allybuff){
                 if(skill1.allybuff.const){
                     if(skill1.allybuff.const.atk && (parseFloat(skill1.allybuff.const.atk) > constatkBuff) && (!skill1.allybuff.const.type || (skill1.allybuff.const.type === characterDb.characters[attackerName].stat.type))){
                         constatkBuff = parseFloat(skill1.allybuff.const.atk);
