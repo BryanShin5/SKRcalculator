@@ -473,7 +473,7 @@
       "stat":{"atk":704, "def":818, "hp":4572, "type": "physical"},
       "passive": {"name": "발키리의 저력", "selfbuff": {"const": {"reduction" : 24, "type": "magic"}}},
       "skill1": { "name": "하늘의 빛", "atkmult": 65, "defmult":75, "hits": 1, "debuff":{"turn":{"weakrate": 27}}},
-      "skill2": { "name": "하늘의 방패", "mult": 0, "hits": 0, "allybuff": {"turn": {"reduction" : 26, "type": "magic"}}},
+      "skill2": { "name": "하늘의 방패", "mult": 0, "hits": 0, "allybuff": {"turn": {"reduction" : 26, "type": "magic"}}}
     },
     "각성헤브니아": {
       "stat":{"atk":1389, "def":533, "hp":3174, "type": "physical"},
