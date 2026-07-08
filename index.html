@@ -359,6 +359,10 @@
                         amplifyBuff = amplifyBuff + parseFloat(skill1.selfbuff.stack.amplify);
                         buffCount = buffCount + 1;
                     }
+                    if(skill1.selfbuff.stack.dmgamp){
+                        amplifyBuff = dmgampBuff + parseFloat(skill1.selfbuff.stack.dmgamp);
+                        buffCount = buffCount + 1;
+                    }
                 }
             }
             if(skill1?.allybuff){
@@ -457,6 +461,10 @@
                     }
                     if(skill1.allybuff.stack.amplify){
                         amplifyBuff = amplifyBuff + parseFloat(skill1.allybuff.stack.amplify);
+                        buffCount = buffCount + 1;
+                    }
+                    if(skill1.allybuff.stack.dmgamp){
+                        amplifyBuff = dmgampBuff + parseFloat(skill1.allybuff.stack.dmgamp);
                         buffCount = buffCount + 1;
                     }
                 }
@@ -1443,6 +1451,7 @@
         const defmult = parseFloat(heroData?.[skillname]?.defmult) || 0;
         const hpmult = parseFloat(heroData?.[skillname]?.hpmult) || 0;
         const enemyhpmult = parseFloat(heroData?.[skillname]?.enemyhpmult?.[0]) || 0;
+        const enemydefmult = parseFloat(heroData?.[skillname]?.enemydefmult) || 0;
         const limitmult = parseFloat(heroData?.[skillname]?.enemyhpmult?.[1]) || 0;
         const debuffmult = parseFloat(heroData?.[skillname]?.debuffmult) || 0;
         const debuffcap = parseFloat(heroData?.[skillname]?.debuffcap) || 0;
@@ -1528,10 +1537,10 @@
         const skillDefIgnore = Math.min((defignore + finalDefIgnore),95);
         console.error(finalAtk, finalDef, finalHp, finalCritRate, finalCritDmg, finalWeakRate, finalWeakDmg, finalDmgAmp, finalBossAmp, skillDefIgnore, finalBreak, attackerName, defenderName);
         console.error(defFinalDef, defFinalHp, defFinalGuard, defFinalReduction, defFinalElasticity, vulnerability);
-        const baseDmg = (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100) + (debuffmult/100)* Math.min(enemydebuffCount, debuffcap)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
-        const critDmg = (finalAtk * (atkmult/100) + (finalDef * (defmult/100)) + (finalHp * (hpmult/100)) + (critmult/100 * finalAtk) + ((debuffmult/100)* Math.min(enemydebuffCount, debuffcap))) * (skillCritDmg / 100) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
-        const weakDmg = (finalAtk * (atkmult/100) + (finalDef * (defmult/100)) + (finalHp * (hpmult/100)) + (weakmult/100 * finalAtk) + ((debuffmult/100)* Math.min(enemydebuffCount, debuffcap))) * (skillWeakDmg / 100) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
-        const critWeakDmg = (finalAtk * (atkmult/100) + (finalDef * (defmult/100)) + (finalHp * (hpmult/100)) + (critmult/100 * finalAtk) + (weakmult/100 * finalAtk) + ((debuffmult/100)* Math.min(enemydebuffCount, debuffcap))) * (skillCritDmg / 100) * (skillWeakDmg / 100) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
+        const baseDmg = (finalAtk * (atkmult/100) + finalDef * (defmult/100) + finalHp * (hpmult/100) + (enemydefmult/100)* defFinalDef + Math.min(defFinalHp * enemyhpmult, limitmult * finalAtk)) + (debuffmult/100)* Math.min(enemydebuffCount, debuffcap)) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
+        const critDmg = (finalAtk * (atkmult/100) + (finalDef * (defmult/100)) + (finalHp * (hpmult/100)) + (critmult/100 * finalAtk) + (enemydefmult/100)* defFinalDef + Math.min(defFinalHp * enemyhpmult, limitmult * finalAtk)) + ((debuffmult/100)* Math.min(enemydebuffCount, debuffcap))) * (skillCritDmg / 100) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
+        const weakDmg = (finalAtk * (atkmult/100) + (finalDef * (defmult/100)) + (finalHp * (hpmult/100)) + (weakmult/100 * finalAtk) + (enemydefmult/100)* defFinalDef + Math.min(defFinalHp * enemyhpmult, limitmult * finalAtk)) + ((debuffmult/100)* Math.min(enemydebuffCount, debuffcap))) * (skillWeakDmg / 100) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
+        const critWeakDmg = (finalAtk * (atkmult/100) + (finalDef * (defmult/100)) + (finalHp * (hpmult/100)) + (critmult/100 * finalAtk) + (weakmult/100 * finalAtk) + (enemydefmult/100)* defFinalDef + Math.min(defFinalHp * enemyhpmult, limitmult * finalAtk)) + ((debuffmult/100)* Math.min(enemydebuffCount, debuffcap))) * (skillCritDmg / 100) * (skillWeakDmg / 100) * ((100 + finalDmgAmp) / 100) * ((100 + finalAmp) / 100) * ((100 + amplifyBuff)/100) * ((100 + vulnerability) / 100);
 
         const whiteprob = skillCritRate * defFinalGuard + (1-skillCritRate) * (1-defFinalGuard);
         const critprob = skillCritRate * (1-defFinalGuard);
