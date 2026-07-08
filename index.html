@@ -1463,7 +1463,7 @@
         const weakrate = parseFloat(heroData?.[skillname]?.weakrate) || 0;
         const weakdmg = parseFloat(heroData?.[skillname]?.weakdmg) || 0;
         const hits = parseFloat(heroData?.[skillname]?.hits) || 0;
-        console.error(atkmult, defmult, hpmult, enemydefmult);
+        console.error(atkmult, defmult, hpmult, enemydefmult, hits);
         const frontInputs = document.querySelectorAll('.front-hero');
         const frontHeroes = Array.from(frontInputs).map(input => input.value.trim());
         const backInputs = document.querySelectorAll('.back-hero');
