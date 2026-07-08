@@ -16,7 +16,7 @@
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
       "passive": {"name": "신의 저울"},
       "skill1": { "name": "천상의 심판", "atkmult": 77, "hits": 2,  "debuff": {"turn": {"def" : 29, "count":3}}},
-      "skill2": { "name": "최고 판결", "atkmult": 80, "hits": 2}
+      "skill2": { "name": "최고 판결", "atkmult": 87, "hits": 2}
     },
     "밀리아": {
       "stat":{"atk":1500, "def":1580, "hp":7255, "type": "magic"},
@@ -33,8 +33,14 @@
     "루디": {
       "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
       "passive": {"name": "견고한 방패", "selfbuff": {"const": {"reduction" : 20, "def":24}}},
-      "skill1": { "name": "돌격", "atkmult": 200, "defmult": 235, "hits": 1},
-      "skill2": { "name": "방어준비", "allybuff": {"turn": {"link": 10}}}
+      "skill1": { "name": "돌격", "atkmult": 85, "defmult": 100, "hits": 1},
+      "skill2": { "name": "방어준비", "allybuff": {"turn": {"link": 20}}}
+    },
+    "각성루디": {
+      "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
+      "passive": {"name": "견고한 방패", "selfbuff": {"const": {"reduction" : 20, "def":24}}},
+      "skill1": { "name": "돌격", "atkmult": 85, "defmult": 100, "hits": 1, "selfbuff": {"stack": {"def": 30}}},
+      "skill2": { "name": "방어준비", "allybuff": {"turn": {"link": 20}}, "selfbuff": {"stack": {"def": 30}}}
     },
     "아일린": {
       "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
@@ -310,6 +316,19 @@
       "skill2": { "name": "무자비한 착취", "atkmult": 90, "hits": 2, "defignore":40},
       "skill3": { "name": "최후통첩", "atkmult": 72, "critmult": 60, "hits": 2, "defignore":40}
     }, 
+    "아리스": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "대지의 기운", "selfbuff": {"stack": {"atk" : 180, "dmgamp": 180}}, "allybuff":{"const":{"guard":23}}},
+      "skill1": { "name": "짓뭉개주마!", "atkmult": 51, "enemydefmult":59, "hits": 5},
+      "skill2": { "name": "끝내볼까?", "atkmult": 40, "enemydefmult":45, "hits": 2}
+    },
+    "각성아리스": {
+      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "passive": {"name": "대지의 기운", "selfbuff": {"stack": {"atk" : 180, "dmgamp": 180}}, "allybuff":{"const":{"guard":23}}},
+      "skill1": { "name": "짓뭉개주마!", "atkmult": 62, "enemydefmult":71, "hits": 5},
+      "skill2": { "name": "끝내볼까?", "atkmult": 45, "enemydefmult":50, "hits": 2},
+      "skill3": { "name": "위태로운 공존", "enemydefmult":178, "hits": 1, "selfbuff": {"const": {"defignore": 40}}, "debuff":{"const":{"guard":23}}}
+    },
     "클레미스": {
       "stat":{"atk":1095, "def":675, "hp":4458, "type": "magic"},
       "passive": {"name": "신묘한 지능", "debuff": {"const": {"atk" : 16}}, "selfbuff":{"const":{"guard":33}}},
