@@ -37,7 +37,7 @@
       "skill2": { "name": "방어준비", "allybuff": {"turn": {"link": 20}}}
     },
     "각성루디": {
-      "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
+      "stat":{"atk":832, "def":1034, "hp":5547, "type": "physical"},
       "passive": {"name": "견고한 방패", "selfbuff": {"const": {"reduction" : 20, "def":24}}},
       "skill1": { "name": "돌격", "atkmult": 85, "defmult": 100, "hits": 1, "selfbuff": {"stack": {"def": 30}}},
       "skill2": { "name": "방어준비", "allybuff": {"turn": {"link": 20}}, "selfbuff": {"stack": {"def": 30}}}
@@ -115,7 +115,7 @@
       "skill2": { "name": "죽음의 일격", "atkmult": 158, "hits": 5}
     },
     "각성델론즈": {
-      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "stat":{"atk":1712, "def":668, "hp":3836, "type": "physical"},
       "passive": {"name": "죽음의 경계", "allybuff": {"const": {"amplify" : 20, "type": "physical"}, "stack": {"critdmg": 64}}},
       "skill1": { "name": "사신의 심판", "atkmult": 97, "hits": 2},
       "skill2": { "name": "사신난무", "atkmult": 174, "hits": 5},
@@ -278,7 +278,7 @@
       "skill2": { "name": "죽음의 안개", "atkmult": 87, "hits": 2}
     },
     "스쿨드": {
-      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "stat":{"atk":1712, "def":668, "hp":3836, "type": "magic"},
       "passive": {"name": "초승달 예언가"},
       "skill1": { "name": "반짝! 별자리 여행", "atkmult": 32, "hits": 2},
       "skill2": { "name": "성좌의 비밀", "atkmult": 26, "hits": 3}
@@ -297,7 +297,7 @@
       "skill2": { "name": "정화의 일격", "atkmult": 75, "hits": 2, "defignore":40}
     }, 
     "각성실베스타": {
-      "stat":{"atk":1500, "def":571, "hp":3326, "type": "magic"},
+      "stat":{"atk":1712, "def":668, "hp":3836, "type": "magic"},
       "passive": {"name": "기사의 의지"},
       "skill1": { "name": "정의의 단죄", "atkmult": 95, "hits": 2, "defignore":40},
       "skill2": { "name": "정화의 일격", "atkmult": 75, "enemyhpmult": [7,75], "hits": 2, "defignore":40},
@@ -310,7 +310,7 @@
       "skill2": { "name": "무자비한 착취", "atkmult": 75, "hits": 2, "defignore":40}
     }, 
     "각성오르카": {
-      "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
+      "stat":{"atk":1712, "def":668, "hp":3836, "type": "physical"},
       "passive": {"name": "잔혹한 거래", "allybuff": {"turn": {"atk" : 25}}},
       "skill1": { "name": "불공정 거래", "atkmult": 72, "hits": 2, "defignore":40, "debuff": {"stack": {"def" : 20, "vulnerability": 17, "type" : "physical", "target" : "normal"}}},
       "skill2": { "name": "무자비한 착취", "atkmult": 90, "hits": 2, "defignore":40},
@@ -323,7 +323,7 @@
       "skill2": { "name": "끝내볼까?", "atkmult": 40, "enemydefmult":45, "hits": 2}
     },
     "각성아리스": {
-      "stat":{"atk":1306, "def":659, "hp":3693, "type": "physical"},
+      "stat":{"atk":1457, "def":728, "hp":4565, "type": "physical"},
       "passive": {"name": "대지의 기운", "selfbuff": {"stack": {"atk" : 180, "dmgamp": 180}}, "allybuff":{"const":{"guard":23}}},
       "skill1": { "name": "짓뭉개주마!", "atkmult": 62, "enemydefmult":71, "hits": 5},
       "skill2": { "name": "끝내볼까?", "atkmult": 45, "enemydefmult":50, "hits": 2},
@@ -489,13 +489,13 @@
       "skill2": { "name": "균형의방패", "mult": 0, "hits": 0, "allybuff": {"turn": {"guard" : 21}}}
     },
     "각성헬레니아": {
-      "stat":{"atk":704, "def":818, "hp":4572, "type": "physical"},
+      "stat":{"atk":774, "def":930, "hp":5254, "type": "physical"},
       "passive": {"name": "발키리의 저력", "selfbuff": {"const": {"reduction" : 24, "type": "magic"}}},
       "skill1": { "name": "하늘의 빛", "atkmult": 65, "defmult":75, "hits": 1, "debuff":{"turn":{"weakrate": 27}}},
       "skill2": { "name": "하늘의 방패", "mult": 0, "hits": 0, "allybuff": {"turn": {"reduction" : 26, "type": "magic"}}}
     },
     "각성헤브니아": {
-      "stat":{"atk":1389, "def":533, "hp":3174, "type": "physical"},
+      "stat":{"atk":1569, "def":595, "hp":3642, "type": "physical"},
       "passive": {"name": "마법 포착", "allybuff": {"const": {"atk" : 25, "type": "physical"}}},
       "skill1": { "name": "검의 심판", "atkmult": 160, "hits": 1},
       "skill2": { "name": "맹렬한 공격", "atkmult": 340, "hits": 1, "debuff": {"turn": {"vulnerability" : 29, "type": "physical"}}},
