@@ -335,6 +335,12 @@
       "skill1": { "name": "완벽한 함정", "atkmult": 30, "hpmult": 7, "hits": 1},
       "skill2": { "name": "섭리의 조율", "debuff":{"turn":{"dmgamp":16}}, "allybuff":{"turn":{"def":39}}}
     },
+    "각성클레미스": {
+      "stat":{"atk":1253, "def":774, "hp":5127, "type": "magic"},
+      "passive": {"name": "신묘한 지능", "debuff": {"const": {"atk" : 16}}, "selfbuff":{"const":{"guard":33}}},
+      "skill1": { "name": "완벽한 함정", "atkmult": 30, "hpmult": 7, "hits": 1},
+      "skill2": { "name": "섭리의 조율", "debuff":{"turn":{"dmgamp":16}}, "allybuff":{"turn":{"def":39}}}
+    },
     "세인": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
       "passive": { "name": "악마의 힘", "selfbuff":{"const": {"critrate" : 41, "debuffamp": 20}}},
