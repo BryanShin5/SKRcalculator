@@ -472,13 +472,8 @@
     }
     function defenderIterator(charactername, skillname){
         const defenderData = characterDb.characters[charactername];
-        if (!defenderData) {
-            console.error(`DB에서 방어팀 영웅 '${enemyName}'을 찾을 수 없습니다.`);
-            return; // 다음 영웅으로 패스
-        }
-        const skill1 = defenderData[skillname]
-        if(enemyName === charactername){
-            const skill1 = defenderData.skill1;
+        const skill1 = defenderData[skillname];
+        if(defenderName === charactername){
             if(skill1.selfbuff){
             if(skill1.selfbuff.const){
                 if(skill1.selfbuff.const.def && parseFloat(skill1.selfbuff.const.def)>constenemydefbuff){
