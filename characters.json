@@ -32,13 +32,13 @@
     },
     "루디": {
       "stat":{"atk":727, "def":892, "hp":4825, "type": "physical"},
-      "passive": {"name": "견고한 방패", "selfbuff": {"const": {"reduction" : 20, "def":24}}},
+      "passive": {"name": "견고한 방패", "selfbuff": {"const": {"reduction" : 20}}, "allybuff": {"const": {"def" : 24}}},
       "skill1": { "name": "돌격", "atkmult": 85, "defmult": 100, "hits": 1},
       "skill2": { "name": "방어준비", "allybuff": {"turn": {"link": 20}}}
     },
     "각성루디": {
       "stat":{"atk":832, "def":1034, "hp":5547, "type": "physical"},
-      "passive": {"name": "견고한 방패", "selfbuff": {"const": {"reduction" : 20, "def":24}}},
+      "passive": {"name": "견고한 방패", "selfbuff": {"const": {"reduction" : 20}}, "allybuff": {"const": {"def" : 24}}},
       "skill1": { "name": "돌격", "atkmult": 85, "defmult": 100, "hits": 1, "selfbuff": {"stack": {"def": 30}}},
       "skill2": { "name": "방어준비", "allybuff": {"turn": {"link": 20}}, "selfbuff": {"stack": {"def": 30}}}
     },
