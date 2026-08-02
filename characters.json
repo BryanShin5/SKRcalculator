@@ -343,13 +343,13 @@
     },
     "선란": {
       "stat":{"atk":1500, "def":571, "hp":3326, "type": "physical"},
-      "passive": { "name": "귀면무사", "selfbuff":{"const": {"weakrate" : 100}, {"stack": {"atk": 21, "critdmg": 30}}, "allybuff":{"const":{"atk": 19, "type": "physical"}}},
+      "passive": { "name": "귀면무사", "selfbuff":{"const": {"weakrate" : 100}, "stack": {"atk": 21, "critdmg": 30}}, "allybuff":{"const":{"atk": 19, "type": "physical"}}},
       "skill1": { "name": "연환참", "atkmult": 70, "hits": 3},
       "skill2": { "name": "무영비검", "atkmult": 51, "hits": 3, "enemyhpmult": [6,100]}
     },
     "각성선란": {
       "stat":{"atk":1712, "def":668, "hp":3836, "type": "physical"},
-      "passive": { "name": "귀면무사", "selfbuff":{"const": {"weakrate" : 100}, {"stack": {"atk": 21, "critdmg": 30}}, "allybuff":{"const":{"atk": 25, "type": "physical"}}},
+      "passive": { "name": "귀면무사", "selfbuff":{"const": {"weakrate" : 100}, "stack": {"atk": 21, "critdmg": 30}}, "allybuff":{"const":{"atk": 25, "type": "physical"}}},
       "skill1": { "name": "연환참", "atkmult": 70, "hits": 3},
       "skill2": { "name": "무영비검", "atkmult": 55, "hits": 3, "enemyhpmult": [7,100]},
       "skill3": { "name": "천검", "atkmult": 117, "hits": 2, "enemyhpmult": [9, 100]}
